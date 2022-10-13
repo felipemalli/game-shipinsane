@@ -1,1 +1,3 @@
-###Shipinsane
+### Shipinsane
+
+Jogo desenvolvido em Python.
