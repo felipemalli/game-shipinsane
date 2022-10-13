@@ -14,3 +14,8 @@ Projeto de um jogo de piratas desenvolvido em Python.
     <a href="https://github.com/MatheusFrancis">Matheus Francis</a>
   </div>
 <div>
+
+## Tecnologias
+- Python3
+- Pygame
+- PPlay
