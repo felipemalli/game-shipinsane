@@ -16,6 +16,6 @@ Projeto de um jogo de piratas desenvolvido em Python.
 <div>
 
 ## Tecnologias
-- Python3
+- Python
 - Pygame
 - PPlay
