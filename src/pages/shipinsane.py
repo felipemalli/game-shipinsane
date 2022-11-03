@@ -1,3 +1,4 @@
+import math
 import os
 import sys
 
@@ -14,13 +15,11 @@ from gameObjects.cannon_ball import Cannon_ball
 
 
 def init():
-    WIDTH = 1920
-    HEIGHT = 1080
+    WIDTH, HEIGHT = 1920, 1080
     window = Window(WIDTH, HEIGHT)
     window.set_title("ShipInsane")
     window.set_background_color([0, 0, 0])
 
-    #Carrega os sprites de cada objeto do jogo
     island = Sprite("../assets/island2.png", 1)
     sea = Sprite("../assets/mar.png", 1)
     enemy_pirate_1 = Sprite("../assets/enemy1.png", 1)
@@ -28,11 +27,9 @@ def init():
     player = Sprite("../assets/player.png", 1)
     enemy_ship_1 = Sprite("../assets/enemy_ship1.png")
     enemy_ship_2 = Sprite("../assets/enemy_ship2.png")
-    # cannon1 = Sprite("../assets/cannon1.png")
+    cannon_ball = Sprite("../assets/cannon_ball.png")
 
     keyboard = Window.get_keyboard()
-
-    #Configura as posiçoes dos elementos do jogo
 
     island.x = WIDTH / 2 - island.width / 2
     island.y = HEIGHT / 2 - island.height / 2
@@ -61,23 +58,37 @@ def init():
     # cannon4.y = island.y + island.height / 2
 
     cannon_north_x = island.x + island.width / 2 - 15
-    cannon_north_y = island.y + 10
+    cannon_north_y = island.y + 20
     cannon_north_sprite = Sprite("../assets/cannon_north.png")
     cannon_north = Cannon(cannon_north_sprite, cannon_north_x, cannon_north_y)
     cannon_north_img, cannon_north_rect = cannon_north.get_img_rect()
 
+    cooldown_time = 0.5
+    shot_cooldown = cooldown_time
     while(True):
         sea.draw()
         island.draw()
 
         if keyboard.key_pressed("A"):
-            cannon_north_img, cannon_north_rect = cannon_north.move_angle_anticlockwise()
+            cannon_north_img, cannon_north_rect = cannon_north.move_anticlockwise()
 
         if keyboard.key_pressed("D"):
-            cannon_north_img, cannon_north_rect = cannon_north.move_angle_clockwise()
+            cannon_north_img, cannon_north_rect = cannon_north.move_clockwise()
+
+        if keyboard.key_pressed("SPACE") and shot_cooldown < 0:
+            shot_cooldown = cooldown_time
+            cannon_north.shot()
+        
+        cannon_north.render_shots()
+            
+
+
+        if shot_cooldown > 0:
+            shot_cooldown -= window.delta_time()
 
         window.get_screen().blit(cannon_north_img, cannon_north_rect)
-    
+
+
         # enemy_pirate_1.draw()
         # enemy_pirate_2.draw()
         # enemy_ship_1.draw()
