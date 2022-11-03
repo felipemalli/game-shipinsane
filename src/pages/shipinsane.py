@@ -71,12 +71,10 @@ def init():
         island.draw()
 
         if keyboard.key_pressed("A"):
-            cannon_north.move_angle_anticlockwise()
-            cannon_north_img, cannon_north_rect = cannon_north.rot_center()
+            cannon_north_img, cannon_north_rect = cannon_north.move_angle_anticlockwise()
 
         if keyboard.key_pressed("D"):
-            cannon_north.move_angle_clockwise()
-            cannon_north_img, cannon_north_rect = cannon_north.rot_center()
+            cannon_north_img, cannon_north_rect = cannon_north.move_angle_clockwise()
 
         window.get_screen().blit(cannon_north_img, cannon_north_rect)
     

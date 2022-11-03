@@ -19,18 +19,20 @@ class Cannon:
     def get_img_rect(self):
         return self.image, self.rect
 
-    def move_angle_anticlockwise(self):
-        if self.angle < 60:
-            self.angle += 1
-
-    def move_angle_clockwise(self):
-        if self.angle > -60:
-            self.angle -= 1
-    
     def rot_center(self):
         rot_image = pygame.transform.rotate(self.image, self.angle)
         rot_rect = rot_image.get_rect(center=self.rect.center)
         return rot_image,rot_rect
+
+    def move_angle_anticlockwise(self):
+        if self.angle < 60:
+            self.angle += 1
+        return self.rot_center()
+
+    def move_angle_clockwise(self):
+        if self.angle > -60:
+            self.angle -= 1
+        return self.rot_center()
 
     def get_is_on_screen(self):
         return self.is_on_screen
