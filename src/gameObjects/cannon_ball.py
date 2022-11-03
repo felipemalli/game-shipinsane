@@ -5,9 +5,11 @@ class Cannon_ball:
     def __init__(self, speed, cannon_object):
         self.cannon_object = cannon_object
         self.speed = speed                  # speed with delta_time included!
-        self.cannon_ball = Sprite("cannon_ball.png")
-        self.cannon_ball.x = cannon_object.x + (cannon_object.width / 2) - (self.cannon_ball.width / 2)
-        self.cannon_ball.y = cannon_object.y - self.cannon_ball.height
+        self.cannon_ball = Sprite("../assets/cannon_ball.png")
+        self.cannon_ball.x = 960
+        self.cannon_ball.y = 400
+        # self.cannon_ball.x = cannon_object.x + (cannon_object.width / 2) - (self.cannon_ball.width / 2)
+        # self.cannon_ball.y = cannon_object.y - self.cannon_ball.height
 
     def draw(self):
         self.cannon_ball.draw()
@@ -31,5 +33,5 @@ class Cannon_ball:
         if self.cannon_ball.y >= 0:
             y_increment = self.speed
             self.up_y_position(y_increment)
-        else:
-            self.cannon_object.remove_cannon_ball(self)
+        # else:
+        #     self.cannon_object.remove_cannon_ball(self)
