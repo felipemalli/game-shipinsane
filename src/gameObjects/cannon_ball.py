@@ -1,37 +1,34 @@
+import math
+
 from PPlay.sprite import Sprite
 
 
 class Cannon_ball:
     def __init__(self, speed, cannon_object):
         self.cannon_object = cannon_object
+        self.cannon_rect = cannon_object.get_rect()
+        self.cannon_angle = cannon_object.get_angle()
+
+        self.cannon_ball_spt = Sprite("../assets/cannon_ball.png")
+        self.cannon_ball_spt.x = self.cannon_rect.centerx - (self.cannon_ball_spt.width / 2) + 1
+        self.cannon_ball_spt.y = self.cannon_rect.centery - (self.cannon_ball_spt.width / 2) + 1
+
         self.speed = speed                  # speed with delta_time included!
-        self.cannon_ball = Sprite("../assets/cannon_ball.png")
-        self.cannon_ball.x = 960
-        self.cannon_ball.y = 400
-        # self.cannon_ball.x = cannon_object.x + (cannon_object.width / 2) - (self.cannon_ball.width / 2)
-        # self.cannon_ball.y = cannon_object.y - self.cannon_ball.height
 
     def draw(self):
-        self.cannon_ball.draw()
+        self.cannon_ball_spt.draw()
 
-    def get_x_position(self):
-        return self.cannon_ball.x
+    def is_out_of_screen(self):
+        WIDTH, HEIGHT = 1920, 1080
+        if self.cannon_ball_spt.y + self.cannon_ball_spt.height < 0 or self.cannon_ball_spt.y > HEIGHT:
+            return True
+        if self.cannon_ball_spt.x < 0 or self.cannon_ball_spt.x > WIDTH:
+            return True
+        return False
 
-    def get_y_position(self):
-        return self.cannon_ball.y
-    
-    def set_y_position(self, y_position):
-        self.cannon_ball.y = y_position
-
-    def up_y_position(self, y_increment_position):
-        self.cannon_ball.y -= y_increment_position
-
-    def get_is_on_screen(self):
-        return self.is_on_screen
-
-    def move_up(self):
-        if self.cannon_ball.y >= 0:
-            y_increment = self.speed
-            self.up_y_position(y_increment)
-        # else:
-        #     self.cannon_object.remove_cannon_ball(self)
+    def move_with_angle(self):
+        if self.is_out_of_screen(): self.cannon_object.remove_cannon_ball(self)
+        angle = self.cannon_angle
+        radAngle = math.radians(90 - angle)
+        self.cannon_ball_spt.x -= self.speed * math.cos(radAngle)
+        self.cannon_ball_spt.y -= self.speed * math.sin(radAngle)
