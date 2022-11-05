@@ -2,6 +2,35 @@
 
 Projeto de um jogo de piratas desenvolvido em Python.
 
+
+## Como jogar
+
+1- Clone o repositório:
+
+```sh
+git clone git@github.com:felipemalli/game-shipinsane.git
+```
+
+2- Inicialize a máquina virtual:
+```sh
+python3 -m venv .venv && source .venv/bin/activate
+```
+
+3- Instale as dependências:
+```sh
+pip3 install -r requirements.txt
+```
+
+4- Entre na pasta do menu:
+```sh
+cd src/pages/
+```
+
+5- Inicialize o jogo:
+```sh
+python3 ./menu.py
+```
+
 ## Equipe de desenvolvimento
 <div>
   <div>
