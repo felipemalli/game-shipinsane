@@ -8,13 +8,13 @@ class Cannon:
     def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
 
-        self.cannon_spt = sprite
-        self.cannon_spt.x = x
-        self.cannon_spt.y = y
+        self.sprite = sprite
+        self.sprite.x = x
+        self.sprite.y = y
 
-        self.image = self.cannon_spt.image
-        self.rect = self.cannon_spt.image.get_rect()
-        self.rect.center=(self.cannon_spt.x - (self.cannon_spt.width / 2), self.cannon_spt.y + (self.cannon_spt.height / 2))
+        self.image = self.sprite.image
+        self.rect = self.sprite.image.get_rect()
+        self.rect.center=(self.sprite.x - (self.sprite.width / 2), self.sprite.y + (self.sprite.height / 2))
 
         self.initial_angle = initial_angle
         self.angle = 0
@@ -58,3 +58,8 @@ class Cannon:
         for cannon_ball in self.cannon_ball_list:
             cannon_ball.draw()
             cannon_ball.move_with_angle()
+
+        # if pygame.sprite.collide_mask(cannon_ball.cannon_ball_spt, self.island):
+        #     print('colidiu')
+        # else:
+        #     print('nao')
