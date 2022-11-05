@@ -30,7 +30,7 @@ def player_direction(player):
 
     return player
 
-def player_movement(player, island):
+def player_movement(player):
     player = player_direction(player)
 
     if keyboard.key_pressed("W"):

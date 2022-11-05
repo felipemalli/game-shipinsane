@@ -76,7 +76,7 @@ def init():
 
         # ------------- Player interactions -------------
 
-        player = player_movement(player, island)
+        player = player_movement(player)
 
         if player.collided(circle_N.draw()):
             cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_N.control(cannon_shot_timer, "RIGHT", "LEFT")
