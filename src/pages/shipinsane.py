@@ -28,7 +28,6 @@ def init():
     # enemy_pirate_1.y = island.y + 50
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
-    # player = Sprite("../assets/player_NE.png", 1)
 
     # ----------------- Player  ----------------
 
@@ -50,7 +49,7 @@ def init():
     cannon_NE = Cannon(300, Sprite("../assets/cannon_NE.png"), island.x + 130 + island.width / 2, island.y + island.height / 2 - 70)
     cannon_NE_img, cannon_NE_rect = cannon_NE.get_img_rect()
 
-    # ------- Contact circles of cannons -------
+    # --------- Contact area of cannons ---------
 
     circle_color, circle_size, circle_thickness = (160, 160, 160), 12, 1
 

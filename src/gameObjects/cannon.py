@@ -42,12 +42,12 @@ class Cannon:
         return rot_image,rot_rect
 
     def move_clockwise(self):
-        if self.angle > -45:
+        if self.angle > -50:
             self.angle -= 0.35
         return self.rot_center()
 
     def move_anticlockwise(self):
-        if self.angle < 45:
+        if self.angle < 50:
             self.angle += 0.35
         return self.rot_center()
 

@@ -14,7 +14,7 @@ class Contact_circle:
         self.size = size
         self.thickness = thickness
         self.color = color
-        self.sprite = 0
+        self.sprite = None
 
     def draw(self):
         self.sprite = pygame.draw.circle(window.get_screen(), self.color, [self.x, self.y], self.size, self.thickness)
