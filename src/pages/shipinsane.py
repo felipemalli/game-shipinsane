@@ -66,8 +66,12 @@ def init():
 
     # ------------------------------------------
 
+    delta_time = 0
+
     while(True):
-        if cannon_shot_timer >= 0: cannon_shot_timer -= window.delta_time()
+        delta_time = window.delta_time()
+
+        if cannon_shot_timer >= 0: cannon_shot_timer -= delta_time
 
         # ----------- Static Renderizations ------------
 
@@ -89,15 +93,15 @@ def init():
         
         # ---------- Dinamic Renderizations -------------
        
-        cannon_N.render_shots()
+        cannon_N.render_shots(delta_time)
         window.get_screen().blit(cannon_N_img, cannon_N_rect)
-        cannon_W.render_shots()
+        cannon_W.render_shots(delta_time)
         window.get_screen().blit(cannon_W_img, cannon_W_rect)
-        cannon_NE.render_shots()
+        cannon_NE.render_shots(delta_time)
         window.get_screen().blit(cannon_NE_img, cannon_NE_rect)
         player.draw()
         window.get_screen().blit(cannon_S_img, cannon_S_rect)
-        cannon_S.render_shots()
+        cannon_S.render_shots(delta_time)
 
         enemy_pirate_1.draw()
         enemy_pirate_2.draw()

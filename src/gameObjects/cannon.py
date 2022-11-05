@@ -1,16 +1,15 @@
 import pygame
 from PPlay.keyboard import Keyboard
-from PPlay.sprite import Sprite
-
-keyboard = Keyboard()
 
 from .cannon_ball import Cannon_ball
 
+keyboard = Keyboard()
 
 class Cannon:
     def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
         self.shot_cooldown = 1
+        self.shot_speed = 100
 
         self.sprite = sprite
         self.sprite.x = x
@@ -56,17 +55,16 @@ class Cannon:
         return self.rot_center()
 
     def shot(self):
-        shot_speed = 0.7
-        cannon_ball = Cannon_ball(shot_speed, self)
+        cannon_ball = Cannon_ball(self.shot_speed, self)
         self.cannon_ball_list.append(cannon_ball)
 
     def remove_cannon_ball(self, cannon_ball):
         self.cannon_ball_list.remove(cannon_ball)
 
-    def render_shots(self):
+    def render_shots(self, delta_time):
         for cannon_ball in self.cannon_ball_list:
             cannon_ball.draw()
-            cannon_ball.move_with_angle()
+            cannon_ball.move_with_angle(delta_time)
 
     def control(self, shot_timer, clockwise_key, anticlockwise_key):
         rot_image, rot_rect = self.rot_center()
