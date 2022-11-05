@@ -4,6 +4,8 @@ import sys
 from PPlay.sprite import Sprite
 from PPlay.window import Window
 
+from game_parts.player_movement import player_movement
+
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.cannon_ball import Cannon_ball
@@ -37,10 +39,6 @@ def init():
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
     # player = Sprite("../assets/player_NE.png", 1)
-    player = sprite_direction('../assets/', 'player', 'NE')
-
-    player.x = island.x + island.width / 2 - 35
-    player.y = island.y + island.height / 2 - 25
 
     # cannon1.x = island.x + island.width / 2 - 15
     # cannon1.y = island.y + 10
@@ -54,6 +52,9 @@ def init():
     # cannon4.x = island.x
     # cannon4.y = island.y + island.height / 2
 
+    # ----------------- Player  ----------------
+
+    player = sprite_direction('../assets/', 'player', 'NE', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
 
     # ----------- Cannons of island  -----------
 
@@ -78,15 +79,8 @@ def init():
         sea.draw()
         island.draw()
 
-        if keyboard.key_pressed("W"):
-            player.y -= 0.5
-        if keyboard.key_pressed("A"):
-            player.x -= 0.5
-        if keyboard.key_pressed("S"):
-            player.y += 0.5
-        if keyboard.key_pressed("D"):
-            player.x += 0.5
-
+        player = player_movement(player, island)
+        
         if keyboard.key_pressed("LEFT"):
             cannon_N_img, cannon_N_rect = cannon_N.move_anticlockwise()
             cannon_S_img, cannon_S_rect = cannon_S.move_anticlockwise()
