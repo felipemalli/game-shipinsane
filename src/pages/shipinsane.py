@@ -5,11 +5,12 @@ import pygame
 from PPlay.sprite import Sprite
 
 from game_parts.player_movement import player_movement
-from pages.game_parts.window_game import island, sea, window
+from pages.game_parts.window_game import HEIGHT, WIDTH, island, sea, window
 
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
+from gameObjects.player import Player
 from utils.sprite_direction import sprite_direction
 
 
@@ -30,10 +31,13 @@ def init():
 
     # ----------------- Player  ----------------
 
-    player = sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
+    # player = sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
+
+    player = Player()
 
     # ----------- Cannons of island  -----------
 
+    cannon_ammo = 3
     cannon_shot_timer = 0
 
     cannon_N = Cannon(0, Sprite("../assets/cannon_N.png"), island.x + island.width / 2 - 15, island.y + 20)
@@ -78,17 +82,19 @@ def init():
         sea.draw()
         island.draw()
 
+        window.draw_text('Cannon ammo: ' + str(cannon_ammo), WIDTH / 4 + 100, HEIGHT - 40, 30)
+        window.draw_text('Life: ' + str(100), WIDTH / 2 + 100, HEIGHT - 40, 30)
         # ------------- Player interactions -------------
+    
+        player.movement()
 
-        player = player_movement(player)
-
-        if player.collided(circle_N.draw()):
+        if player.get_sprite().collided(circle_N.draw()):
             cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_N.control(cannon_shot_timer, "RIGHT", "LEFT")
-        if player.collided(circle_S.draw()):
+        if player.get_sprite().collided(circle_S.draw()):
             cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_S.control(cannon_shot_timer, "LEFT", "RIGHT")
-        if player.collided(circle_W.draw()):
+        if player.get_sprite().collided(circle_W.draw()):
             cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_W.control(cannon_shot_timer, "UP", "DOWN")
-        if player.collided(circle_NE.draw()):
+        if player.get_sprite().collided(circle_NE.draw()):
             cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_NE.control(cannon_shot_timer, "DOWN", "UP")
         
         # ---------- Dinamic Renderizations -------------
@@ -99,7 +105,7 @@ def init():
         window.get_screen().blit(cannon_W_img, cannon_W_rect)
         cannon_NE.render_shots(delta_time)
         window.get_screen().blit(cannon_NE_img, cannon_NE_rect)
-        player.draw()
+        player.get_sprite().draw()
         window.get_screen().blit(cannon_S_img, cannon_S_rect)
         cannon_S.render_shots(delta_time)
 

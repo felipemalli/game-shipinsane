@@ -9,7 +9,7 @@ class Cannon:
     def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
         self.shot_cooldown = 1
-        self.shot_speed = 100
+        self.shot_speed = 150
 
         self.sprite = sprite
         self.sprite.x = x
