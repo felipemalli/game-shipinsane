@@ -2,6 +2,7 @@ import pygame
 from PPlay.keyboard import Keyboard
 
 from .cannon_ball import Cannon_ball
+from .player import Player
 
 keyboard = Keyboard()
 
@@ -66,7 +67,7 @@ class Cannon:
             cannon_ball.draw()
             cannon_ball.move_with_angle(delta_time)
 
-    def control(self, shot_timer, clockwise_key, anticlockwise_key):
+    def control(self, player_object, shot_timer, clockwise_key, anticlockwise_key):
         rot_image, rot_rect = self.rot_center()
 
         if keyboard.key_pressed(clockwise_key):
@@ -75,7 +76,8 @@ class Cannon:
         if keyboard.key_pressed(anticlockwise_key):
             rot_image, rot_rect = self.move_anticlockwise()
 
-        if keyboard.key_pressed("SPACE") and shot_timer < 0:
+        if keyboard.key_pressed("SPACE") and shot_timer < 0 and player_object.get_cannon_ammo() > 0:
+            player_object.reduce_cannon_ammo()
             self.shot()
             return self.shot_cooldown, rot_image, rot_rect
         

@@ -37,7 +37,6 @@ def init():
 
     # ----------- Cannons of island  -----------
 
-    cannon_ammo = 3
     cannon_shot_timer = 0
 
     cannon_N = Cannon(0, Sprite("../assets/cannon_N.png"), island.x + island.width / 2 - 15, island.y + 20)
@@ -82,20 +81,20 @@ def init():
         sea.draw()
         island.draw()
 
-        window.draw_text('Cannon ammo: ' + str(cannon_ammo), WIDTH / 4 + 100, HEIGHT - 40, 30)
+        window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 4 + 100, HEIGHT - 40, 30)
         window.draw_text('Life: ' + str(100), WIDTH / 2 + 100, HEIGHT - 40, 30)
         # ------------- Player interactions -------------
     
         player.movement()
 
         if player.get_sprite().collided(circle_N.draw()):
-            cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_N.control(cannon_shot_timer, "RIGHT", "LEFT")
+            cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_N.control(player, cannon_shot_timer, "RIGHT", "LEFT")
         if player.get_sprite().collided(circle_S.draw()):
-            cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_S.control(cannon_shot_timer, "LEFT", "RIGHT")
+            cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_S.control(player, cannon_shot_timer, "LEFT", "RIGHT")
         if player.get_sprite().collided(circle_W.draw()):
-            cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_W.control(cannon_shot_timer, "UP", "DOWN")
+            cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_W.control(player, cannon_shot_timer, "UP", "DOWN")
         if player.get_sprite().collided(circle_NE.draw()):
-            cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_NE.control(cannon_shot_timer, "DOWN", "UP")
+            cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_NE.control(player, cannon_shot_timer, "DOWN", "UP")
         
         # ---------- Dinamic Renderizations -------------
        

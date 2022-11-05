@@ -17,6 +17,13 @@ class Player:
         self.cannon_ammo = 3
         self.life = 100
 
+    def reduce_cannon_ammo(self):
+        if self.cannon_ammo > 0:
+            self.cannon_ammo -= 1
+
+    def get_cannon_ammo(self):
+        return self.cannon_ammo
+
     def get_sprite(self):
         return self.sprite
 
