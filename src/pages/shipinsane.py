@@ -1,17 +1,13 @@
-import math
 import os
 import sys
 
-import pygame
-from PPlay.gameimage import *
-from PPlay.keyboard import *
-from PPlay.mouse import *
-from PPlay.sprite import *
-from PPlay.window import *
+from PPlay.sprite import Sprite
+from PPlay.window import Window
 
-sys.path.insert(0, os.path.abspath("../"))
+sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.cannon_ball import Cannon_ball
+from utils.sprite_direction import sprite_direction
 
 
 def init():
@@ -24,7 +20,6 @@ def init():
     sea = Sprite("../assets/mar.png", 1)
     enemy_pirate_1 = Sprite("../assets/enemy1.png", 1)
     enemy_pirate_2 = Sprite("../assets/enemy2.png", 1)
-    player = Sprite("../assets/player_NE.png", 1)
     enemy_ship_1 = Sprite("../assets/enemy_ship1.png")
     enemy_ship_2 = Sprite("../assets/enemy_ship2.png")
 
@@ -41,6 +36,9 @@ def init():
     # enemy_pirate_1.y = island.y + 50
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
+    # player = Sprite("../assets/player_NE.png", 1)
+    player = sprite_direction('../assets/', 'player', 'NE')
+
     player.x = island.x + island.width / 2 - 35
     player.y = island.y + island.height / 2 - 25
 
@@ -79,6 +77,15 @@ def init():
     while(True):
         sea.draw()
         island.draw()
+
+        if keyboard.key_pressed("W"):
+            player.y -= 0.5
+        if keyboard.key_pressed("A"):
+            player.x -= 0.5
+        if keyboard.key_pressed("S"):
+            player.y += 0.5
+        if keyboard.key_pressed("D"):
+            player.x += 0.5
 
         if keyboard.key_pressed("LEFT"):
             cannon_N_img, cannon_N_rect = cannon_N.move_anticlockwise()
