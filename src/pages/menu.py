@@ -1,7 +1,7 @@
 import os
 import sys
 
-from pages.game_parts.window_game import HEIGHT, WIDTH
+from game_parts.window_game import HEIGHT, WIDTH
 
 sys.path.insert(0, os.path.abspath("../../"))
 from PPlay.mouse import Mouse

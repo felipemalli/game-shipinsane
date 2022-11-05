@@ -10,7 +10,7 @@ from pages.game_parts.window_game import island, sea, window
 
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
-from gameObjects.cannon_ball import Cannon_ball
+from gameObjects.contact_circle import Contact_circle
 from utils.sprite_direction import sprite_direction
 
 
@@ -36,6 +36,8 @@ def init():
 
     # ----------- Cannons of island  -----------
 
+    cannon_shot_timer = 0
+
     cannon_N = Cannon(0, Sprite("../assets/cannon_N.png"), island.x + island.width / 2 - 15, island.y + 20)
     cannon_N_img, cannon_N_rect = cannon_N.get_img_rect()
 
@@ -48,46 +50,46 @@ def init():
     cannon_NE = Cannon(300, Sprite("../assets/cannon_NE.png"), island.x + 130 + island.width / 2, island.y + island.height / 2 - 70)
     cannon_NE_img, cannon_NE_rect = cannon_NE.get_img_rect()
 
-    # ------------------------------------------
+    # ------- Contact circles of cannons -------
 
-    cannon_shot_timer = 0
-    
     circle_color, circle_size, circle_thickness = (160, 160, 160), 12, 1
-    circle_N_x = cannon_N_rect.x + (cannon_N.get_sprite().width / 2)
-    circle_N_y = cannon_N_rect.y + cannon_N.get_sprite().height
-    circle_S_x = cannon_S_rect.x + (cannon_S.get_sprite().width / 2)
-    circle_S_y = cannon_S_rect.y - cannon_S.get_sprite().height / 12
-    circle_W_x = cannon_W_rect.x + (cannon_W.get_sprite().width) + 4
-    circle_W_y = cannon_W_rect.y + cannon_W.get_sprite().height / 2 + 5
-    circle_NE_x = cannon_NE_rect.x + (cannon_NE.get_sprite().width / 4) - 2
-    circle_NE_y = cannon_NE_rect.y + cannon_NE.get_sprite().height - 4
+
+    circle_N_x, circle_N_y = cannon_N_rect.x + (cannon_N.get_sprite().width / 2), cannon_N_rect.y + cannon_N.get_sprite().height
+    circle_N = Contact_circle(circle_N_x, circle_N_y, circle_size, circle_thickness, circle_color)
+
+    circle_S_x, circle_S_y = cannon_S_rect.x + (cannon_S.get_sprite().width / 2), cannon_S_rect.y - cannon_S.get_sprite().height / 12
+    circle_S = Contact_circle(circle_S_x, circle_S_y, circle_size, circle_thickness, circle_color)
+
+    circle_W_x, circle_W_y = cannon_W_rect.x + (cannon_W.get_sprite().width) + 4, cannon_W_rect.y + cannon_W.get_sprite().height / 2 + 5
+    circle_W = Contact_circle(circle_W_x, circle_W_y, circle_size, circle_thickness, circle_color)
+
+    circle_NE_x, circle_NE_y = cannon_NE_rect.x + (cannon_NE.get_sprite().width / 4) - 2, cannon_NE_rect.y + cannon_NE.get_sprite().height - 4 
+    circle_NE = Contact_circle(circle_NE_x, circle_NE_y, circle_size, circle_thickness, circle_color)
+
+    # ------------------------------------------
 
     while(True):
         if cannon_shot_timer >= 0: cannon_shot_timer -= window.delta_time()
 
-        # ----------- Initial Renderizations ------------
+        # ----------- Static Renderizations ------------
 
         sea.draw()
         island.draw()
-        circle_N = pygame.draw.circle(window.get_screen(), circle_color, [circle_N_x, circle_N_y], circle_size, circle_thickness)
-        circle_S = pygame.draw.circle(window.get_screen(), circle_color, [circle_S_x, circle_S_y], circle_size, circle_thickness)
-        circle_W = pygame.draw.circle(window.get_screen(), circle_color, [circle_W_x, circle_W_y], circle_size, circle_thickness)
-        circle_NE = pygame.draw.circle(window.get_screen(), circle_color, [circle_NE_x, circle_NE_y], circle_size, circle_thickness)
 
         # ------------- Player interactions -------------
 
         player = player_movement(player, island)
 
-        if player.collided(circle_N):
+        if player.collided(circle_N.draw()):
             cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_controls(cannon_N, cannon_N_img, cannon_N_rect, cannon_shot_timer, "RIGHT", "LEFT")
-        if player.collided(circle_S):
+        if player.collided(circle_S.draw()):
             cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_controls(cannon_S, cannon_S_img, cannon_S_rect, cannon_shot_timer, "LEFT", "RIGHT")
-        if player.collided(circle_W):
+        if player.collided(circle_W.draw()):
             cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_controls(cannon_W, cannon_W_img, cannon_W_rect, cannon_shot_timer, "UP", "DOWN")
-        if player.collided(circle_NE):
+        if player.collided(circle_NE.draw()):
             cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_controls(cannon_NE, cannon_NE_img, cannon_NE_rect, cannon_shot_timer, "DOWN", "UP")
         
-        # --------------- Renderizations ----------------
+        # ---------- Dinamic Renderizations -------------
        
         cannon_N.render_shots()
         window.get_screen().blit(cannon_N_img, cannon_N_rect)
