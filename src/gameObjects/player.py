@@ -41,11 +41,11 @@ class Player:
     def movement(self):
         if keyboard.key_pressed("W"):
             self.sprite.y -= 0.5
-        if keyboard.key_pressed("A"):
+        elif keyboard.key_pressed("A"):
             self.sprite.x -= 0.5
-        if keyboard.key_pressed("S"):           
+        elif keyboard.key_pressed("S"):           
             self.sprite.y += 0.5
-        if keyboard.key_pressed("D"):           
+        elif keyboard.key_pressed("D"):           
             self.sprite.x += 0.5
 
         self.player_direction()
