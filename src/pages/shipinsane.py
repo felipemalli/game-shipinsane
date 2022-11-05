@@ -4,30 +4,31 @@ import sys
 import pygame
 from PPlay.sprite import Sprite
 
-from game_parts.player_movement import player_movement
-from pages.game_parts.window_game import HEIGHT, WIDTH, island, sea, window
+from game_parts.window_game import HEIGHT, WIDTH, island, sea, window
 
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
 from gameObjects.player import Player
-from utils.sprite_direction import sprite_direction
 
 
 def init():
-    enemy_pirate_1 = Sprite("../assets/enemy1.png", 1)
-    enemy_pirate_2 = Sprite("../assets/enemy2.png", 1)
+    enemy_pirate_1 = Sprite("../assets/enemy1.png")
+    enemy_pirate_2 = Sprite("../assets/enemy2.png")
     enemy_ship_1 = Sprite("../assets/enemy_ship1.png")
     enemy_ship_2 = Sprite("../assets/enemy_ship2.png")
+    chest = Sprite("../assets/chest.png")
 
-    # enemy_ship_1.x = 5 * WIDTH / 6
-    # enemy_ship_1.y = island.x / 2 - 40
+    enemy_ship_1.x = 5 * WIDTH / 6
+    enemy_ship_1.y = island.x / 2 - 40
     # enemy_ship_2.x = island.x / 2 - 40
     # enemy_ship_2.y = 5 * HEIGHT / 7 
     # enemy_pirate_1.x = island.x + island.width / 2 
     # enemy_pirate_1.y = island.y + 50
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
+    chest.x = island.x + island.x / 2 + island.x / 6
+    chest.y = island.y + island.y / 2
 
     # ----------------- Player  ----------------
 
@@ -67,6 +68,10 @@ def init():
     circle_NE_x, circle_NE_y = cannon_NE_rect.x + (cannon_NE.get_sprite().width / 4) - 2, cannon_NE_rect.y + cannon_NE.get_sprite().height - 4 
     circle_NE = Contact_circle(circle_NE_x, circle_NE_y, circle_size, circle_thickness, circle_color)
 
+    # ------------ Cannon ball chest -----------
+
+
+
     # ------------------------------------------
 
     delta_time = 0
@@ -82,7 +87,7 @@ def init():
         island.draw()
 
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 4 + 100, HEIGHT - 40, 30)
-        window.draw_text('Life: ' + str(100), WIDTH / 2 + 100, HEIGHT - 40, 30)
+        window.draw_text('Life: ' + str(100), WIDTH / 2 + 150, HEIGHT - 40, 30)
         # ------------- Player interactions -------------
     
         player.movement()
@@ -96,6 +101,9 @@ def init():
         if player.get_sprite().collided(circle_NE.draw()):
             cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_NE.control(player, cannon_shot_timer, "DOWN", "UP")
         
+        if player.get_sprite().collided(chest):
+            player.reload_chest()
+
         # ---------- Dinamic Renderizations -------------
        
         cannon_N.render_shots(delta_time)
@@ -112,6 +120,7 @@ def init():
         enemy_pirate_2.draw()
         enemy_ship_1.draw()
         enemy_ship_2.draw()
+        chest.draw()
 
         #  ----------------------------------------------
 

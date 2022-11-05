@@ -7,7 +7,7 @@ from PPlay.keyboard import Keyboard
 keyboard = Keyboard()
 
 sys.path.insert(0, os.path.abspath("../../")) # src/
-from src.pages.game_parts.window_game import island
+from src.pages.game_parts.window_game import HEIGHT, WIDTH, island, window
 from src.utils.sprite_direction import sprite_direction
 
 
@@ -20,6 +20,9 @@ class Player:
     def reduce_cannon_ammo(self):
         if self.cannon_ammo > 0:
             self.cannon_ammo -= 1
+
+    def set_cannon_ammo(self, cannon_ammo):
+        self.cannon_ammo = cannon_ammo
 
     def get_cannon_ammo(self):
         return self.cannon_ammo
@@ -56,3 +59,12 @@ class Player:
             self.sprite.x += 0.5
 
         self.player_direction()
+
+    def reload_chest(self):
+        font = pygame.font.SysFont("Arial", 30, False, False)
+        text = font.render("Press R to reload", False, (0,0,0))
+        text_rect = text.get_rect(center=(WIDTH/2, HEIGHT - 100))
+        window.get_screen().blit(text, text_rect)
+        
+        if keyboard.key_pressed("R"):
+            self.set_cannon_ammo(3)
