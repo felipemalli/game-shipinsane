@@ -31,23 +31,28 @@ class Cannon:
     def get_img_rect(self):
         return self.image, self.rect
 
+    def get_sprite(self):
+        return self.sprite
+
     def rot_center(self):
         rot_image = pygame.transform.rotate(self.image, self.angle)
         rot_rect = rot_image.get_rect(center=self.rect.center)
+        self.sprite.x = rot_rect.x
+        self.sprite.y = rot_rect.y
         return rot_image,rot_rect
 
     def move_clockwise(self):
-        if self.angle > -60:
+        if self.angle > -45:
             self.angle -= 0.35
         return self.rot_center()
 
     def move_anticlockwise(self):
-        if self.angle < 60:
+        if self.angle < 45:
             self.angle += 0.35
         return self.rot_center()
 
     def shot(self):
-        shot_speed = 0.5
+        shot_speed = 0.7
         cannon_ball = Cannon_ball(shot_speed, self)
         self.cannon_ball_list.append(cannon_ball)
 
