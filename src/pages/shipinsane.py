@@ -1,9 +1,11 @@
 import os
 import sys
 
+import pygame
 from PPlay.sprite import Sprite
 from PPlay.window import Window
 
+from game_parts.cannon_controls import cannon_controls
 from game_parts.player_movement import player_movement
 
 sys.path.insert(0, os.path.abspath("../")) # src/
@@ -54,7 +56,7 @@ def init():
 
     # ----------------- Player  ----------------
 
-    player = sprite_direction('../assets/', 'player', 'NE', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
+    player = sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
 
     # ----------- Cannons of island  -----------
 
@@ -72,53 +74,60 @@ def init():
 
     # ------------------------------------------
 
-    cooldown_time = 0.5
-    shot_cooldown = cooldown_time
+    cannon_shot_timer = 0
+    
+    circle_color, circle_size, circle_thickness = (160, 160, 160), 12, 1
+    circle_N_x = cannon_N_rect.x + (cannon_N.get_sprite().width / 2)
+    circle_N_y = cannon_N_rect.y + cannon_N.get_sprite().height
+    circle_S_x = cannon_S_rect.x + (cannon_S.get_sprite().width / 2)
+    circle_S_y = cannon_S_rect.y - cannon_S.get_sprite().height / 12
+    circle_W_x = cannon_W_rect.x + (cannon_W.get_sprite().width) + 4
+    circle_W_y = cannon_W_rect.y + cannon_W.get_sprite().height / 2 + 5
+    circle_NE_x = cannon_NE_rect.x + (cannon_NE.get_sprite().width / 4) - 2
+    circle_NE_y = cannon_NE_rect.y + cannon_NE.get_sprite().height - 4
 
     while(True):
+        if cannon_shot_timer >= 0: cannon_shot_timer -= window.delta_time()
+
+        # ----------- Initial Renderizations ------------
+
         sea.draw()
         island.draw()
+        circle_N = pygame.draw.circle(window.get_screen(), circle_color, [circle_N_x, circle_N_y], circle_size, circle_thickness)
+        circle_S = pygame.draw.circle(window.get_screen(), circle_color, [circle_S_x, circle_S_y], circle_size, circle_thickness)
+        circle_W = pygame.draw.circle(window.get_screen(), circle_color, [circle_W_x, circle_W_y], circle_size, circle_thickness)
+        circle_NE = pygame.draw.circle(window.get_screen(), circle_color, [circle_NE_x, circle_NE_y], circle_size, circle_thickness)
+
+        # ------------- Player interactions -------------
 
         player = player_movement(player, island)
+
+        if player.collided(circle_N):
+            cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_controls(cannon_N, cannon_N_img, cannon_N_rect, cannon_shot_timer, "RIGHT", "LEFT")
+        if player.collided(circle_S):
+            cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_controls(cannon_S, cannon_S_img, cannon_S_rect, cannon_shot_timer, "LEFT", "RIGHT")
+        if player.collided(circle_W):
+            cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_controls(cannon_W, cannon_W_img, cannon_W_rect, cannon_shot_timer, "UP", "DOWN")
+        if player.collided(circle_NE):
+            cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_controls(cannon_NE, cannon_NE_img, cannon_NE_rect, cannon_shot_timer, "DOWN", "UP")
         
-        if keyboard.key_pressed("LEFT"):
-            cannon_N_img, cannon_N_rect = cannon_N.move_anticlockwise()
-            cannon_S_img, cannon_S_rect = cannon_S.move_anticlockwise()
-            cannon_W_img, cannon_W_rect = cannon_W.move_anticlockwise()
-            cannon_NE_img, cannon_NE_rect = cannon_NE.move_anticlockwise()
-
-        if keyboard.key_pressed("RIGHT"):
-            cannon_N_img, cannon_N_rect = cannon_N.move_clockwise()
-            cannon_S_img, cannon_S_rect = cannon_S.move_clockwise()
-            cannon_W_img, cannon_W_rect = cannon_W.move_clockwise()
-            cannon_NE_img, cannon_NE_rect = cannon_NE.move_clockwise()
-
-        if keyboard.key_pressed("SPACE") and shot_cooldown < 0:
-            shot_cooldown = cooldown_time
-            cannon_N.shot()
-            cannon_S.shot()
-            cannon_W.shot()
-            cannon_NE.shot()        
-
+        # --------------- Renderizations ----------------
+       
         cannon_N.render_shots()
         window.get_screen().blit(cannon_N_img, cannon_N_rect)
-
-        window.get_screen().blit(cannon_S_img, cannon_S_rect)
-        cannon_S.render_shots()    
-
         cannon_W.render_shots()
         window.get_screen().blit(cannon_W_img, cannon_W_rect)
-
         cannon_NE.render_shots()
         window.get_screen().blit(cannon_NE_img, cannon_NE_rect)
-
-        if shot_cooldown > 0:
-            shot_cooldown -= window.delta_time()
-
-        # enemy_pirate_1.draw()
-        # enemy_pirate_2.draw()
-        # enemy_ship_1.draw()
-        # enemy_ship_2.draw()
         player.draw()
+        window.get_screen().blit(cannon_S_img, cannon_S_rect)
+        cannon_S.render_shots()
+
+        enemy_pirate_1.draw()
+        enemy_pirate_2.draw()
+        enemy_ship_1.draw()
+        enemy_ship_2.draw()
+
+        #  ----------------------------------------------
+
         window.update()
-        window.set_background_color([0, 0, 0,])
