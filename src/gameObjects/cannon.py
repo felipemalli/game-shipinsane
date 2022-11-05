@@ -5,7 +5,7 @@ from .cannon_ball import Cannon_ball
 
 
 class Cannon:
-    def __init__(self, sprite, x, y):
+    def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
 
         self.cannon_spt = sprite
@@ -16,10 +16,14 @@ class Cannon:
         self.rect = self.cannon_spt.image.get_rect()
         self.rect.center=(self.cannon_spt.x - (self.cannon_spt.width / 2), self.cannon_spt.y + (self.cannon_spt.height / 2))
 
+        self.initial_angle = initial_angle
         self.angle = 0
 
-    def get_angle(self):
+    def get_relative_angle(self):
         return self.angle
+
+    def get_absolute_angle(self):
+        return self.initial_angle + self.angle
 
     def get_rect(self):
         return self.rect
@@ -43,12 +47,11 @@ class Cannon:
         return self.rot_center()
 
     def shot(self):
-        shot_speed = 1
+        shot_speed = 0.5
         cannon_ball = Cannon_ball(shot_speed, self)
         self.cannon_ball_list.append(cannon_ball)
 
     def remove_cannon_ball(self, cannon_ball):
-        print(cannon_ball)
         self.cannon_ball_list.remove(cannon_ball)
 
     def render_shots(self):
