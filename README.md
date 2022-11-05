@@ -11,7 +11,7 @@ Projeto de um jogo de piratas desenvolvido em Python.
 git clone git@github.com:felipemalli/game-shipinsane.git
 ```
 
-2- Inicialize a máquina virtual:
+2- Ative a máquina virtual:
 ```sh
 python3 -m venv .venv && source .venv/bin/activate
 ```
