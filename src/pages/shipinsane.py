@@ -3,10 +3,10 @@ import sys
 
 import pygame
 from PPlay.sprite import Sprite
-from PPlay.window import Window
 
 from game_parts.cannon_controls import cannon_controls
 from game_parts.player_movement import player_movement
+from pages.game_parts.window_game import island, sea, window
 
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
@@ -15,22 +15,10 @@ from utils.sprite_direction import sprite_direction
 
 
 def init():
-    WIDTH, HEIGHT = 1920, 1080
-    window = Window(WIDTH, HEIGHT)
-    window.set_title("ShipInsane")
-    window.set_background_color([0, 0, 0])
-
-    island = Sprite("../assets/island2.png", 1)
-    sea = Sprite("../assets/mar.png", 1)
     enemy_pirate_1 = Sprite("../assets/enemy1.png", 1)
     enemy_pirate_2 = Sprite("../assets/enemy2.png", 1)
     enemy_ship_1 = Sprite("../assets/enemy_ship1.png")
     enemy_ship_2 = Sprite("../assets/enemy_ship2.png")
-
-    keyboard = Window.get_keyboard()
-
-    island.x = WIDTH / 2 - island.width / 2
-    island.y = HEIGHT / 2 - island.height / 2
 
     # enemy_ship_1.x = 5 * WIDTH / 6
     # enemy_ship_1.y = island.x / 2 - 40
@@ -41,18 +29,6 @@ def init():
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
     # player = Sprite("../assets/player_NE.png", 1)
-
-    # cannon1.x = island.x + island.width / 2 - 15
-    # cannon1.y = island.y + 10
-
-    # cannon2.x = island.x + island.width / 2 + 130
-    # cannon2.y = island.y + island.height / 2 - 70
-
-    # cannon3.x = island.x + island.width / 2 - 50
-    # cannon3.y = island.y + island.height - 50  
-
-    # cannon4.x = island.x
-    # cannon4.y = island.y + island.height / 2
 
     # ----------------- Player  ----------------
 
