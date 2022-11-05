@@ -1,5 +1,8 @@
 import pygame
+from PPlay.keyboard import Keyboard
 from PPlay.sprite import Sprite
+
+keyboard = Keyboard()
 
 from .cannon_ball import Cannon_ball
 
@@ -7,6 +10,7 @@ from .cannon_ball import Cannon_ball
 class Cannon:
     def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
+        self.shot_cooldown = 1
 
         self.sprite = sprite
         self.sprite.x = x
@@ -39,7 +43,7 @@ class Cannon:
         rot_rect = rot_image.get_rect(center=self.rect.center)
         self.sprite.x = rot_rect.x
         self.sprite.y = rot_rect.y
-        return rot_image,rot_rect
+        return rot_image, rot_rect
 
     def move_clockwise(self):
         if self.angle > -50:
@@ -63,6 +67,21 @@ class Cannon:
         for cannon_ball in self.cannon_ball_list:
             cannon_ball.draw()
             cannon_ball.move_with_angle()
+
+    def control(self, shot_timer, clockwise_key, anticlockwise_key):
+        rot_image, rot_rect = self.rot_center()
+
+        if keyboard.key_pressed(clockwise_key):
+            rot_image, rot_rect = self.move_clockwise()
+
+        if keyboard.key_pressed(anticlockwise_key):
+            rot_image, rot_rect = self.move_anticlockwise()
+
+        if keyboard.key_pressed("SPACE") and shot_timer < 0:
+            self.shot()
+            return self.shot_cooldown, rot_image, rot_rect
+        
+        return shot_timer, rot_image, rot_rect
 
         # if pygame.sprite.collide_mask(cannon_ball.cannon_ball_spt, self.island):
         #     print('colidiu')

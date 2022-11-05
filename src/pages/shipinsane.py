@@ -4,7 +4,6 @@ import sys
 import pygame
 from PPlay.sprite import Sprite
 
-from game_parts.cannon_controls import cannon_controls
 from game_parts.player_movement import player_movement
 from pages.game_parts.window_game import island, sea, window
 
@@ -80,13 +79,13 @@ def init():
         player = player_movement(player, island)
 
         if player.collided(circle_N.draw()):
-            cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_controls(cannon_N, cannon_N_img, cannon_N_rect, cannon_shot_timer, "RIGHT", "LEFT")
+            cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_N.control(cannon_shot_timer, "RIGHT", "LEFT")
         if player.collided(circle_S.draw()):
-            cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_controls(cannon_S, cannon_S_img, cannon_S_rect, cannon_shot_timer, "LEFT", "RIGHT")
+            cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_S.control(cannon_shot_timer, "LEFT", "RIGHT")
         if player.collided(circle_W.draw()):
-            cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_controls(cannon_W, cannon_W_img, cannon_W_rect, cannon_shot_timer, "UP", "DOWN")
+            cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_W.control(cannon_shot_timer, "UP", "DOWN")
         if player.collided(circle_NE.draw()):
-            cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_controls(cannon_NE, cannon_NE_img, cannon_NE_rect, cannon_shot_timer, "DOWN", "UP")
+            cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_NE.control(cannon_shot_timer, "DOWN", "UP")
         
         # ---------- Dinamic Renderizations -------------
        
