@@ -43,9 +43,3 @@ def player_movement(player, island):
         player.x += 0.5
 
     return player
-
-
-    if pygame.sprite.collide_mask(cannon_ball.cannon_ball_spt, self.island):
-        print('colidiu')
-    else:
-        print('nao')
