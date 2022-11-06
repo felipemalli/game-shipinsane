@@ -17,7 +17,6 @@ def init():
     enemy_pirate_2 = Sprite("../assets/enemy2.png")
     enemy_ship_1 = Sprite("../assets/enemy_ship1.png")
     enemy_ship_2 = Sprite("../assets/enemy_ship2.png")
-    chest = Sprite("../assets/chest.png")
 
     enemy_ship_1.x = 5 * WIDTH / 6
     enemy_ship_1.y = island.x / 2 - 40
@@ -27,14 +26,10 @@ def init():
     # enemy_pirate_1.y = island.y + 50
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
-    chest.x = island.x + island.x / 2 + island.x / 6
-    chest.y = island.y + island.y / 2
 
     # ----------------- Player  ----------------
 
-    # player = sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
-
-    player = Player()
+    player = Player(island)
 
     # ----------- Cannons of island  -----------
 
@@ -70,7 +65,9 @@ def init():
 
     # ------------ Cannon ball chest -----------
 
-
+    chest = Sprite("../assets/chest.png")
+    chest.x = island.x + island.x / 2 + island.x / 6
+    chest.y = island.y + island.y / 2
 
     # ------------------------------------------
 
@@ -83,14 +80,13 @@ def init():
 
         # ----------- Static Renderizations ------------
 
+        player.movement()
         sea.draw()
         island.draw()
 
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 4 + 100, HEIGHT - 40, 30)
         window.draw_text('Life: ' + str(100), WIDTH / 2 + 150, HEIGHT - 40, 30)
         # ------------- Player interactions -------------
-    
-        player.movement()
 
         if player.get_sprite().collided(circle_N.draw()):
             cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_N.control(player, cannon_shot_timer, "RIGHT", "LEFT")
@@ -115,13 +111,13 @@ def init():
         player.get_sprite().draw()
         window.get_screen().blit(cannon_S_img, cannon_S_rect)
         cannon_S.render_shots(delta_time)
+        chest.draw()
 
         enemy_pirate_1.draw()
         enemy_pirate_2.draw()
         enemy_ship_1.draw()
         enemy_ship_2.draw()
-        chest.draw()
-
+        
         #  ----------------------------------------------
 
         window.update()
