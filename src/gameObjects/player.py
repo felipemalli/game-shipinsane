@@ -69,23 +69,40 @@ class Player:
             return True
 
     def block_if_outside_island(self, fake_sprite, key):
+        key_attribute = 'key_' + key
         if not pygame.sprite.collide_mask(fake_sprite.get_sprite(), self.island):
-            key_attribute = 'key_' + key
             setattr(self, key_attribute, 'blocked')
+            return True
+        else:
+            setattr(self, key_attribute, 'free')
+            return False
 
     def check_if_outside_island(self):
         fake_x = self.sprite.x
         fake_y = self.sprite.y
         fake_sprite = Player(self.island)
 
-        fake_sprite.get_sprite().y = fake_y
         fake_sprite.get_sprite().x = fake_x + 25
+        fake_sprite.get_sprite().y = fake_y
         fake_sprite.get_sprite().draw()
-        self.block_if_outside_island(fake_sprite, 'D')
+        is_outside = self.block_if_outside_island(fake_sprite, 'D')
+    
+        if not is_outside:
+            fake_sprite.get_sprite().x = fake_x + 25
+            fake_sprite.get_sprite().y = fake_y + 36
+            fake_sprite.get_sprite().draw()
+            self.block_if_outside_island(fake_sprite, 'D')
 
         fake_sprite.get_sprite().x = fake_x - 25
+        fake_sprite.get_sprite().y = fake_y
         fake_sprite.get_sprite().draw()
-        self.block_if_outside_island(fake_sprite, 'A')
+        is_outside = self.block_if_outside_island(fake_sprite, 'A')
+
+        if not is_outside:
+            fake_sprite.get_sprite().x = fake_x - 25
+            fake_sprite.get_sprite().y = fake_y + 36
+            fake_sprite.get_sprite().draw()
+            self.block_if_outside_island(fake_sprite, 'A')
 
         fake_sprite.get_sprite().x = fake_x
         fake_sprite.get_sprite().y = fake_y - 5
@@ -96,13 +113,6 @@ class Player:
         fake_sprite.get_sprite().y = fake_y + 38
         fake_sprite.get_sprite().draw()
         self.block_if_outside_island(fake_sprite, 'S')
-
-
-    def check_if_inside_island(self):
-        if self.key_W == 'blocked' and self.is_inside_island(): self.key_W = 'free'
-        if self.key_A == 'blocked' and self.is_inside_island(): self.key_A = 'free'
-        if self.key_S == 'blocked' and self.is_inside_island(): self.key_S = 'free'
-        if self.key_D == 'blocked' and self.is_inside_island(): self.key_D = 'free'
         
     def movement(self):
         if keyboard.key_pressed("W") and self.key_W == 'free':
@@ -119,7 +129,6 @@ class Player:
             self.check_if_outside_island()
         
         self.player_direction()
-        self.check_if_inside_island()
 
     def reload_chest(self):
         font = pygame.font.SysFont("Arial", 30, False, False)
