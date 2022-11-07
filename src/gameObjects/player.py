@@ -19,7 +19,6 @@ class Player:
         self.cannon_ammo = 3
         self.speed = 100
         self.life = 100
-
         self.key_W = 'free'
         self.key_A = 'free'
         self.key_S = 'free'
@@ -27,22 +26,16 @@ class Player:
 
     def get_island(self):
         return self.island
-
     def get_sprite(self):
         return self.sprite
-
     def set_sprite(self, sprite):
         self.sprite = sprite
-
     def get_cannon_ammo(self):
         return self.cannon_ammo
-
     def get_speed(self):
         return self.speed
-
     def set_sprite_x(self, x):
         self.sprite.x = x
-
     def set_sprite_y(self, y):
         self.sprite.y = y
 
