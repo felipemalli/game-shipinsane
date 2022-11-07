@@ -80,7 +80,7 @@ def init():
 
         # ----------- Static Renderizations ------------
 
-        player.movement()
+        player.movement(delta_time)
         sea.draw()
         island.draw()
 
