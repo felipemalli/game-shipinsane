@@ -78,8 +78,3 @@ class Cannon:
             return self.shot_cooldown, rot_image, rot_rect
         
         return shot_timer, rot_image, rot_rect
-
-        # if pygame.sprite.collide_mask(cannon_ball.cannon_ball_spt, self.island):
-        #     print('colidiu')
-        # else:
-        #     print('nao')
