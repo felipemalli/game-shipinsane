@@ -23,20 +23,16 @@ class Cannon:
         self.initial_angle = initial_angle
         self.angle = 0
 
-    def get_relative_angle(self):
-        return self.angle
-
-    def get_absolute_angle(self):
-        return self.initial_angle + self.angle
-
-    def get_rect(self):
-        return self.rect
-
-    def get_img_rect(self):
-        return self.image, self.rect
-
     def get_sprite(self):
         return self.sprite
+    def get_relative_angle(self):
+        return self.angle
+    def get_absolute_angle(self):
+        return self.initial_angle + self.angle
+    def get_rect(self):
+        return self.rect
+    def get_img_rect(self):
+        return self.image, self.rect
 
     def rot_center(self):
         rot_image = pygame.transform.rotate(self.image, self.angle)
