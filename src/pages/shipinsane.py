@@ -98,7 +98,7 @@ def init():
             cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_NE.control(player, cannon_shot_timer, "DOWN", "UP")
         
         if player.get_sprite().collided(chest):
-            player.reload_chest()
+            player.reload_ammo()
 
         # ---------- Dinamic Renderizations -------------
        

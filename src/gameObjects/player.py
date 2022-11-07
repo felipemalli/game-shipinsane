@@ -72,10 +72,8 @@ class Player:
         key_attribute = 'key_' + key
         if not pygame.sprite.collide_mask(fake_sprite.get_sprite(), self.island):
             setattr(self, key_attribute, 'blocked')
-            return True
         else:
             setattr(self, key_attribute, 'free')
-            return False
 
     def check_if_outside_island(self):
         fake_x = self.sprite.x
@@ -85,9 +83,9 @@ class Player:
         fake_sprite.get_sprite().x = fake_x + 25
         fake_sprite.get_sprite().y = fake_y
         fake_sprite.get_sprite().draw()
-        is_outside = self.block_if_outside_island(fake_sprite, 'D')
+        self.block_if_outside_island(fake_sprite, 'D')
     
-        if not is_outside:
+        if self.key_D == 'free':
             fake_sprite.get_sprite().x = fake_x + 25
             fake_sprite.get_sprite().y = fake_y + 36
             fake_sprite.get_sprite().draw()
@@ -96,9 +94,9 @@ class Player:
         fake_sprite.get_sprite().x = fake_x - 25
         fake_sprite.get_sprite().y = fake_y
         fake_sprite.get_sprite().draw()
-        is_outside = self.block_if_outside_island(fake_sprite, 'A')
+        self.block_if_outside_island(fake_sprite, 'A')
 
-        if not is_outside:
+        if self.key_A == 'free':
             fake_sprite.get_sprite().x = fake_x - 25
             fake_sprite.get_sprite().y = fake_y + 36
             fake_sprite.get_sprite().draw()
@@ -130,7 +128,7 @@ class Player:
         
         self.player_direction()
 
-    def reload_chest(self):
+    def reload_ammo(self):
         font = pygame.font.SysFont("Arial", 30, False, False)
         text = font.render("Press R to reload", False, (0,0,0))
         text_rect = text.get_rect(center=(WIDTH/2, HEIGHT - 100))
