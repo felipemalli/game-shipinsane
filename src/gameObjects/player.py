@@ -68,49 +68,32 @@ class Player:
         if pygame.sprite.collide_mask(self.sprite, self.island):
             return True
 
-    def block_if_outside_island(self, fake_sprite, key):
+    def block_if_outside_island(self, sprite, key):
         key_attribute = 'key_' + key
-        if not pygame.sprite.collide_mask(fake_sprite.get_sprite(), self.island):
+        if not pygame.sprite.collide_mask(sprite.get_sprite(), self.island):
             setattr(self, key_attribute, 'blocked')
         else:
             setattr(self, key_attribute, 'free')
 
+    def test_next_position(self, mirror_sprite, key_to_block, actual_x, plus_x, actual_y, plus_y):
+        mirror_sprite.get_sprite().x = actual_x + plus_x
+        mirror_sprite.get_sprite().y = actual_y + plus_y
+        mirror_sprite.get_sprite().draw()
+        self.block_if_outside_island(mirror_sprite, key_to_block)
+
     def check_if_outside_island(self):
-        fake_x = self.sprite.x
-        fake_y = self.sprite.y
-        fake_sprite = Player(self.island)
+        actual_x = self.sprite.x
+        actual_y = self.sprite.y
+        mirror_sprite = Player(self.island)
 
-        fake_sprite.get_sprite().x = fake_x + 25
-        fake_sprite.get_sprite().y = fake_y
-        fake_sprite.get_sprite().draw()
-        self.block_if_outside_island(fake_sprite, 'D')
-    
+        self.test_next_position(mirror_sprite, 'D', actual_x, 25, actual_y, 0)
         if self.key_D == 'free':
-            fake_sprite.get_sprite().x = fake_x + 25
-            fake_sprite.get_sprite().y = fake_y + 36
-            fake_sprite.get_sprite().draw()
-            self.block_if_outside_island(fake_sprite, 'D')
-
-        fake_sprite.get_sprite().x = fake_x - 25
-        fake_sprite.get_sprite().y = fake_y
-        fake_sprite.get_sprite().draw()
-        self.block_if_outside_island(fake_sprite, 'A')
-
+            self.test_next_position(mirror_sprite, 'D', actual_x, 25, actual_y, 36) 
+        self.test_next_position(mirror_sprite, 'A', actual_x, -25, actual_y, 0)
         if self.key_A == 'free':
-            fake_sprite.get_sprite().x = fake_x - 25
-            fake_sprite.get_sprite().y = fake_y + 36
-            fake_sprite.get_sprite().draw()
-            self.block_if_outside_island(fake_sprite, 'A')
-
-        fake_sprite.get_sprite().x = fake_x
-        fake_sprite.get_sprite().y = fake_y - 5
-        fake_sprite.get_sprite().draw()
-        self.block_if_outside_island(fake_sprite, 'W')
-
-        fake_sprite.get_sprite().x = fake_x
-        fake_sprite.get_sprite().y = fake_y + 38
-        fake_sprite.get_sprite().draw()
-        self.block_if_outside_island(fake_sprite, 'S')
+            self.test_next_position(mirror_sprite, 'A', actual_x, -25, actual_y, 36)
+        self.test_next_position(mirror_sprite, 'W', actual_x, 0, actual_y, -5)
+        self.test_next_position(mirror_sprite, 'S', actual_x, 0, actual_y, 38)
         
     def movement(self):
         if keyboard.key_pressed("W") and self.key_W == 'free':
