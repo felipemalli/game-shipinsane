@@ -32,6 +32,8 @@ class Player:
         self.sprite = sprite
     def get_cannon_ammo(self):
         return self.cannon_ammo
+    def set_cannon_ammo(self, cannon_ammo):
+        self.cannon_ammo = cannon_ammo
     def get_speed(self):
         return self.speed
     def set_sprite_x(self, x):
