@@ -3,7 +3,6 @@ import sys
 
 import pygame
 from PPlay.keyboard import Keyboard
-from PPlay.sprite import Sprite
 
 keyboard = Keyboard()
 
