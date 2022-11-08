@@ -2,7 +2,6 @@ import pygame
 from PPlay.keyboard import Keyboard
 
 from .cannon_ball import Cannon_ball
-from .player import Player
 
 keyboard = Keyboard()
 
