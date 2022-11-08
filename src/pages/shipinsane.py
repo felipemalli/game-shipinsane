@@ -9,19 +9,15 @@ from game_parts.window_game import HEIGHT, WIDTH, island, sea, window
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
+from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.player import Player
+from gameObjects.ship import Ship
 
 
 def init():
-    enemy_pirate_1 = Sprite("../assets/enemy1.png")
-    enemy_pirate_2 = Sprite("../assets/enemy2.png")
-    enemy_ship_1 = Sprite("../assets/enemy_ship1.png")
-    enemy_ship_2 = Sprite("../assets/enemy_ship2.png")
+    # enemy_pirate_1 = Sprite("../assets/enemy1.png")
+    # enemy_pirate_2 = Sprite("../assets/enemy2.png")
 
-    enemy_ship_1.x = 5 * WIDTH / 6
-    enemy_ship_1.y = island.x / 2 - 40
-    # enemy_ship_2.x = island.x / 2 - 40
-    # enemy_ship_2.y = 5 * HEIGHT / 7 
     # enemy_pirate_1.x = island.x + island.width / 2 
     # enemy_pirate_1.y = island.y + 50
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
@@ -69,6 +65,10 @@ def init():
     chest.x = island.x + island.x / 2 + island.x / 6
     chest.y = island.y + island.y / 2
 
+    # -------------- Fleet_of_ships ------------
+
+    fleet_of_ships = Fleet_of_ships(island)
+
     # ------------------------------------------
 
     delta_time = 0
@@ -86,6 +86,11 @@ def init():
 
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 4 + 100, HEIGHT - 40, 30)
         window.draw_text('Life: ' + str(100), WIDTH / 2 + 150, HEIGHT - 40, 30)
+
+        # -------------- Enemy generation ---------------
+
+        fleet_of_ships.generate_enemy_ships(delta_time)
+
         # ------------- Player interactions -------------
 
         if player.get_sprite().collided(circle_N.draw()):
@@ -112,12 +117,11 @@ def init():
         window.get_screen().blit(cannon_S_img, cannon_S_rect)
         cannon_S.render_shots(delta_time)
         chest.draw()
+        fleet_of_ships.render_ships(delta_time)
 
-        enemy_pirate_1.draw()
-        enemy_pirate_2.draw()
-        enemy_ship_1.draw()
-        enemy_ship_2.draw()
-        
+        # enemy_pirate_1.draw()
+        # enemy_pirate_2.draw()
+
         #  ----------------------------------------------
 
         window.update()
