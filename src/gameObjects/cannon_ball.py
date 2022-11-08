@@ -1,6 +1,11 @@
 import math
+import os
+import sys
 
 from PPlay.sprite import Sprite
+
+sys.path.insert(0, os.path.abspath("../../")) # src/
+from src.pages.game_parts.window_game import HEIGHT, WIDTH
 
 
 class Cannon_ball:
@@ -19,7 +24,6 @@ class Cannon_ball:
         self.sprite.draw()
 
     def is_out_of_screen(self):
-        WIDTH, HEIGHT = 1920, 1080
         if self.sprite.y + self.sprite.height < 0 or self.sprite.y > HEIGHT:
             return True
         if self.sprite.x < 0 or self.sprite.x > WIDTH:
