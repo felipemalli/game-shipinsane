@@ -8,14 +8,14 @@ keyboard = Keyboard()
 
 sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from src.utils.sprite_direction import sprite_direction
+from src.utils.sprite_utilities import Sprite_utils
 
 
 class Player:
     def __init__(self, island):
         self.island = island
         self.hitbox = pygame.Rect(0, 0, 0, 0)
-        self.sprite = sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
+        self.sprite = Sprite_utils.sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
         self.cannon_ammo = 3
         self.speed = 100
         self.life = 100
@@ -55,21 +55,21 @@ class Player:
 
     def player_direction(self):
         if keyboard.key_pressed("W") and keyboard.key_pressed("D"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'NE', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'NE', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("S") and keyboard.key_pressed("D"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'SE', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'SE', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("S") and keyboard.key_pressed("A"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'SW', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'SW', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("W") and keyboard.key_pressed("A"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'NW', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'NW', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("W"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'N', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'N', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("A"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'W', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'W', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("S"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'S', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'S', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("D"):
-            self.set_sprite(sprite_direction('../assets/', 'player', 'E', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'E', self.get_sprite().x, self.get_sprite().y))
 
     def is_inside_island(self):
         if pygame.sprite.collide_mask(self.get_sprite(), self.get_island()):

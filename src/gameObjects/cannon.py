@@ -2,6 +2,7 @@ import pygame
 from PPlay.keyboard import Keyboard
 
 from .cannon_ball import Cannon_ball
+from .fleet_of_ships import Fleet_of_ships
 
 keyboard = Keyboard()
 
@@ -61,6 +62,8 @@ class Cannon:
         for cannon_ball in self.cannon_ball_list:
             cannon_ball.draw()
             cannon_ball.move_with_angle(delta_time)
+            if self.sprite_collide_obj_list(cannon_ball.sprite, Fleet_of_ships.enemy_ships):
+                self.remove_cannon_ball(cannon_ball)
 
     def control(self, player_object, shot_timer, clockwise_key, anticlockwise_key):
         rot_image, rot_rect = self.rot_center()

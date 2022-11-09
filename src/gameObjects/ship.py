@@ -6,8 +6,7 @@ import pygame
 
 sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from src.utils.collide_mask_rect import collide_mask_rect
-from src.utils.sprite_direction import sprite_direction
+from src.utils.sprite_utilities import Sprite_utils
 
 
 class Ship:
@@ -18,7 +17,7 @@ class Ship:
         
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.direction = random.choice(['N', 'S', 'E', 'W'])
-        self.sprite = sprite_direction('../assets/', 'enemy_ship', self.direction)
+        self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
         self.set_position_out_of_screen()
 
         self.average_change_direction_speed = 100
@@ -28,6 +27,7 @@ class Ship:
     def draw(self):
         if self.direction == "E" or self.direction == "W":
             self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width - 30, self.sprite.height - 50)
+            self.hitbox.collidedictall
             pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
         elif self.direction == "N":
             self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 10, self.sprite.width, self.sprite.height - 10)
@@ -104,7 +104,7 @@ class Ship:
 
     def collide_with_island(self):
         # if pygame.sprite.collide_mask(self.sprite, self.island):
-        if collide_mask_rect(self.hitbox, self.island):
+        if Sprite_utils.collide_mask_rect(self.hitbox, self.island):
             return True
         return False
 

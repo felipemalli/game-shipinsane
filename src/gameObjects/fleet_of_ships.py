@@ -4,9 +4,11 @@ from .ship import Ship
 
 
 class Fleet_of_ships:
-    def __init__(self, island, max_count = 10, average_spawn_speed = 400, enemy_ship_life = 100, enemy_ship_speed = 25):
+    enemy_ships = []
+
+    def __init__(self, island, max_count = 10, average_spawn_speed = 400, enemy_ship_life = 100, enemy_ship_speed = 100):
         self.island = island
-        self.enemy_ships = []
+        # self.enemy_ships = []
         self.max_count = max_count
         self.enemy_ship_life = enemy_ship_life
         self.enemy_ship_speed = enemy_ship_speed
@@ -17,7 +19,7 @@ class Fleet_of_ships:
         self.next_ship_timer = self.next_ship_initial_timer
     
     def generate_enemy_ships(self, delta_time):
-        if len(self.enemy_ships) < self.max_count and self.next_ship_timer > 0:
+        if len(Fleet_of_ships.enemy_ships) < self.max_count and self.next_ship_timer > 0:
             self.next_ship_timer -= self.spawn_speed * delta_time
         
         if self.next_ship_timer <= 0:
@@ -27,11 +29,11 @@ class Fleet_of_ships:
 
     def create_enemy_ship(self):
         enemy_ship = Ship(self.island, self.enemy_ship_life, self.enemy_ship_speed)
-        self.enemy_ships.append(enemy_ship)
+        Fleet_of_ships.enemy_ships.append(enemy_ship)
+        print(Fleet_of_ships.enemy_ships)
 
     def render_ships(self, delta_time):
-        print(self.enemy_ships)
-        for enemy_ship in self.enemy_ships:
+        for enemy_ship in Fleet_of_ships.enemy_ships:
             enemy_ship.draw()
             enemy_ship.move(delta_time)
 
