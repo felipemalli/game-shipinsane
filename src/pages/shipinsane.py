@@ -93,16 +93,16 @@ def init():
 
         # ------------- Player interactions -------------
 
-        if player.get_sprite().collided(circle_N.draw()):
+        if player.get_hitbox().colliderect(circle_N.draw()):
             cannon_shot_timer, cannon_N_img, cannon_N_rect = cannon_N.control(player, cannon_shot_timer, "RIGHT", "LEFT")
-        if player.get_sprite().collided(circle_S.draw()):
+        if player.get_hitbox().colliderect(circle_S.draw()):
             cannon_shot_timer, cannon_S_img, cannon_S_rect = cannon_S.control(player, cannon_shot_timer, "LEFT", "RIGHT")
-        if player.get_sprite().collided(circle_W.draw()):
+        if player.get_hitbox().colliderect(circle_W.draw()):
             cannon_shot_timer, cannon_W_img, cannon_W_rect = cannon_W.control(player, cannon_shot_timer, "UP", "DOWN")
-        if player.get_sprite().collided(circle_NE.draw()):
+        if player.get_hitbox().colliderect(circle_NE.draw()):
             cannon_shot_timer, cannon_NE_img, cannon_NE_rect = cannon_NE.control(player, cannon_shot_timer, "DOWN", "UP")
         
-        if player.get_sprite().collided(chest):
+        if player.get_hitbox().colliderect(chest):
             player.reload_ammo()
 
         # ---------- Dinamic Renderizations -------------
@@ -113,11 +113,12 @@ def init():
         window.get_screen().blit(cannon_W_img, cannon_W_rect)
         cannon_NE.render_shots(delta_time)
         window.get_screen().blit(cannon_NE_img, cannon_NE_rect)
-        player.get_sprite().draw()
+        fleet_of_ships.render_ships(delta_time)
+        player.draw()
         window.get_screen().blit(cannon_S_img, cannon_S_rect)
         cannon_S.render_shots(delta_time)
         chest.draw()
-        fleet_of_ships.render_ships(delta_time)
+  
 
         # enemy_pirate_1.draw()
         # enemy_pirate_2.draw()

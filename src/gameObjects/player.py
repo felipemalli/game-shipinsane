@@ -14,6 +14,7 @@ from src.utils.sprite_direction import sprite_direction
 class Player:
     def __init__(self, island):
         self.island = island
+        self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.sprite = sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
         self.cannon_ammo = 3
         self.speed = 100
@@ -39,6 +40,14 @@ class Player:
         self.sprite.x = x
     def set_sprite_y(self, y):
         self.sprite.y = y
+
+    def get_hitbox(self):
+        return self.hitbox
+
+    def draw(self):
+        self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 20, self.sprite.width, self.sprite.height - 20)
+        # pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
+        self.sprite.draw()
 
     def reduce_cannon_ammo(self):
         if self.get_cannon_ammo() > 0:
