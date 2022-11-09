@@ -12,6 +12,7 @@ from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.player import Player
 from gameObjects.ship import Ship
+from gameObjects.lifebar import Life_Bar
 
 
 def init():
@@ -26,6 +27,14 @@ def init():
     # ----------------- Player  ----------------
 
     player = Player(island)
+
+    #------------------Player Lifebar-----------------
+    lifebar_player = Life_Bar(WIDTH/4 , HEIGHT - 100, player.life, 100, 1000, 30)
+    lifebar_mini = Life_Bar(player.sprite.x - player.sprite.width / 2, player.sprite.y - 13, player.life, 100, 50, 10)
+    img_heart = Sprite("../assets/heart_50x50.png")
+    img_heart.x = WIDTH / 4 - 50
+    img_heart.y = HEIGHT - 110
+
 
     # ----------- Cannons of island  -----------
 
@@ -83,6 +92,7 @@ def init():
         player.movement(delta_time)
         sea.draw()
         island.draw()
+        img_heart.draw()
 
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 4 + 100, HEIGHT - 40, 30)
         window.draw_text('Life: ' + str(100), WIDTH / 2 + 150, HEIGHT - 40, 30)
@@ -118,8 +128,13 @@ def init():
         window.get_screen().blit(cannon_S_img, cannon_S_rect)
         cannon_S.render_shots(delta_time)
         chest.draw()
-  
 
+        lifebar_player.actual = player.life 
+        lifebar_mini.center_x = player.sprite.x - player.sprite.width / 2
+        lifebar_mini.center_y = player.sprite.y - 13
+        lifebar_mini.actual = player.life
+        lifebar_player.draw()
+        lifebar_mini.draw()
         # enemy_pirate_1.draw()
         # enemy_pirate_2.draw()
 
