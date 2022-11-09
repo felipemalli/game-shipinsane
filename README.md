@@ -1,6 +1,4 @@
-# Shipinsane
-
-Projeto de um jogo desenvolvido em Python.
+# Game: Shipinsane
 
 Sobreviva em uma jangada ao enfrentar piratas em mares desconhecidos. A dificuldade
 aumentará conforme você sobrevive mais tempo, prepare-se para viver como um verdadeiro
