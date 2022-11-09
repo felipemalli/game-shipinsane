@@ -5,7 +5,7 @@ from PPlay.sprite import Sprite
 class Sprite_utils:
     
     @classmethod
-    def sprite_direction(relative_path, png_name, direction, x = None, y = None):
+    def sprite_direction(self, relative_path, png_name, direction, x = None, y = None):
         sprite_path = relative_path + png_name + '_' + direction + '.png'
         sprite = Sprite(sprite_path)
         if x and y:
@@ -15,7 +15,7 @@ class Sprite_utils:
         return sprite
 
     @classmethod
-    def collide_mask_rect(left, right):
+    def collide_mask_rect(self, left, right):
         xoffset = right.rect[0] - left.x
         yoffset = right.rect[1] - left.y
         try:
@@ -29,8 +29,8 @@ class Sprite_utils:
         return leftmask.overlap(rightmask, (xoffset, yoffset))
 
     @classmethod
-    def sprite_collide_obj_list(sprite, list):
+    def sprite_collide_obj_list(self, sprite, list):
         for list_object in list:
             if sprite.rect.colliderect(list_object.sprite.rect):
-                return True
+                return list_object
         return False

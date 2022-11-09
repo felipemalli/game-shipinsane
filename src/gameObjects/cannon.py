@@ -1,3 +1,6 @@
+import os
+import sys
+
 import pygame
 from PPlay.keyboard import Keyboard
 
@@ -5,6 +8,10 @@ from .cannon_ball import Cannon_ball
 from .fleet_of_ships import Fleet_of_ships
 
 keyboard = Keyboard()
+
+sys.path.insert(0, os.path.abspath("../../")) # src/
+from src.utils.sprite_utilities import Sprite_utils
+
 
 class Cannon:
     def __init__(self, initial_angle, sprite, x, y):
@@ -62,8 +69,11 @@ class Cannon:
         for cannon_ball in self.cannon_ball_list:
             cannon_ball.draw()
             cannon_ball.move_with_angle(delta_time)
-            if self.sprite_collide_obj_list(cannon_ball.sprite, Fleet_of_ships.enemy_ships):
+
+            ship = Sprite_utils.sprite_collide_obj_list(cannon_ball.sprite, Fleet_of_ships.enemy_ships)
+            if ship:
                 self.remove_cannon_ball(cannon_ball)
+                ship.reduce_life()
 
     def control(self, player_object, shot_timer, clockwise_key, anticlockwise_key):
         rot_image, rot_rect = self.rot_center()

@@ -24,6 +24,9 @@ class Ship:
         self.change_direction_initial_timer = 20
         self.change_direction_timer = self.change_direction_initial_timer
 
+    def reduce_life(self):
+        self.life -= 1
+
     def draw(self):
         if self.direction == "E" or self.direction == "W":
             self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width - 30, self.sprite.height - 50)

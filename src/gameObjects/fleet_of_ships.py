@@ -8,7 +8,6 @@ class Fleet_of_ships:
 
     def __init__(self, island, max_count = 10, average_spawn_speed = 400, enemy_ship_life = 100, enemy_ship_speed = 100):
         self.island = island
-        # self.enemy_ships = []
         self.max_count = max_count
         self.enemy_ship_life = enemy_ship_life
         self.enemy_ship_speed = enemy_ship_speed
