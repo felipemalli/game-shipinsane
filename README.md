@@ -13,7 +13,6 @@ navegador em um barco insano!
 Barcos piratas aparecerão ao redor do mapa atirando bolas de canhão em direção à ilha em que se encontra o jogador.
 O jogador deve desviar dos tiros e atirar nos barcos com os canhões da ilha. Caso o barco pirata encoste na ilha, piratas aparecerão para matá-lo, não deixe-os encostar!
 
-<br>
 
 ### Teclas:
 
