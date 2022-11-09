@@ -1,4 +1,4 @@
-# Game: Shipinsane
+# Game: Shipinsane [Em desenvolvimento...]
 
 Sobreviva em uma jangada ao enfrentar piratas em mares desconhecidos. A dificuldade
 aumentará conforme você sobrevive mais tempo, prepare-se para viver como um verdadeiro
@@ -14,13 +14,13 @@ O jogador deve desviar dos tiros e atirar nos barcos com os canhões da ilha. Ca
 
 ### Teclas:
 
-A W S D - Movimento do jogador
+W A S D - Movimento do jogador
 
 Espaço - Ataque corpo-a-corpo do jogador
 
 Setas - Movimento do canhão
 
-Espaço  - Atira com o canhão
+Espaço - Atira com o canhão
 
 R (no baú) - Recarrega o canhão
 
@@ -57,6 +57,7 @@ python3 ./menu.py
 <br>
 
 ## Equipe de desenvolvimento
+
 <div>
   <div>
     <img width="15" src="https://avatars.githubusercontent.com/u/88905074?v=4" alt="Felipe Vahia" />
