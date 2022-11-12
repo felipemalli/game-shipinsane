@@ -28,6 +28,14 @@ def init():
 
     player = Player(island)
 
+    #------------------Sea Sprites--------------------
+
+    image_sprite = [Sprite("../assets/sea0.png"),
+                    Sprite("../assets/sea1.png"),
+                    Sprite("../assets/sea2.png"),
+                    Sprite("../assets/sea3.png"),
+                    Sprite("../assets/sea4.png")]
+
     #------------------Player Lifebar-----------------
     lifebar_player = Life_Bar(WIDTH/4 , HEIGHT - 100, player.life, 100, 1000, 30)
     lifebar_mini = Life_Bar(player.sprite.x - player.sprite.width / 2, player.sprite.y - 13, player.life, 100, 50, 10)
@@ -82,7 +90,26 @@ def init():
 
     delta_time = 0
 
+    counter = 0
     while(True):
+
+        if (0 <= counter <= 50):
+            image_sprite[0].draw()
+        elif (51 <= counter <= 100):
+            image_sprite[1].draw()
+        elif (101 <= counter <= 150):
+            image_sprite[2].draw()
+        elif (151 <= counter <= 200):
+            image_sprite[3].draw()
+        else:
+            image_sprite[4].draw()
+        
+
+        counter += 1
+        
+        if counter >= 250:
+            counter = 0
+
         delta_time = window.delta_time()
 
         if cannon_shot_timer >= 0: cannon_shot_timer -= delta_time
@@ -90,7 +117,6 @@ def init():
         # ----------- Static Renderizations ------------
 
         player.movement(delta_time)
-        sea.draw()
         island.draw()
         img_heart.draw()
 
@@ -135,6 +161,8 @@ def init():
         lifebar_mini.actual = player.life
         lifebar_player.draw()
         lifebar_mini.draw()
+
+
         # enemy_pirate_1.draw()
         # enemy_pirate_2.draw()
 
