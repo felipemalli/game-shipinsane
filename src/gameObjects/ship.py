@@ -51,46 +51,49 @@ class Ship:
             pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
         self.sprite.draw()
 
-    """Initial position"""
-    def set_position_out_of_screen(self):
-        if self.direction == 'S': # coming from above
-            self.sprite.y = - self.sprite.height
-            self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
-            return
-        if self.direction == 'N': # coming from below
-            self.sprite.y = HEIGHT
-            self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
-            return
-        if self.direction == 'E': # coming from left
-            self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
-            self.sprite.x = - self.sprite.width
-            return
-        if self.direction == 'W': # coming from right
-            self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
-            self.sprite.x = WIDTH
-            return
+    # """Initial position with middle included"""
+    # def set_position_out_of_screen(self):
+    #     if self.direction == 'S': # coming from above
+    #         self.sprite.y = - self.sprite.height
+    #         self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
+    #         return
+    #     if self.direction == 'N': # coming from below
+    #         self.sprite.y = HEIGHT
+    #         self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
+    #         return
+    #     if self.direction == 'E': # coming from left
+    #         self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
+    #         self.sprite.x = - self.sprite.width
+    #         return
+    #     if self.direction == 'W': # coming from right
+    #         self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
+    #         self.sprite.x = WIDTH
+    #         return
 
-    """Initial position with middle not included
+    #Initial position with middle not included
     def set_position_out_of_screen(self):
-        side = random.choice('left or up', 'right or down')
+        side = random.choice(['left or up', 'right or down'])
+        space_ship_island = 50
         if self.direction == 'S': # coming from up
             self.sprite.y = - self.sprite.height
-            if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.x)
-            elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + self.sprite.x, WIDTH - self.sprite.width)
+            if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
+            elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
             return
         if self.direction == 'N': # coming from down
             self.sprite.y = HEIGHT
-            self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
+            if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
+            elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
             return
         if self.direction == 'E': # coming from left
-            self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
             self.sprite.x = - self.sprite.width
+            if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
+            elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
             return
         if self.direction == 'W': # coming from right
-            self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
             self.sprite.x = WIDTH
+            if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
+            elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
             return
-    """
 
     def is_close_to_S(self):
         if self.hitbox.y + self.hitbox.height > HEIGHT - self.close_value:
@@ -177,9 +180,6 @@ class Ship:
 
     def move(self, delta_time):
         if not self.collide_with_island():
-            # if self.about_to_leave_map():
-            print(self.is_close_to_below())
-                
 
             # if self.change_direction_timer > 0:
             #     self.change_direction_timer -= self.change_direction_speed * delta_time
