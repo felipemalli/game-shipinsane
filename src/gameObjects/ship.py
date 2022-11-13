@@ -28,6 +28,7 @@ class Ship:
         self.change_direction_initial_timer = 20
         self.change_direction_timer = self.change_direction_initial_timer
 
+        self.random_speed_variation = 10
         self.change_random_speed = 5
         self.random_speed_NS = 0
         self.random_speed_EW = 0
@@ -112,40 +113,40 @@ class Ship:
             return True
 
     def is_close_to_E(self):
-        if self.hitbox.x < self.close_value:
-            return True
-
-    def is_too_close_to_E(self):
-        if self.hitbox.x < self.too_close_value:  
-            return True
-
-    def is_close_to_W(self):
         if self.hitbox.x + self.hitbox.width > WIDTH - self.close_value:
             return True
 
-    def is_too_close_to_W(self):
+    def is_too_close_to_E(self):
         if self.hitbox.x + self.hitbox.width > WIDTH - self.too_close_value:  
             return True
 
-    # def random_speed_NS_possibility(self):
-    #     if (close_to_north() and (self.direction == 'E' or self.direction == 'W')):
-    #         return [3]
-    #     if (close_to_south() and (self.direction == 'E' or self.direction == 'W')):
-    #         return [-3]
-    #     return [-3, 3]
+    def is_close_to_W(self):
+        if self.hitbox.x < self.close_value:
+            return True
+
+    def is_too_close_to_W(self):
+        if self.hitbox.x < self.too_close_value:  
+            return True
+
+    def random_speed_NS_possibility(self):
+        if (self.is_too_close_to_N() and (self.direction == 'E' or self.direction == 'W')):
+            return [self.random_speed_variation]
+        if (self.is_too_close_to_S() and (self.direction == 'E' or self.direction == 'W')):
+            return [-self.random_speed_variation]
+        return [-self.random_speed_variation, self.random_speed_variation]
     
-    # def random_speed_EW_possibility(self):
-    #     if (close_to_east() and (self.direction == 'N' or self.direction == 'S')):
-    #         return [-3]
-    #     if (close_to_west() and (self.direction == 'N' or self.direction == 'S')):
-    #         return [3]
-    #     return [-3, 3]
+    def random_speed_EW_possibility(self):
+        if (self.is_too_close_to_E() and (self.direction == 'N' or self.direction == 'S')):
+            return [-self.random_speed_variation]
+        if (self.is_too_close_to_W() and (self.direction == 'N' or self.direction == 'S')):
+            return [self.random_speed_variation]
+        return [-self.random_speed_variation, self.random_speed_variation]
 
     def random_side_speed(self, delta_time):
         self.change_random_speed += (2* delta_time)
         if self.change_random_speed >= (10 + random.randint(-3, 3)):
-            self.random_speed_NS = random.choice([3, -3]) * delta_time
-            self.random_speed_EW = random.choice([3, -3]) * delta_time
+            self.random_speed_NS = random.choice(self.random_speed_NS_possibility()) * delta_time
+            self.random_speed_EW = random.choice(self.random_speed_EW_possibility()) * delta_time
             self.change_random_speed = 0
 
     def move_to_a_direction(self, direction, delta_time):
