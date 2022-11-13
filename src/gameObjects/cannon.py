@@ -70,10 +70,10 @@ class Cannon:
             cannon_ball.draw()
             cannon_ball.move_with_angle(delta_time)
 
-            ship = Sprite_utils.sprite_collide_obj_list(cannon_ball.sprite, Fleet_of_ships.enemy_ships)
-            if ship:
+            enemy_ship = Sprite_utils.sprite_collide_obj_list(cannon_ball.sprite, Fleet_of_ships.enemy_ships)
+            if enemy_ship:
                 self.remove_cannon_ball(cannon_ball)
-                ship.reduce_life()
+                enemy_ship.reduce_life()
 
     def control(self, player_object, shot_timer, clockwise_key, anticlockwise_key):
         rot_image, rot_rect = self.rot_center()
