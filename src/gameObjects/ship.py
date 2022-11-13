@@ -92,6 +92,38 @@ class Ship:
             return
     """
 
+    def is_close_to_S(self):
+        if self.hitbox.y + self.hitbox.height > HEIGHT - self.close_value:
+            return True
+
+    def is_too_close_to_S(self):
+        if self.hitbox.y + self.hitbox.height > HEIGHT - self.too_close_value:
+            return True
+
+    def is_close_to_N(self):
+        if self.hitbox.y < self.close_value:
+            return True
+
+    def is_too_close_to_N(self):
+        if self.hitbox.y < self.too_close_value:  
+            return True
+
+    def is_close_to_E(self):
+        if self.hitbox.x < self.close_value:
+            return True
+
+    def is_too_close_to_E(self):
+        if self.hitbox.x < self.too_close_value:  
+            return True
+
+    def is_close_to_W(self):
+        if self.hitbox.x + self.hitbox.width > WIDTH - self.close_value:
+            return True
+
+    def is_too_close_to_W(self):
+        if self.hitbox.x + self.hitbox.width > WIDTH - self.too_close_value:  
+            return True
+
     # def random_speed_NS_possibility(self):
     #     if (close_to_north() and (self.direction == 'E' or self.direction == 'W')):
     #         return [3]
