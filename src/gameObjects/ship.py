@@ -17,7 +17,8 @@ class Ship:
         self.speed = speed
         self.hitbox = pygame.Rect(0, 0, 0, 0)
 
-        self.direction = random.choice(['N', 'S', 'E', 'W'])
+        # self.direction = random.choice(['N', 'S', 'E', 'W'])
+        self.direction = 'S'
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
         self.set_position_out_of_screen()
 
@@ -28,7 +29,7 @@ class Ship:
         self.change_direction_initial_timer = 20
         self.change_direction_timer = self.change_direction_initial_timer
 
-        self.random_speed_variation = 10
+        self.random_speed_variation = 5
         self.change_random_speed = 5
         self.random_speed_NS = 0
         self.random_speed_EW = 0
@@ -40,57 +41,57 @@ class Ship:
         self.life -= 1
 
     def draw(self):
-        if self.direction == "E" or self.direction == "W":
+        if self.direction in ['E', 'W']:
             self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width - 30, self.sprite.height - 50)
             self.hitbox.collidedictall
             pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
-        elif self.direction == "N":
+        elif self.direction in ['NE', 'N', 'NW']:
             self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 10, self.sprite.width, self.sprite.height - 10)
             pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
-        elif self.direction == "S":
+        elif self.direction in ['SE', 'S', 'SW']:
             self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 35, self.sprite.width, self.sprite.height - 35)
             pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
         self.sprite.draw()
 
     # """Initial position with middle included"""
     # def set_position_out_of_screen(self):
-    #     if self.direction == 'S': # coming from above
+    #     if self.direction == 'S': # coming from N
     #         self.sprite.y = - self.sprite.height
     #         self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
     #         return
-    #     if self.direction == 'N': # coming from below
+    #     if self.direction == 'N': # coming from S
     #         self.sprite.y = HEIGHT
     #         self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
     #         return
-    #     if self.direction == 'E': # coming from left
+    #     if self.direction == 'E': # coming from W
     #         self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
     #         self.sprite.x = - self.sprite.width
     #         return
-    #     if self.direction == 'W': # coming from right
+    #     if self.direction == 'W': # coming from E
     #         self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
     #         self.sprite.x = WIDTH
     #         return
 
-    #Initial position with middle not included
+    """Initial position with middle not included"""
     def set_position_out_of_screen(self):
         side = random.choice(['left or up', 'right or down'])
         space_ship_island = 50
-        if self.direction == 'S': # coming from up
+        if self.direction == 'S': # coming from N
             self.sprite.y = - self.sprite.height
             if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
             elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
             return
-        if self.direction == 'N': # coming from down
+        if self.direction == 'N': # coming from S
             self.sprite.y = HEIGHT
             if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
             elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
             return
-        if self.direction == 'E': # coming from left
+        if self.direction == 'E': # coming from W
             self.sprite.x = - self.sprite.width
             if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
             elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
             return
-        if self.direction == 'W': # coming from right
+        if self.direction == 'W': # coming from E
             self.sprite.x = WIDTH
             if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
             elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
@@ -129,16 +130,16 @@ class Ship:
             return True
 
     def random_speed_NS_possibility(self):
-        if (self.is_too_close_to_N() and (self.direction == 'E' or self.direction == 'W')):
+        if self.is_too_close_to_N() and self.direction in ['E', 'W']:
             return [self.random_speed_variation]
-        if (self.is_too_close_to_S() and (self.direction == 'E' or self.direction == 'W')):
+        if self.is_too_close_to_S() and self.direction in ['E', 'W']:
             return [-self.random_speed_variation]
         return [-self.random_speed_variation, self.random_speed_variation]
     
     def random_speed_EW_possibility(self):
-        if (self.is_too_close_to_E() and (self.direction == 'N' or self.direction == 'S')):
+        if self.is_too_close_to_E() and self.direction in ['N', 'S']:
             return [-self.random_speed_variation]
-        if (self.is_too_close_to_W() and (self.direction == 'N' or self.direction == 'S')):
+        if self.is_too_close_to_W() and self.direction in ['N', 'S']:
             return [self.random_speed_variation]
         return [-self.random_speed_variation, self.random_speed_variation]
 
@@ -164,24 +165,38 @@ class Ship:
             self.sprite.x -= self.speed * delta_time
             self.sprite.y += self.random_speed_NS
 
+    """Changes direction to the next or previous."""
+    def change_direction(self):
+        if len(self.direction) == 1: possible_directions = [direc for direc in self.all_directions if ((self.direction in direc) and (self.direction != direc))]
+        else: possible_directions = [direc for direc in self.all_directions if ((self.direction[0] == direc) or (self.direction[1] == direc))]
+        possible_valid_directions = [direc for direc in possible_directions if self.direction_dict[direc]]
+        self.direction = random.choice(possible_valid_directions)
+        self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction, self.sprite.x, self.sprite.y)
+
+    def set_directions(self, directions, boolean):
+        for direction in directions:
+            self.direction_dict[direction] = boolean
+
+    def prevents_going_through_bottom(self):
+        if self.is_close_to_S() and self.direction in ['SE', 'S', 'SW']:
+            self.set_directions(["S"], False) # if is close, S is not a possibility more
+            if self.direction == "S":
+                self.change_direction() # to SE or SW
+                self.set_directions(["SE", "SW"], False) # for if it is in SE, SW, E or W not going more botton
+            if self.is_too_close_to_S(): # if it is SE or SW
+                self.set_directions(["SE", "SW"], False)
+                self.change_direction() # to E or W
+        elif self.direction_dict["S"] == False: # if is not close and S blocked, free all
+            self.set_directions(["SE", "S", "SW"], True)
+
     def collide_with_island(self):
         if Sprite_utils.collide_mask_rect(self.hitbox, self.island):
             return True
         return False
 
-    def remove_directions(self, letters):
-        for letter in letters:
-            self.possible_directions.remove(letter)
-
-    """Changes direction to the next or previous."""
-    def change_direction(self):
-        if len(self.direction) == 1: possible_directions = [direc for direc in self.all_directions if ((self.direction in direc) and (self.direction != direc))]
-        else: possible_directions = [direc for direc in self.all_directions if ((self.direction[0] == direc) or (self.direction[1] == direc))]
-        self.direction = random.choice(possible_directions)
-
     def move(self, delta_time):
         if not self.collide_with_island():
-
+            self.prevents_going_through_bottom()
             # if self.change_direction_timer > 0:
             #     self.change_direction_timer -= self.change_direction_speed * delta_time
             # else:

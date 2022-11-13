@@ -16,7 +16,7 @@ class Player:
         self.island = island
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
-        self.cannon_ammo = 3
+        self.cannon_ammo = 100
         self.speed = 100
         self.life = 100
         self.key_W = 'free'
@@ -125,4 +125,4 @@ class Player:
         window.get_screen().blit(text, text_rect)
         
         if keyboard.key_pressed("R"):
-            self.set_cannon_ammo(3)
+            self.set_cannon_ammo(100)
