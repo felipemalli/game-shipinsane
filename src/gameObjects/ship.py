@@ -6,7 +6,8 @@ import pygame
 
 sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from src.utils.ship_moviment import get_around_string_list
+from src.utils.ship_moviment import (get_around_string_list,
+                                     get_around_string_list_by_range)
 from src.utils.sprite_utilities import Sprite_utils
 
 
@@ -17,8 +18,7 @@ class Ship:
         self.speed = speed
         self.hitbox = pygame.Rect(0, 0, 0, 0)
 
-        # self.direction = random.choice(['N', 'S', 'E', 'W'])
-        self.direction = 'S'
+        self.direction = random.choice(['N', 'S', 'E', 'W'])
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
         self.set_position_out_of_screen()
 
@@ -97,6 +97,11 @@ class Ship:
             elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
             return
 
+        # if self.direction == 'N': # coming from N
+        #     self.sprite.y = HEIGHT
+        #     self.sprite.x = 60
+        #     return
+
     def is_close_to_S(self):
         if self.hitbox.y + self.hitbox.height > HEIGHT - self.close_value:
             return True
@@ -170,6 +175,12 @@ class Ship:
         if len(self.direction) == 1: possible_directions = [direc for direc in self.all_directions if ((self.direction in direc) and (self.direction != direc))]
         else: possible_directions = [direc for direc in self.all_directions if ((self.direction[0] == direc) or (self.direction[1] == direc))]
         possible_valid_directions = [direc for direc in possible_directions if self.direction_dict[direc]]
+
+        if not possible_valid_directions: # if ship is coming diagonally in a corner
+            for main_direction in ["N", "S", "E", "W" ]:
+                if main_direction in self.direction:
+                    possible_valid_directions.append(main_direction)
+
         self.direction = random.choice(possible_valid_directions)
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction, self.sprite.x, self.sprite.y)
 
@@ -177,17 +188,29 @@ class Ship:
         for direction in directions:
             self.direction_dict[direction] = boolean
 
-    def prevents_going_through_bottom(self):
-        if self.is_close_to_S() and self.direction in ['SE', 'S', 'SW']:
-            self.set_directions(["S"], False) # if is close, S is not a possibility more
-            if self.direction == "S":
-                self.change_direction() # to SE or SW
-                self.set_directions(["SE", "SW"], False) # for if it is in SE, SW, E or W not going more botton
-            if self.is_too_close_to_S(): # if it is SE or SW
-                self.set_directions(["SE", "SW"], False)
-                self.change_direction() # to E or W
-        elif self.direction_dict["S"] == False: # if is not close and S blocked, free all
-            self.set_directions(["SE", "S", "SW"], True)
+    def prevents_going_through(self, direction):
+        prev_diagonal_direction, next__diagonal_direction, next_direction, prev_direction = get_around_string_list_by_range(self.all_directions, direction, 2)
+
+        is_close = getattr(self, "is_close_to_" + direction)
+        is_too_close = getattr(self, "is_too_close_to_" + direction)
+
+        if is_close() and self.direction in [prev_diagonal_direction, direction, next__diagonal_direction]:
+            self.set_directions([direction], False) # if close, direction is blocked
+            if self.direction == direction:
+                self.change_direction() # to random diagonal direction
+            if is_too_close(): # when in diagonal direction and too close, change to clean direction (actual is already blocked because of up line)
+                self.change_direction()
+        elif self.direction_dict[direction] == False: # if not close and direction blocked, free all
+            self.set_directions([prev_diagonal_direction, direction, next__diagonal_direction], True)
+
+        if is_close():
+            diagonal_to_block = None
+            if self.direction in [prev_direction, next_direction]: # if it is close and coming in parallel, the diagonal to this side needs to be blocked
+                if self.direction in prev_diagonal_direction: diagonal_to_block = prev_diagonal_direction
+                if self.direction in next__diagonal_direction: diagonal_to_block = next__diagonal_direction
+                if diagonal_to_block: self.set_directions([diagonal_to_block], False)
+            elif diagonal_to_block:
+                self.set_directions([prev_diagonal_direction, next__diagonal_direction], True)
 
     def collide_with_island(self):
         if Sprite_utils.collide_mask_rect(self.hitbox, self.island):
@@ -196,7 +219,11 @@ class Ship:
 
     def move(self, delta_time):
         if not self.collide_with_island():
-            self.prevents_going_through_bottom()
+            self.prevents_going_through('N')
+            self.prevents_going_through('E')
+            self.prevents_going_through('S')
+            self.prevents_going_through('W')
+            
             # if self.change_direction_timer > 0:
             #     self.change_direction_timer -= self.change_direction_speed * delta_time
             # else:
