@@ -1,6 +1,8 @@
-def get_around_index_list_by_range(iterated_list, center_index, range_size):
+def get_around_string_list_by_range(iterated_list, string, range_size):
     around_list = list()
     
+    center_index = iterated_list.index(string)
+
     for i in range(1, range_size + 1):
         around_index = center_index + i
         if around_index >= len(iterated_list):
