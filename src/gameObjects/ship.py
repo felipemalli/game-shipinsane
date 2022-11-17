@@ -20,7 +20,7 @@ class Ship:
 
         self.direction = random.choice(['N', 'S', 'E', 'W'])
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
-        self.set_position_out_of_screen()
+        self.initial_position_defined = self.set_position_out_of_screen()
 
         self.all_directions = ["N", "NW", "W", "SW", "S", "SE", "E", "NE"]
         self.direction_dict = { direction: True for direction in self.all_directions }
@@ -41,17 +41,18 @@ class Ship:
         self.life -= 1
 
     def draw(self):
-        if self.direction in ['E', 'W']:
-            self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width - 30, self.sprite.height - 50)
-            self.hitbox.collidedictall
-            pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
-        elif self.direction in ['NE', 'N', 'NW']:
-            self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 10, self.sprite.width, self.sprite.height - 10)
-            pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
-        elif self.direction in ['SE', 'S', 'SW']:
-            self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 35, self.sprite.width, self.sprite.height - 35)
-            pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
-        self.sprite.draw()
+        if self.initial_position_defined:
+            if self.direction in ['E', 'W']:
+                self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width - 30, self.sprite.height - 50)
+                self.hitbox.collidedictall
+                pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
+            elif self.direction in ['NE', 'N', 'NW']:
+                self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 10, self.sprite.width, self.sprite.height - 10)
+                pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
+            elif self.direction in ['SE', 'S', 'SW']:
+                self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 35, self.sprite.width, self.sprite.height - 35)
+                pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
+            self.sprite.draw()
 
     # """Initial position with middle included"""
     # def set_position_out_of_screen(self):
@@ -80,22 +81,22 @@ class Ship:
             self.sprite.y = - self.sprite.height
             if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
             elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
-            return
+            return True
         if self.direction == 'N': # coming from S
             self.sprite.y = HEIGHT
             if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
             elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
-            return
+            return True
         if self.direction == 'E': # coming from W
             self.sprite.x = - self.sprite.width
             if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
             elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
-            return
+            return True
         if self.direction == 'W': # coming from E
             self.sprite.x = WIDTH
             if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
             elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
-            return
+            return True
 
         # if self.direction == 'N': # coming from N
         #     self.sprite.y = HEIGHT
