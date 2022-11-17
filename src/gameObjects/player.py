@@ -121,7 +121,7 @@ class Player:
     def reload_ammo(self):
         font = pygame.font.SysFont("Arial", 30, False, False)
         text = font.render("Press R to reload", False, (0,0,0))
-        text_rect = text.get_rect(center=(WIDTH/2, HEIGHT - 100))
+        text_rect = text.get_rect(center=(WIDTH/2, HEIGHT - 200))
         window.get_screen().blit(text, text_rect)
         
         if keyboard.key_pressed("R"):

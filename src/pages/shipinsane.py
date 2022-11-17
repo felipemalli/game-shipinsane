@@ -10,9 +10,9 @@ sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
+from gameObjects.lifebar import Life_Bar
 from gameObjects.player import Player
 from gameObjects.ship import Ship
-from gameObjects.lifebar import Life_Bar
 
 
 def init():
@@ -92,6 +92,7 @@ def init():
 
     counter = 0
     while(True):
+        player.movement(delta_time)
 
         if (0 <= counter <= 50):
             image_sprite[0].draw()
@@ -104,7 +105,6 @@ def init():
         else:
             image_sprite[4].draw()
         
-
         counter += 1
         
         if counter >= 250:
@@ -116,7 +116,6 @@ def init():
 
         # ----------- Static Renderizations ------------
 
-        player.movement(delta_time)
         island.draw()
         img_heart.draw()
 
