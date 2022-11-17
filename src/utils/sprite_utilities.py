@@ -5,12 +5,12 @@ from PPlay.sprite import Sprite
 class Sprite_utils:
     
     @classmethod
-    def sprite_direction(self, relative_path, png_name, direction, x = None, y = None):
+    def sprite_direction(self, relative_path, png_name, direction, x = -500, y = -500):
         sprite_path = relative_path + png_name + '_' + direction + '.png'
         sprite = Sprite(sprite_path)
-        if x and y:
-            sprite.x = x
-            sprite.y = y
+        
+        sprite.x = x
+        sprite.y = y
 
         return sprite
 
