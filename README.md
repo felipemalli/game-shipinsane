@@ -22,7 +22,7 @@ Setas - Movimento do canhão
 
 Espaço - Atira com o canhão
 
-R (no baú) - Recarrega o canhão
+R (no baú) - Recarrega as bolas de canhão
 
 F1 - Aparece/Esconde hitbox do jogador e dos inimigos
 
