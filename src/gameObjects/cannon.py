@@ -6,6 +6,7 @@ import pygame
 from PPlay.keyboard import Keyboard
 
 from .cannon_ball import Cannon_ball
+from .cannon_ball_format import Cannon_ball_format
 from .fleet_of_ships import Fleet_of_ships
 
 keyboard = Keyboard()
@@ -14,7 +15,7 @@ sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.utils.sprite_utilities import Sprite_utils
 
 
-class Cannon:
+class Cannon(Cannon_ball_format):
     def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
         self.shot_cooldown = 1
