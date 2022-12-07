@@ -1,10 +1,6 @@
 import math
-import os
-import sys
 
 from PPlay.sprite import Sprite
-
-sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import HEIGHT, WIDTH
 
 

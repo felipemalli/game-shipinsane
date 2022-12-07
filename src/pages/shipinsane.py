@@ -126,7 +126,7 @@ def init():
         if player.get_hitbox().colliderect(circle_NE.draw()): cannon_NE.control(player, "DOWN", "UP")
         if player.get_hitbox().colliderect(chest): player.reload_ammo()
 
-        # ---------- Dinamic Renderizations -------------
+        # ---------- Dynamic Renderizations -------------
        
         cannon_N.render_shots(delta_time)
         cannon_N.render()

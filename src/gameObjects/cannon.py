@@ -1,6 +1,4 @@
 import math
-import os
-import sys
 
 import pygame
 from PPlay.keyboard import Keyboard
@@ -11,7 +9,6 @@ from .fleet_of_ships import Fleet_of_ships
 
 keyboard = Keyboard()
 
-sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import window
 from src.utils.sprite_utilities import Sprite_utils
 

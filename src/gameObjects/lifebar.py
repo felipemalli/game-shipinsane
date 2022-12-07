@@ -1,7 +1,9 @@
 import pygame
-from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from .player import Player
 from PPlay.sprite import Sprite
+from src.pages.game_parts.window_game import HEIGHT, WIDTH
+
+from .player import Player
+
 
 class Life_Bar:
     def __init__(self, center_x, center_y, actual, max, size, thickness):

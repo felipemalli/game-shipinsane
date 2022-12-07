@@ -1,9 +1,4 @@
-import os
-import sys
-
 import pygame
-
-sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import window
 
 

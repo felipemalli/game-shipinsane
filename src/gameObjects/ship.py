@@ -1,18 +1,16 @@
-import os
+
 import random
-import sys
 
 import pygame
-
-from .cannon_ball import Cannon_ball
-
-sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.ship_moviment import get_around_string_list_by_range
 from src.utils.sprite_utilities import Sprite_utils
 
+from .cannon_ball import Cannon_ball
+from .cannon_ball_format import Cannon_ball_format
 
-class Ship:
+
+class Ship(Cannon_ball_format):
     CLOSE_TO_SCREEN = 150
     TOO_CLOSE_TO_SCREEN = 50
 
@@ -30,9 +28,9 @@ class Ship:
         self.all_directions = ["N", "NW", "W", "SW", "S", "SE", "E", "NE"]
         self.direction_dict = { direction: True for direction in self.all_directions }
 
-        self.average_change_direction_speed = 100
-        self.change_direction_initial_timer = 20
-        self.change_direction_timer = self.change_direction_initial_timer
+        # self.average_change_direction_speed = 100
+        # self.change_direction_initial_timer = 20
+        # self.change_direction_timer = self.change_direction_initial_timer
 
         """ Random speed for perpendicular direction """
         self.random_speed_variation = 5
@@ -234,8 +232,12 @@ class Ship:
             self.prevents_going_through('S')
             self.prevents_going_through('W')
             
+            """Ship to random direction initial code"""
+            #
             # if self.change_direction_timer > 0:
             #     self.change_direction_timer -= self.change_direction_speed * delta_time
             # else:
             #     random_timer = self.generate_random_num_around(self.)
+
             self.move_to_a_direction(self.direction, delta_time)
+
