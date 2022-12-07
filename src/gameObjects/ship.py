@@ -43,7 +43,7 @@ class Ship:
     def draw(self):
         if self.initial_position_defined:
             if self.direction in ['E', 'W']:
-                self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width - 30, self.sprite.height - 50)
+                self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width, self.sprite.height - 50)
                 self.hitbox.collidedictall
                 pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
             elif self.direction in ['NE', 'N', 'NW']:
