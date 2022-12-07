@@ -7,5 +7,5 @@ class Cannon_ball_format(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def remove_cannon_ball(self):
+    def remove_cannon_ball(self, cannon_ball):
         raise NotImplementedError

@@ -12,13 +12,14 @@ from .fleet_of_ships import Fleet_of_ships
 keyboard = Keyboard()
 
 sys.path.insert(0, os.path.abspath("../../")) # src/
+from src.pages.game_parts.window_game import window
 from src.utils.sprite_utilities import Sprite_utils
 
 
 class Cannon(Cannon_ball_format):
     def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
-        self.shot_cooldown = 1
+        self.shot_cooldown = 0
         self.shot_speed = 150
 
         self.sprite = sprite
@@ -30,7 +31,9 @@ class Cannon(Cannon_ball_format):
 
         self.image = self.sprite.image
         self.rect = self.sprite.image.get_rect()
-        self.rect.center=(self.sprite.x - (self.sprite.width / 2), self.sprite.y + (self.sprite.height / 2))
+        self.rect.center = (self.sprite.x - (self.sprite.width / 2), self.sprite.y + (self.sprite.height / 2))
+        self.rot_image = self.image
+        self.rot_rect = self.rect
 
     def get_sprite(self):
         return self.sprite
@@ -40,8 +43,6 @@ class Cannon(Cannon_ball_format):
         return self.initial_angle + self.angle
     def get_rect(self):
         return self.rect
-    def get_img_rect(self):
-        return self.image, self.rect
 
     """Ensure that cannon ball will come out in the perfect position"""
     def initial_cannon_ball_x(self):
@@ -83,7 +84,13 @@ class Cannon(Cannon_ball_format):
                 self.remove_cannon_ball(cannon_ball)
                 enemy_ship.reduce_life()
 
-    def control(self, player_object, shot_timer, clockwise_key, anticlockwise_key):
+        if self.shot_cooldown > 0:
+            self.shot_cooldown -= delta_time
+
+    def render(self):
+        window.get_screen().blit(self.rot_image, self.rot_rect)
+
+    def control(self, player_object, clockwise_key, anticlockwise_key):
         rot_image, rot_rect = self.rot_center()
 
         if keyboard.key_pressed(clockwise_key):
@@ -92,9 +99,10 @@ class Cannon(Cannon_ball_format):
         if keyboard.key_pressed(anticlockwise_key):
             rot_image, rot_rect = self.move_anticlockwise()
 
-        if keyboard.key_pressed("SPACE") and shot_timer < 0 and player_object.get_cannon_ammo() > 0:
+        if keyboard.key_pressed("SPACE") and self.shot_cooldown <= 0 and player_object.get_cannon_ammo() > 0:
             player_object.reduce_cannon_ammo()
             self.shot()
-            return self.shot_cooldown, rot_image, rot_rect
+            self.shot_cooldown = 1
         
-        return shot_timer, rot_image, rot_rect
+        self.rot_image = rot_image
+        self.rot_rect = rot_rect
