@@ -1,3 +1,4 @@
+import math
 import os
 import sys
 
@@ -23,12 +24,12 @@ class Cannon:
         self.sprite.x = x
         self.sprite.y = y
 
+        self.initial_angle = initial_angle
+        self.angle = 0
+
         self.image = self.sprite.image
         self.rect = self.sprite.image.get_rect()
         self.rect.center=(self.sprite.x - (self.sprite.width / 2), self.sprite.y + (self.sprite.height / 2))
-
-        self.initial_angle = initial_angle
-        self.angle = 0
 
     def get_sprite(self):
         return self.sprite
@@ -40,6 +41,12 @@ class Cannon:
         return self.rect
     def get_img_rect(self):
         return self.image, self.rect
+
+    """Ensure that cannon ball will come out in the perfect position"""
+    def initial_cannon_ball_x(self):
+        return self.rect.centerx - (6 * (math.cos(math.radians(90 - self.get_relative_angle()))) + (10 * (math.cos(math.radians(90 - self.get_absolute_angle())))) - 1)
+    def initial_cannon_ball_y(self):
+        return self.rect.centery - (6 * (math.sin(math.radians(90 - self.get_relative_angle()))) + (10 * (math.sin(math.radians(90 - self.get_absolute_angle())))) - 1)
 
     def rot_center(self):
         rot_image = pygame.transform.rotate(self.image, self.angle)
@@ -59,7 +66,7 @@ class Cannon:
         return self.rot_center()
 
     def shot(self):
-        cannon_ball = Cannon_ball(self.shot_speed, self)
+        cannon_ball = Cannon_ball(self.initial_cannon_ball_x(), self.initial_cannon_ball_y(), self.shot_speed, self)
         self.cannon_ball_list.append(cannon_ball)
 
     def remove_cannon_ball(self, cannon_ball):

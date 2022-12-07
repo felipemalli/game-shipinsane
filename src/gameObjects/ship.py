@@ -4,6 +4,8 @@ import sys
 
 import pygame
 
+from .cannon_ball import Cannon_ball
+
 sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.ship_moviment import get_around_string_list_by_range
@@ -23,7 +25,7 @@ class Ship:
 
         self.direction = random.choice(['N', 'S', 'E', 'W'])
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
-        self.initial_position_defined = self.set_position_out_of_screen()
+        self.is_initial_position_defined = self.set_position_out_of_screen()
 
         self.all_directions = ["N", "NW", "W", "SW", "S", "SE", "E", "NE"]
         self.direction_dict = { direction: True for direction in self.all_directions }
@@ -38,6 +40,12 @@ class Ship:
         self.random_speed_NS = 0
         self.random_speed_EW = 0
 
+        self.cannon_ball_list = []
+        self.shot_speed = 150
+        self.angle = 0
+        # self.image = self.sprite.image
+        self.rect = self.sprite.image.get_rect()
+
     def set_show_hitbox(self, boolean):
         self.show_hitbox = boolean
 
@@ -49,7 +57,7 @@ class Ship:
             enemy_ships.remove(self)
 
     def draw(self):
-        if self.initial_position_defined:
+        if self.is_initial_position_defined:
             if self.direction in ['E', 'W']:
                 self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width, self.sprite.height - 50)
                 self.hitbox.collidedictall
@@ -172,7 +180,7 @@ class Ship:
             self.sprite.x -= self.speed * delta_time
             self.sprite.y += self.random_speed_NS
 
-    """Changes direction to the next or previous."""
+    """Changes direction to the next or previous"""
     def change_direction(self):
         if len(self.direction) == 1: possible_directions = [direc for direc in self.all_directions if ((self.direction in direc) and (self.direction != direc))]
         else: possible_directions = [direc for direc in self.all_directions if ((self.direction[0] == direc) or (self.direction[1] == direc))]
@@ -231,6 +239,3 @@ class Ship:
             # else:
             #     random_timer = self.generate_random_num_around(self.)
             self.move_to_a_direction(self.direction, delta_time)
-
-    # def shot(self):
-

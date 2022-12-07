@@ -9,15 +9,13 @@ from src.pages.game_parts.window_game import HEIGHT, WIDTH
 
 
 class Cannon_ball:
-    def __init__(self, speed, cannon_object):
+    def __init__(self, x, y, speed, cannon_object):
         self.cannon_object = cannon_object
-        self.cannon_rect = cannon_object.get_rect()
-        self.cannon_absolute_angle = cannon_object.get_absolute_angle()
-        self.cannon_relative_angle = cannon_object.get_relative_angle()
+        self.cannon_shot_angle = cannon_object.get_absolute_angle()
 
         self.sprite = Sprite("../assets/cannon_ball.png")
-        self.sprite.x = self.cannon_rect.centerx - (self.sprite.width / 2) - (6 * (math.cos(math.radians(90 - self.cannon_relative_angle))) + (10 * (math.cos(math.radians(90 - self.cannon_absolute_angle)))) - 1)
-        self.sprite.y = self.cannon_rect.centery - (self.sprite.width / 2) - (6 * (math.sin(math.radians(90 - self.cannon_relative_angle))) + (10 * (math.sin(math.radians(90 - self.cannon_absolute_angle)))) - 1)
+        self.sprite.x = x - (self.sprite.width / 2)
+        self.sprite.y = y - (self.sprite.height / 2)
         self.speed = speed
 
     def draw(self):
@@ -32,7 +30,7 @@ class Cannon_ball:
 
     def move_with_angle(self, delta_time):
         if self.is_out_of_screen(): self.cannon_object.remove_cannon_ball(self)
-        angle = self.cannon_absolute_angle
+        angle = self.cannon_shot_angle
         radAngle = math.radians(90 - angle)
         self.sprite.x -= self.speed * math.cos(radAngle) * delta_time
         self.sprite.y -= self.speed * math.sin(radAngle) * delta_time

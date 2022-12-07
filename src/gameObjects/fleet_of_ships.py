@@ -43,7 +43,6 @@ class Fleet_of_ships:
             enemy_ship.draw()
             enemy_ship.move(delta_time)
 
-
     def generate_random_num_around(self, num, proximity):
         min_num = num - proximity
         max_num = num + proximity
