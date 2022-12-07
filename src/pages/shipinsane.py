@@ -10,12 +10,14 @@ sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
+from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.lifebar import Life_Bar
 from gameObjects.player import Player
 from gameObjects.ship import Ship
 
 
 def init():
+
     # enemy_pirate_1 = Sprite("../assets/enemy1.png")
     # enemy_pirate_2 = Sprite("../assets/enemy2.png")
 
@@ -24,7 +26,7 @@ def init():
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
 
-    # ----------------- Player  ----------------
+    # -------------------- Player  -------------------
 
     player = Player(island)
 
@@ -86,6 +88,10 @@ def init():
 
     fleet_of_ships = Fleet_of_ships(island)
 
+    # ---------------- Hitbox Switcher ---------------
+
+    hitbox_switcher = Hitbox_switcher([player, fleet_of_ships])
+
     # ------------------------------------------
 
     delta_time = 0
@@ -118,6 +124,7 @@ def init():
 
         island.draw()
         img_heart.draw()
+        hitbox_switcher.draw(delta_time)
 
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 4 + 100, HEIGHT - 40, 30)
         window.draw_text('Life: ' + str(100), WIDTH / 2 + 150, HEIGHT - 40, 30)
@@ -161,10 +168,9 @@ def init():
         lifebar_player.draw()
         lifebar_mini.draw()
 
-
         # enemy_pirate_1.draw()
         # enemy_pirate_2.draw()
-
+        
         #  ----------------------------------------------
 
         window.update()

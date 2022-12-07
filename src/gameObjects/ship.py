@@ -17,6 +17,7 @@ class Ship:
         self.life = life
         self.speed = speed
         self.hitbox = pygame.Rect(0, 0, 0, 0)
+        self.show_hitbox = False
 
         self.direction = random.choice(['N', 'S', 'E', 'W'])
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
@@ -37,6 +38,9 @@ class Ship:
         self.close_value = 150
         self.too_close_value = 50
 
+    def set_show_hitbox(self, boolean):
+        self.show_hitbox = boolean
+
     def reduce_life(self):
         self.life -= 1
 
@@ -45,13 +49,11 @@ class Ship:
             if self.direction in ['E', 'W']:
                 self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 50, self.sprite.width, self.sprite.height - 50)
                 self.hitbox.collidedictall
-                pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
             elif self.direction in ['NE', 'N', 'NW']:
                 self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 10, self.sprite.width, self.sprite.height - 10)
-                pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
             elif self.direction in ['SE', 'S', 'SW']:
                 self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 35, self.sprite.width, self.sprite.height - 35)
-                pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
+            if self.show_hitbox: pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
             self.sprite.draw()
 
     # """Initial position with middle included"""
