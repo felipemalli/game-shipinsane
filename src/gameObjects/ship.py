@@ -6,12 +6,14 @@ import pygame
 
 sys.path.insert(0, os.path.abspath("../../")) # src/
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from src.utils.ship_moviment import (get_around_string_list,
-                                     get_around_string_list_by_range)
+from src.utils.ship_moviment import get_around_string_list_by_range
 from src.utils.sprite_utilities import Sprite_utils
 
 
 class Ship:
+    CLOSE_TO_SCREEN = 150
+    TOO_CLOSE_TO_SCREEN = 50
+
     def __init__(self, island, life, speed):
         self.island = island
         self.life = life
@@ -30,19 +32,21 @@ class Ship:
         self.change_direction_initial_timer = 20
         self.change_direction_timer = self.change_direction_initial_timer
 
+        """ Random speed for perpendicular direction """
         self.random_speed_variation = 5
         self.change_random_speed = 5
         self.random_speed_NS = 0
         self.random_speed_EW = 0
-
-        self.close_value = 150
-        self.too_close_value = 50
 
     def set_show_hitbox(self, boolean):
         self.show_hitbox = boolean
 
     def reduce_life(self):
         self.life -= 1
+
+    def check_death(self, enemy_ships):
+        if self.life <= 0:
+            enemy_ships.remove(self)
 
     def draw(self):
         if self.initial_position_defined:
@@ -100,41 +104,36 @@ class Ship:
             elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
             return True
 
-        # if self.direction == 'N': # coming from N
-        #     self.sprite.y = HEIGHT
-        #     self.sprite.x = 60
-        #     return
-
     def is_close_to_S(self):
-        if self.hitbox.y + self.hitbox.height > HEIGHT - self.close_value:
+        if self.hitbox.y + self.hitbox.height > HEIGHT - self.CLOSE_TO_SCREEN:
             return True
 
     def is_too_close_to_S(self):
-        if self.hitbox.y + self.hitbox.height > HEIGHT - self.too_close_value:
+        if self.hitbox.y + self.hitbox.height > HEIGHT - self.TOO_CLOSE_TO_SCREEN:
             return True
 
     def is_close_to_N(self):
-        if self.hitbox.y < self.close_value:
+        if self.hitbox.y < self.CLOSE_TO_SCREEN:
             return True
 
     def is_too_close_to_N(self):
-        if self.hitbox.y < self.too_close_value:  
+        if self.hitbox.y < self.TOO_CLOSE_TO_SCREEN:  
             return True
 
     def is_close_to_E(self):
-        if self.hitbox.x + self.hitbox.width > WIDTH - self.close_value:
+        if self.hitbox.x + self.hitbox.width > WIDTH - self.CLOSE_TO_SCREEN:
             return True
 
     def is_too_close_to_E(self):
-        if self.hitbox.x + self.hitbox.width > WIDTH - self.too_close_value:  
+        if self.hitbox.x + self.hitbox.width > WIDTH - self.TOO_CLOSE_TO_SCREEN:  
             return True
 
     def is_close_to_W(self):
-        if self.hitbox.x < self.close_value:
+        if self.hitbox.x < self.CLOSE_TO_SCREEN:
             return True
 
     def is_too_close_to_W(self):
-        if self.hitbox.x < self.too_close_value:  
+        if self.hitbox.x < self.TOO_CLOSE_TO_SCREEN:  
             return True
 
     def random_speed_NS_possibility(self):
@@ -232,3 +231,6 @@ class Ship:
             # else:
             #     random_timer = self.generate_random_num_around(self.)
             self.move_to_a_direction(self.direction, delta_time)
+
+    # def shot(self):
+

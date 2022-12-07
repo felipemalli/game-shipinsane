@@ -33,15 +33,16 @@ class Fleet_of_ships:
     def create_enemy_ship(self):
         enemy_ship = Ship(self.island, self.enemy_ship_life, self.enemy_ship_speed)
         Fleet_of_ships.enemy_ships.append(enemy_ship)
-        # print(Fleet_of_ships.enemy_ships)
 
     def render_ships(self, delta_time):
+        for enemy_ship in Fleet_of_ships.enemy_ships:
+            enemy_ship.check_death(self.enemy_ships)
+            
         for enemy_ship in Fleet_of_ships.enemy_ships:
             enemy_ship.set_show_hitbox(self.show_hitbox)
             enemy_ship.draw()
             enemy_ship.move(delta_time)
-            if enemy_ship.life <= 0:
-                Fleet_of_ships.enemy_ships.remove(enemy_ship)
+
 
     def generate_random_num_around(self, num, proximity):
         min_num = num - proximity
