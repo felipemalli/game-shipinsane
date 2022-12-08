@@ -65,7 +65,7 @@ class Cannon(Cannon_ball_format):
         return self.rot_center()
 
     def shot(self):
-        cannon_ball = Cannon_ball(self.initial_cannon_ball_x(), self.initial_cannon_ball_y(), self.shot_speed, self)
+        cannon_ball = Cannon_ball(self.initial_cannon_ball_x(), self.initial_cannon_ball_y(), self.shot_speed, self, self.get_absolute_angle())
         self.cannon_ball_list.append(cannon_ball)
 
     def remove_cannon_ball(self, cannon_ball):

@@ -38,10 +38,12 @@ class Ship(Cannon_ball_format):
         self.random_speed_NS = 0
         self.random_speed_EW = 0
 
+        # self.quadrant = ''
+    
         self.cannon_ball_list = []
-        self.shot_speed = 150
-        self.angle = 0
-        # self.image = self.sprite.image
+        self.shot_speed = 200
+        self.shot_cooldown = 4
+        self.shot_inaccuracy = 300
         self.rect = self.sprite.image.get_rect()
 
     def set_show_hitbox(self, boolean):
@@ -232,7 +234,7 @@ class Ship(Cannon_ball_format):
             self.prevents_going_through('S')
             self.prevents_going_through('W')
             
-            """Ship to random direction initial code"""
+            """Ship to random direction | In progress..."""
             #
             # if self.change_direction_timer > 0:
             #     self.change_direction_timer -= self.change_direction_speed * delta_time
@@ -241,3 +243,33 @@ class Ship(Cannon_ball_format):
 
             self.move_to_a_direction(self.direction, delta_time)
 
+    def shot(self, delta_time):
+        self.render_shots(delta_time)
+        if self.shot_cooldown <= 0:
+            cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
+            self.shot_cooldown = 2
+            self.cannon_ball_list.append(cannon_ball)
+        if self.shot_cooldown > 0:
+            self.shot_cooldown -= delta_time
+    
+    def remove_cannon_ball(self, cannon_ball):
+        self.cannon_ball_list.remove(cannon_ball)
+
+    def render_shots(self, delta_time):
+        for cannon_ball in self.cannon_ball_list:
+            cannon_ball.draw()
+            random_close_x = random.randrange((WIDTH / 2) - self.shot_inaccuracy, (WIDTH / 2) + self.shot_inaccuracy)
+            random_close_y = random.randrange((HEIGHT / 2) - self.shot_inaccuracy, (HEIGHT / 2) + self.shot_inaccuracy)
+            cannon_ball.move_with_position_direction(self.hitbox.x, self.hitbox.y, random_close_x, random_close_y, delta_time)
+
+    # def update_quadrant(self):
+    #     if self.hitbox.y + (self.hitbox.height / 2) < HEIGHT / 2:
+    #         if self.hitbox.x + (self.hitbox.width / 2) > WIDTH / 2:
+    #             self.quadrant = 'NE'
+    #         else:
+    #             self.quadrant = 'NW'
+    #     else:
+    #         if self.hitbox.x + (self.hitbox.width / 2) > WIDTH / 2:
+    #             self.quadrant = 'SE'
+    #         else:
+    #             self.quadrant = 'SW'
