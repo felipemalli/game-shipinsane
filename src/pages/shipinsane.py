@@ -88,6 +88,10 @@ def init():
     while(True):
         player.movement(delta_time)
 
+        delta_time = window.delta_time()
+
+       #  ---------------- In progress ----------------
+
         if (0 <= counter <= 50):
             image_sprite[0].draw()
         elif (51 <= counter <= 100):
@@ -103,8 +107,6 @@ def init():
         
         if counter >= 250:
             counter = 0
-
-        delta_time = window.delta_time()
 
         # ----------- Static Renderizations ------------
 
@@ -141,14 +143,18 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
 
-        lifebar_mini.center_x = player.sprite.x - player.sprite.width / 2
-        lifebar_mini.center_y = player.sprite.y - 13
         lifebar_player.draw()
         lifebar_mini.draw()
 
-        # enemy_pirate_1.draw()
-        # enemy_pirate_2.draw()
-        
+       #  ---------------- In progress ----------------
+
+        lifebar_mini.center_x = player.sprite.x + player.sprite.width - (player.sprite.width / 2) - (lifebar_mini.size / 2)
+        lifebar_mini.center_y = player.sprite.y - 13
+        if player.life <= 0:
+            font = pygame.font.SysFont("Arial", 100, False, False)
+            text = font.render("Você perdeu!", False, (0,0,0))
+            text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
+            window.get_screen().blit(text, text_rect)
         #  ----------------------------------------------
 
         window.update()
