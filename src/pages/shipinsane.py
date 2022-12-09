@@ -39,8 +39,8 @@ def init():
                     Sprite("../assets/sea4.png")]
 
     #------------------Player Lifebar-----------------
-    lifebar_player = Life_Bar(WIDTH/4 , HEIGHT - 100, player.life, 100, 1000, 30)
-    lifebar_mini = Life_Bar(player.sprite.x - player.sprite.width / 2, player.sprite.y - 13, player.life, 100, 50, 10)
+    lifebar_player = Life_Bar(player, WIDTH/4 , HEIGHT - 100, player.life, 100, 1000, 30)
+    lifebar_mini = Life_Bar(player, player.sprite.x - player.sprite.width / 2, player.sprite.y - 13, player.life, 100, 50, 10)
     img_heart = Sprite("../assets/heart_50x50.png")
     img_heart.x = WIDTH / 4 - 50
     img_heart.y = HEIGHT - 110
@@ -74,6 +74,7 @@ def init():
     # -------------- Fleet_of_ships ------------
 
     fleet_of_ships = Fleet_of_ships(island)
+    fleet_of_ships.add_target(player)
 
     # ---------------- Hitbox Switcher ---------------
 
@@ -140,10 +141,8 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
 
-        lifebar_player.actual = player.life 
         lifebar_mini.center_x = player.sprite.x - player.sprite.width / 2
         lifebar_mini.center_y = player.sprite.y - 13
-        lifebar_mini.actual = player.life
         lifebar_player.draw()
         lifebar_mini.draw()
 

@@ -18,6 +18,7 @@ class Ship(Cannon_ball_format):
         self.island = island
         self.life = life
         self.speed = speed
+        self.damage = 20
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.show_hitbox = False
 
@@ -243,8 +244,8 @@ class Ship(Cannon_ball_format):
 
             self.move_to_a_direction(self.direction, delta_time)
 
-    def shot(self, delta_time):
-        self.render_shots(delta_time)
+    def shot(self, delta_time, targets):
+        self.render_shots(delta_time, targets)
         if self.shot_cooldown <= 0:
             cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
             self.shot_cooldown = 2
@@ -255,12 +256,18 @@ class Ship(Cannon_ball_format):
     def remove_cannon_ball(self, cannon_ball):
         self.cannon_ball_list.remove(cannon_ball)
 
-    def render_shots(self, delta_time):
+    def render_shots(self, delta_time, targets):
         for cannon_ball in self.cannon_ball_list:
             cannon_ball.draw()
             random_close_x = random.randrange((WIDTH / 2) - self.shot_inaccuracy, (WIDTH / 2) + self.shot_inaccuracy)
             random_close_y = random.randrange((HEIGHT / 2) - self.shot_inaccuracy, (HEIGHT / 2) + self.shot_inaccuracy)
             cannon_ball.move_with_position_direction(self.hitbox.x, self.hitbox.y, random_close_x, random_close_y, delta_time)
+        
+        for cannon_ball in self.cannon_ball_list:
+            for target in targets:
+                if cannon_ball.sprite.rect.colliderect(target.hitbox):
+                    self.remove_cannon_ball(cannon_ball)
+                    target.take_damage(self.damage)
 
     # def update_quadrant(self):
     #     if self.hitbox.y + (self.hitbox.height / 2) < HEIGHT / 2:

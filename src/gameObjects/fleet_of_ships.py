@@ -14,9 +14,14 @@ class Fleet_of_ships:
         self.average_spawn_speed = average_spawn_speed
         self.show_hitbox = False
 
+        self.targets = []
+
         self.spawn_speed = self.average_spawn_speed
         self.next_ship_initial_timer = 1000
         self.next_ship_timer = 1
+
+    def add_target(self, target):
+        self.targets.append(target)
 
     def toggle_hitbox(self):
         self.show_hitbox = not self.show_hitbox
@@ -42,7 +47,7 @@ class Fleet_of_ships:
             enemy_ship.set_show_hitbox(self.show_hitbox)
             enemy_ship.draw()
             enemy_ship.move(delta_time)
-            enemy_ship.shot(delta_time)
+            enemy_ship.shot(delta_time, self.targets)
 
     def generate_random_num_around(self, num, proximity):
         min_num = num - proximity

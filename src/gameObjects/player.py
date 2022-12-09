@@ -39,6 +39,12 @@ class Player:
         self.sprite.y = y
     def get_hitbox(self):
         return self.hitbox
+    def get_life(self):
+        return self.life
+
+    def take_damage(self, damage):
+        self.life -= damage
+        print(self.life)
 
     def toggle_hitbox(self):
         self.show_hitbox = not self.show_hitbox
