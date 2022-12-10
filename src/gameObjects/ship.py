@@ -79,8 +79,8 @@ class Ship(I_Cannon_ball):
                 self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 35, self.sprite.width, self.sprite.height - 35)
             if self.show_hitbox: pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
             self.sprite.draw()
-            self.life_bar.center_x = self.sprite.x + self.sprite.width - (self.sprite.width / 2) - (self.life_bar.size / 2)
-            self.life_bar.center_y = self.sprite.y - 13
+            self.life_bar.x = self.sprite.x + self.sprite.width - (self.sprite.width / 2) - (self.life_bar.size / 2)
+            self.life_bar.y = self.sprite.y - 13
             self.life_bar.draw()
 
     # """Initial position with middle included"""

@@ -19,12 +19,18 @@ exit_button.set_position(WIDTH / 12, 400)
 
 mouse = Mouse()
 
+reload = True
+
 while(True): 
+    window.set_background_color((0,0,0))
+
     play_button.draw()
     exit_button.draw()
     
     if mouse.is_over_object(play_button) and mouse.is_button_pressed(1):
-        shipinsane.init()
+        while reload:
+            reload = shipinsane.init()
+        reload = True
         
     if mouse.is_over_object(exit_button) and mouse.is_button_pressed(1):
         break

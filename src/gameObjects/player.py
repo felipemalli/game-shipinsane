@@ -3,6 +3,7 @@ from PPlay.keyboard import Keyboard
 
 keyboard = Keyboard()
 
+from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.sprite_utilities import Sprite_utils
 
@@ -22,7 +23,7 @@ class Player(I_Life_bar):
         self.key_A = 'free'
         self.key_S = 'free'
         self.key_D = 'free'
-        self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 100, 1000, 30)
+        self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/heart_50x50.png"))
 
     def get_island(self):
         return self.island

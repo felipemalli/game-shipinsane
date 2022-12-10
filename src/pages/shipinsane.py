@@ -13,14 +13,15 @@ from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.lifebar import Life_bar
 from gameObjects.player import Player
-from gameObjects.ship import Ship
+from PPlay.keyboard import Keyboard
+
+keyboard = Keyboard()
 
 
 def init():
 
     # enemy_pirate_1 = Sprite("../assets/enemy1.png")
     # enemy_pirate_2 = Sprite("../assets/enemy2.png")
-
     # enemy_pirate_1.x = island.x + island.width / 2 
     # enemy_pirate_1.y = island.y + 50
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
@@ -37,13 +38,6 @@ def init():
                     Sprite("../assets/sea2.png"),
                     Sprite("../assets/sea3.png"),
                     Sprite("../assets/sea4.png")]
-
-    #------------------Player Lifebar-----------------
-    lifebar_mini = Life_bar(player, 100, player.life, player.sprite.x - player.sprite.width / 2, player.sprite.y - 13, 50, 10)
-    img_heart = Sprite("../assets/heart_50x50.png")
-    img_heart.x = WIDTH / 4 - 50
-    img_heart.y = HEIGHT - 110
-
 
     # ----------- Cannons of island  -----------
 
@@ -84,37 +78,30 @@ def init():
     delta_time = 0
 
     counter = 0
+
     while(True):
-        player.movement(delta_time)
+        if player.life > 0:
+            player.movement(delta_time)
 
-        delta_time = window.delta_time()
+        if window.delta_time() < 0.1:
+            delta_time = window.delta_time()
 
-       #  ---------------- In progress ----------------
+       #  ---------- Animation: In progress... ----------
 
-        if (0 <= counter <= 50):
-            image_sprite[0].draw()
-        elif (51 <= counter <= 100):
-            image_sprite[1].draw()
-        elif (101 <= counter <= 150):
-            image_sprite[2].draw()
-        elif (151 <= counter <= 200):
-            image_sprite[3].draw()
-        else:
-            image_sprite[4].draw()
-        
+        if (0 <= counter <= 50): image_sprite[0].draw()
+        elif (51 <= counter <= 100): image_sprite[1].draw()
+        elif (101 <= counter <= 150): image_sprite[2].draw()
+        elif (151 <= counter <= 200): image_sprite[3].draw()
+        else: image_sprite[4].draw()
         counter += 1
-        
-        if counter >= 250:
-            counter = 0
+        if counter >= 250: counter = 0
 
-        # ----------- Static Renderizations ------------
+        # ----------- Static renderizations ------------
 
         island.draw()
-        img_heart.draw()
         hitbox_switcher.draw(delta_time)
 
-        window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 4 + 100, HEIGHT - 40, 30)
-        window.draw_text('Life: ' + str(100), WIDTH / 2 + 150, HEIGHT - 40, 30)
+        window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 2 - 110, HEIGHT - 100, 30)
 
         # -------------- Enemy generation ---------------
 
@@ -128,7 +115,7 @@ def init():
         if player.get_hitbox().colliderect(circle_NE.draw()): cannon_NE.control(player, "DOWN", "UP")
         if player.get_hitbox().colliderect(chest): player.reload_ammo()
 
-        # ---------- Dynamic Renderizations -------------
+        # ------- Dynamic and order renderizations -------
        
         cannon_N.render_shots(delta_time)
         cannon_N.render()
@@ -149,6 +136,13 @@ def init():
             text = font.render("Você perdeu!", False, (0,0,0))
             text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
             window.get_screen().blit(text, text_rect)
+
+        # if keyboard.key_pressed("L"):
+        #     return True
+
+        if keyboard.key_pressed("ESC"):
+            return False
+
         #  ----------------------------------------------
 
         window.update()
