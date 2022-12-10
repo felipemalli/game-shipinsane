@@ -39,7 +39,7 @@ def init():
                     Sprite("../assets/sea4.png")]
 
     #------------------Player Lifebar-----------------
-    lifebar_mini = Life_bar(player, player.sprite.x - player.sprite.width / 2, player.sprite.y - 13, player.life, 100, 50, 10)
+    lifebar_mini = Life_bar(player, 100, player.life, player.sprite.x - player.sprite.width / 2, player.sprite.y - 13, 50, 10)
     img_heart = Sprite("../assets/heart_50x50.png")
     img_heart.x = WIDTH / 4 - 50
     img_heart.y = HEIGHT - 110
@@ -142,12 +142,8 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
 
-        lifebar_mini.draw()
-
        #  ---------------- In progress ----------------
 
-        lifebar_mini.center_x = player.sprite.x + player.sprite.width - (player.sprite.width / 2) - (lifebar_mini.size / 2)
-        lifebar_mini.center_y = player.sprite.y - 13
         if player.life <= 0:
             font = pygame.font.SysFont("Arial", 100, False, False)
             text = font.render("Você perdeu!", False, (0,0,0))

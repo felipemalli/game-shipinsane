@@ -7,6 +7,7 @@ from src.utils.ship_moviment import get_around_string_list_by_range
 from src.utils.sprite_utilities import Sprite_utils
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
+from .lifebar import Life_bar
 
 
 class Ship(I_Cannon_ball):
@@ -20,6 +21,8 @@ class Ship(I_Cannon_ball):
         self.damage = 20
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.show_hitbox = False
+        self.is_moving = True
+        self.is_shooting = True
 
         self.direction = random.choice(['N', 'S', 'E', 'W'])
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
@@ -31,6 +34,8 @@ class Ship(I_Cannon_ball):
         # self.average_change_direction_speed = 100
         # self.change_direction_initial_timer = 20
         # self.change_direction_timer = self.change_direction_initial_timer
+
+        self.life_bar = Life_bar(self, self.life, self.life, self.sprite.x - self.sprite.width / 2, self.sprite.y - 13, 50, 10)
 
         """ Random speed for perpendicular direction """
         self.random_speed_variation = 5
@@ -46,15 +51,22 @@ class Ship(I_Cannon_ball):
         self.shot_inaccuracy = 300
         self.rect = self.sprite.image.get_rect()
 
+    def get_life(self):
+        return self.life
+
     def set_show_hitbox(self, boolean):
         self.show_hitbox = boolean
 
-    def reduce_life(self):
-        self.life -= 1
+    def take_damage(self, damage):
+        self.life -= damage
 
     def check_death(self, enemy_ships):
         if self.life <= 0:
-            enemy_ships.remove(self)
+            self.is_shooting = False
+            self.is_moving = False
+
+            if not len(self.cannon_ball_list):
+                enemy_ships.remove(self)
 
     def draw(self):
         if self.is_initial_position_defined:
@@ -67,6 +79,9 @@ class Ship(I_Cannon_ball):
                 self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 35, self.sprite.width, self.sprite.height - 35)
             if self.show_hitbox: pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
             self.sprite.draw()
+            self.life_bar.center_x = self.sprite.x + self.sprite.width - (self.sprite.width / 2) - (self.life_bar.size / 2)
+            self.life_bar.center_y = self.sprite.y - 13
+            self.life_bar.draw()
 
     # """Initial position with middle included"""
     # def set_position_out_of_screen(self):
@@ -243,15 +258,14 @@ class Ship(I_Cannon_ball):
 
             self.move_to_a_direction(self.direction, delta_time)
 
-    def shot(self, delta_time, targets):
-        self.render_shots(delta_time, targets)
-
-        if self.shot_cooldown <= 0:
-            cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
-            self.shot_cooldown = 2
-            self.cannon_ball_list.append(cannon_ball)
-        if self.shot_cooldown > 0:
-            self.shot_cooldown -= delta_time
+    def shot(self, delta_time):
+        if self.is_shooting:
+            if self.shot_cooldown <= 0:
+                cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
+                self.shot_cooldown = 2
+                self.cannon_ball_list.append(cannon_ball)
+            if self.shot_cooldown > 0:
+                self.shot_cooldown -= delta_time
     
     def remove_cannon_ball(self, cannon_ball):
         self.cannon_ball_list.remove(cannon_ball)

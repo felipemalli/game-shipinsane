@@ -22,7 +22,7 @@ class Player(I_Life_bar):
         self.key_A = 'free'
         self.key_S = 'free'
         self.key_D = 'free'
-        self.life_bar = Life_bar(self, WIDTH/4 , HEIGHT - 100, self.life, 100, 1000, 30)
+        self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 100, 1000, 30)
 
     def get_island(self):
         return self.island
@@ -47,7 +47,6 @@ class Player(I_Life_bar):
 
     def take_damage(self, damage):
         self.life -= damage
-        print(self.life)
 
     def toggle_hitbox(self):
         self.show_hitbox = not self.show_hitbox

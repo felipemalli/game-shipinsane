@@ -6,10 +6,10 @@ from .ship import Ship
 class Fleet_of_ships:
     enemy_ships = []
 
-    def __init__(self, island, max_count = 5, average_spawn_speed = 500, enemy_ship_life = 2, enemy_ship_speed = 40):
+    def __init__(self, island, max_count = 5, average_spawn_speed = 500, enemy_ship_max_life = 40, enemy_ship_speed = 40):
         self.island = island
         self.max_count = max_count
-        self.enemy_ship_life = enemy_ship_life
+        self.enemy_ship_max_life = enemy_ship_max_life
         self.enemy_ship_speed = enemy_ship_speed
         self.average_spawn_speed = average_spawn_speed
         self.show_hitbox = False
@@ -36,7 +36,7 @@ class Fleet_of_ships:
             self.create_enemy_ship()
 
     def create_enemy_ship(self):
-        enemy_ship = Ship(self.island, self.enemy_ship_life, self.enemy_ship_speed)
+        enemy_ship = Ship(self.island, self.enemy_ship_max_life, self.enemy_ship_speed)
         Fleet_of_ships.enemy_ships.append(enemy_ship)
 
     def render_ships(self, delta_time):
@@ -46,8 +46,9 @@ class Fleet_of_ships:
         for enemy_ship in Fleet_of_ships.enemy_ships:
             enemy_ship.set_show_hitbox(self.show_hitbox)
             enemy_ship.draw()
-            enemy_ship.move(delta_time)
-            enemy_ship.shot(delta_time, self.targets)
+            if enemy_ship.is_moving: enemy_ship.move(delta_time)
+            if enemy_ship.is_shooting: enemy_ship.shot(delta_time)
+            enemy_ship.render_shots(delta_time, self.targets)
 
     def generate_random_num_around(self, num, proximity):
         min_num = num - proximity

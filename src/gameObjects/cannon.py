@@ -17,6 +17,7 @@ class Cannon(I_Cannon_ball):
         self.cannon_ball_list = []
         self.shot_cooldown = 0
         self.shot_speed = 150
+        self.damage = 20
 
         self.sprite = sprite
         self.sprite.x = x
@@ -78,7 +79,7 @@ class Cannon(I_Cannon_ball):
             enemy_ship = Sprite_utils.sprite_collide_obj_list(cannon_ball.sprite, Fleet_of_ships.enemy_ships)
             if enemy_ship:
                 self.remove_cannon_ball(cannon_ball)
-                enemy_ship.reduce_life()
+                enemy_ship.take_damage(self.damage)
 
         if self.shot_cooldown > 0:
             self.shot_cooldown -= delta_time
