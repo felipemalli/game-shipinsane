@@ -3,8 +3,7 @@ import math
 import pygame
 from PPlay.keyboard import Keyboard
 
-from .cannon_ball import Cannon_ball
-from .cannon_ball_format import Cannon_ball_format
+from .cannon_ball import Cannon_ball, I_Cannon_ball
 from .fleet_of_ships import Fleet_of_ships
 
 keyboard = Keyboard()
@@ -13,7 +12,7 @@ from src.pages.game_parts.window_game import window
 from src.utils.sprite_utilities import Sprite_utils
 
 
-class Cannon(Cannon_ball_format):
+class Cannon(I_Cannon_ball):
     def __init__(self, initial_angle, sprite, x, y):
         self.cannon_ball_list = []
         self.shot_cooldown = 0

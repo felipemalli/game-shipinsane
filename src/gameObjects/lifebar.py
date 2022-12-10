@@ -1,11 +1,15 @@
+from abc import ABC, abstractmethod
+
 import pygame
-from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH
 
-from .player import Player
 
+class I_Life_bar(ABC):
+    @abstractmethod
+    def get_life(self):
+        raise NotImplementedError
 
-class Life_Bar:
+class Life_bar:
     def __init__(self, entity_object, center_x, center_y, actual, max, size, thickness):
         self.entity_object = entity_object
         self.center_x = center_x                     #posicao x da barra

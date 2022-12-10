@@ -6,8 +6,10 @@ keyboard = Keyboard()
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.sprite_utilities import Sprite_utils
 
+from .lifebar import I_Life_bar, Life_bar
 
-class Player:
+
+class Player(I_Life_bar):
     def __init__(self, island):
         self.island = island
         self.hitbox = pygame.Rect(0, 0, 0, 0)
@@ -20,6 +22,7 @@ class Player:
         self.key_A = 'free'
         self.key_S = 'free'
         self.key_D = 'free'
+        self.life_bar = Life_bar(self, WIDTH/4 , HEIGHT - 100, self.life, 100, 1000, 30)
 
     def get_island(self):
         return self.island
@@ -53,6 +56,7 @@ class Player:
         self.hitbox = pygame.Rect(self.sprite.x, self.sprite.y + 20, self.sprite.width, self.sprite.height - 20)
         if self.show_hitbox: pygame.draw.rect(window.get_screen(), (255,0,0), self.hitbox, 2)
         self.sprite.draw()
+        self.life_bar.draw()
 
     def reduce_cannon_ammo(self):
         if self.get_cannon_ammo() > 0:

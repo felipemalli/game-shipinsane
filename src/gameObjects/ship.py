@@ -6,11 +6,10 @@ from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.ship_moviment import get_around_string_list_by_range
 from src.utils.sprite_utilities import Sprite_utils
 
-from .cannon_ball import Cannon_ball
-from .cannon_ball_format import Cannon_ball_format
+from .cannon_ball import Cannon_ball, I_Cannon_ball
 
 
-class Ship(Cannon_ball_format):
+class Ship(I_Cannon_ball):
     CLOSE_TO_SCREEN = 150
     TOO_CLOSE_TO_SCREEN = 50
 
@@ -246,6 +245,7 @@ class Ship(Cannon_ball_format):
 
     def shot(self, delta_time, targets):
         self.render_shots(delta_time, targets)
+
         if self.shot_cooldown <= 0:
             cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
             self.shot_cooldown = 2

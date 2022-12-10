@@ -1,8 +1,14 @@
 import math
+from abc import ABC, abstractmethod
 
 from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH
 
+
+class I_Cannon_ball(ABC):
+    @abstractmethod
+    def remove_cannon_ball(self, cannon_ball):
+        raise NotImplementedError
 
 class Cannon_ball:
     def __init__(self, x, y, speed, cannon_object, angle = None):
