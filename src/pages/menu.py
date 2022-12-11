@@ -7,10 +7,14 @@ sys.path.insert(0, os.path.abspath("../../"))
 from PPlay.mouse import Mouse
 from PPlay.sprite import Sprite
 from PPlay.window import Window
+from PPlay.sound import Sound
 
 import shipinsane
 
 window = Window(WIDTH, HEIGHT)
+
+music = Sound("../assets/Pirate 1.ogg")
+opening_image = Sprite("../assets/menu_image.jpg")
 
 play_button = Sprite("../assets/play_button.png")
 play_button.set_position(WIDTH / 12, 100)
@@ -22,7 +26,10 @@ mouse = Mouse()
 reload = True
 
 while(True): 
+    music.play()
+
     window.set_background_color((0,0,0))
+    opening_image.draw()
 
     play_button.draw()
     exit_button.draw()
