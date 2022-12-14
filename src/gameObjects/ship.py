@@ -5,6 +5,7 @@ import pygame
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.ship_moviment import get_around_string_list_by_range
 from src.utils.sprite_utilities import Sprite_utils
+from pygame import mixer
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
 from .lifebar import Life_bar
@@ -24,6 +25,7 @@ class Ship(I_Cannon_ball):
         self.is_moving = True
         self.is_shooting = True
 
+        self.sound = mixer.Sound("../assets/explosion1.ogg")
         self.direction = random.choice(['N', 'S', 'E', 'W'])
         self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
         self.is_initial_position_defined = self.set_position_out_of_screen()
@@ -58,6 +60,7 @@ class Ship(I_Cannon_ball):
         self.show_hitbox = boolean
 
     def take_damage(self, damage):
+        self.sound.play()
         self.life -= damage
 
     def check_death(self, enemy_ships):
