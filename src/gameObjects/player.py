@@ -5,7 +5,7 @@ keyboard = Keyboard()
 
 from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from src.utils.sprite_utilities import Sprite_utils
+from src.utils.sprite_utils import Sprite_utils
 
 from .lifebar import I_Life_bar, Life_bar
 

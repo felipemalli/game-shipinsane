@@ -4,7 +4,7 @@ import sys
 import pygame
 from PPlay.sprite import Sprite
 
-from game_parts.window_game import HEIGHT, WIDTH, island, sea, window
+from game_parts.window_game import HEIGHT, WIDTH, island, window
 
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon

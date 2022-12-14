@@ -2,10 +2,10 @@
 import random
 
 import pygame
+from pygame import mixer
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.ship_moviment import get_around_string_list_by_range
-from src.utils.sprite_utilities import Sprite_utils
-from pygame import mixer
+from src.utils.sprite_utils import Sprite_utils
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
 from .lifebar import Life_bar
