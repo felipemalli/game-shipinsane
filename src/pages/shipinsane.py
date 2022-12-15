@@ -12,9 +12,9 @@ from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.player import Player
 from PPlay.keyboard import Keyboard
+from pygame import mixer
 from utils.animation import Animation
 from utils.text_utils import Text_utils
-from pygame import mixer
 
 keyboard = Keyboard()
 
@@ -30,7 +30,7 @@ def init():
 
     sea_sprites = [Sprite("../assets/sea0.png"),Sprite("../assets/sea1.png"),Sprite("../assets/sea2.png"),Sprite("../assets/sea3.png"),Sprite("../assets/sea4.png")]
     sea_animation = Animation(sea_sprites, 0)
-    sound_lose = mixer.Sound("../assets/sf-you-lose.mp3")
+    # sound_lose = mixer.Sound("../assets/sf-you-lose.mp3")
     play_sound = True
 
     # sea_sprite = Sprite("../assets/sea0.png")
@@ -98,6 +98,7 @@ def init():
 
         # -------------- Enemy generation ---------------
 
+
         fleet_of_ships.generate_enemy_ships(delta_time)
 
         # ------------- Player interactions -------------
@@ -127,7 +128,7 @@ def init():
         if player.life <= 0:
             if play_sound:
                 mixer.music.stop()
-                sound_lose.play()
+                # sound_lose.play()
             play_sound = False
             Text_utils.draw_text("Você perdeu!", 100, WIDTH/2, HEIGHT/2)
             Text_utils.draw_text("Digite R para recomeçar.", 35, WIDTH/2, HEIGHT/2 + 120)
