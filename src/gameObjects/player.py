@@ -16,7 +16,7 @@ class Player(I_Life_bar):
         self.island = island
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.show_hitbox = False
-        self.sprite = Sprite_utils.sprite_direction('../assets/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
+        self.sprite = Sprite_utils.sprite_direction('../assets/images/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
         self.cannon_ammo = 10
         self.speed = 100
         self.life = 100
@@ -24,8 +24,8 @@ class Player(I_Life_bar):
         self.key_A = 'free'
         self.key_S = 'free'
         self.key_D = 'free'
-        self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/heart_50x50.png"))
-        self.sound_hit = pygame.mixer.Sound("../assets/hit_player.wav")
+        self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/images/heart_50x50.png"))
+        self.sound_hit = pygame.mixer.Sound("../assets/sounds/hit_player.wav")
         pygame.mixer.Sound.set_volume(self.sound_hit, 0.5)
 
     def get_island(self):
@@ -68,21 +68,21 @@ class Player(I_Life_bar):
 
     def player_direction(self):
         if keyboard.key_pressed("W") and keyboard.key_pressed("D"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'NE', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'NE', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("S") and keyboard.key_pressed("D"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'SE', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'SE', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("S") and keyboard.key_pressed("A"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'SW', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'SW', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("W") and keyboard.key_pressed("A"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'NW', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'NW', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("W"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'N', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'N', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("A"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'W', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'W', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("S"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'S', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'S', self.get_sprite().x, self.get_sprite().y))
         elif keyboard.key_pressed("D"):
-            self.set_sprite(Sprite_utils.sprite_direction('../assets/', 'player', 'E', self.get_sprite().x, self.get_sprite().y))
+            self.set_sprite(Sprite_utils.sprite_direction('../assets/images/', 'player', 'E', self.get_sprite().x, self.get_sprite().y))
 
     def is_inside_island(self):
         if pygame.sprite.collide_mask(self.get_sprite(), self.get_island()):

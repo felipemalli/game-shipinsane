@@ -15,7 +15,7 @@ class Cannon_ball:
         self.cannon_object = cannon_object
         self.angle = angle
 
-        self.sprite = Sprite("../assets/cannon_ball.png")
+        self.sprite = Sprite("../assets/images/cannon_ball.png")
         self.sprite.x = x - (self.sprite.width / 2)
         self.sprite.y = y - (self.sprite.height / 2)
         self.speed = speed
