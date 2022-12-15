@@ -25,6 +25,8 @@ class Player(I_Life_bar):
         self.key_S = 'free'
         self.key_D = 'free'
         self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/heart_50x50.png"))
+        self.sound_hit = pygame.mixer.Sound("../assets/hit_player.wav")
+        pygame.mixer.Sound.set_volume(self.sound_hit, 0.5)
 
     def get_island(self):
         return self.island
@@ -48,6 +50,7 @@ class Player(I_Life_bar):
         return self.life
 
     def take_damage(self, damage):
+        self.sound_hit.play()
         self.life -= damage
 
     def toggle_hitbox(self):

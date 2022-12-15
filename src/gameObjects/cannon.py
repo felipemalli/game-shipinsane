@@ -18,6 +18,8 @@ class Cannon(I_Cannon_ball):
         self.shot_cooldown = 0
         self.shot_speed = 150
         self.damage = 20
+        self.sound_explosion4 = pygame.mixer.Sound("../assets/Explosion 4.ogg")
+        pygame.mixer.Sound.set_volume(self.sound_explosion4, 0.5)
 
         self.sprite = sprite
         self.sprite.x = x
@@ -97,6 +99,7 @@ class Cannon(I_Cannon_ball):
             rot_image, rot_rect = self.move_anticlockwise()
 
         if keyboard.key_pressed("SPACE") and self.shot_cooldown <= 0 and player_object.get_cannon_ammo() > 0:
+            self.sound_explosion4.play()
             player_object.reduce_cannon_ammo()
             self.shot()
             self.shot_cooldown = 1
