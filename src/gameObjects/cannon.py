@@ -18,7 +18,7 @@ class Cannon(I_Cannon_ball):
         self.shot_cooldown = 0
         self.shot_speed = 150
         self.damage = 20
-        self.sound_explosion4 = pygame.mixer.Sound("../assets/Explosion 4.ogg")
+        self.sound_explosion4 = pygame.mixer.Sound("../assets/sounds/Explosion 4.ogg")
         pygame.mixer.Sound.set_volume(self.sound_explosion4, 0.5)
 
         self.sprite = sprite

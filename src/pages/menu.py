@@ -14,20 +14,20 @@ import shipinsane
 
 window = Window(WIDTH, HEIGHT)
 
-mixer.music.load("../assets/Pirate 1.ogg")
+mixer.music.load("../assets/sounds/Pirate 1.ogg")
 mixer.music.play(-1)
-sound_enter = mixer.Sound("../assets/sound_enter.ogg")
+sound_enter = mixer.Sound("../assets/sounds/sound_enter.ogg")
 
-opening_image = Sprite("../assets/menu_image.jpg")
+opening_image = Sprite("../assets/images/menu_image.jpg")
 
 
-play_button = Sprite("../assets/play_button.png")
+play_button = Sprite("../assets/images/play_button.png")
 play_button.set_position(WIDTH / 12, 200)
-play_button_glow = Sprite("../assets/Play_button_glow.png")
+play_button_glow = Sprite("../assets/images/Play_button_glow.png")
 play_button_glow.set_position(WIDTH / 12, 200)
-exit_button = Sprite("../assets/exit_button.png")
+exit_button = Sprite("../assets/images/exit_button.png")
 exit_button.set_position(WIDTH / 12, 600)
-exit_button_glow = Sprite("../assets/exit_button_glow.png")
+exit_button_glow = Sprite("../assets/images/exit_button_glow.png")
 exit_button_glow.set_position(WIDTH / 12, 600)
 
 mouse = Mouse()

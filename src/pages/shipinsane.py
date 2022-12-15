@@ -12,28 +12,21 @@ from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.player import Player
 from PPlay.keyboard import Keyboard
+from pygame import mixer
 from utils.animation import Animation
 from utils.text_utils import Text_utils
-from pygame import mixer
 
 keyboard = Keyboard()
 
 
 def init():
 
-    # enemy_pirate_1 = Sprite("../assets/enemy1.png")
-    # enemy_pirate_2 = Sprite("../assets/enemy2.png")
-    # enemy_pirate_1.x = island.x + island.width / 2 
-    # enemy_pirate_1.y = island.y + 50
-    # enemy_pirate_2.x = island.x + island.width / 2 - 70
-    # enemy_pirate_2.y = island.y + 80
-
-    sea_sprites = [Sprite("../assets/sea0.png"),Sprite("../assets/sea1.png"),Sprite("../assets/sea2.png"),Sprite("../assets/sea3.png"),Sprite("../assets/sea4.png")]
+    sea_sprites = [Sprite("../assets/images/sea0.png"),Sprite("../assets/images/sea1.png"),Sprite("../assets/images/sea2.png"),Sprite("../assets/images/sea3.png"),Sprite("../assets/images/sea4.png")]
     sea_animation = Animation(sea_sprites, 0)
-    sound_lose = mixer.Sound("../assets/sf-you-lose.mp3")
+    # sound_lose = mixer.Sound("../assets/sounds/sf-you-lose.mp3")
     play_sound = True
 
-    # sea_sprite = Sprite("../assets/sea0.png")
+    # sea_sprite = Sprite("../assets/images/sea0.png")
     # image = sea_sprite.image.convert_alpha()
     # image.set_alpha(100)
     # window.get_screen().blit(sea_sprite.image, (0,0))
@@ -44,10 +37,10 @@ def init():
 
     # ----------- Cannons of island  -----------
 
-    cannon_N = Cannon(0, Sprite("../assets/cannon_N.png"), island.x + island.width / 2 - 15, island.y + 20)
-    cannon_S = Cannon(180, Sprite("../assets/cannon_S.png"), island.x + island.width / 2 - 50, island.y + island.height - 50)
-    cannon_W = Cannon(90, Sprite("../assets/cannon_W.png"), island.x + 45, island.y + island.height / 2)
-    cannon_NE = Cannon(300, Sprite("../assets/cannon_NE.png"), island.x + 130 + island.width / 2, island.y + island.height / 2 - 70)
+    cannon_N = Cannon(0, Sprite("../assets/images/cannon_N.png"), island.x + island.width / 2 - 15, island.y + 20)
+    cannon_S = Cannon(180, Sprite("../assets/images/cannon_S.png"), island.x + island.width / 2 - 50, island.y + island.height - 50)
+    cannon_W = Cannon(90, Sprite("../assets/images/cannon_W.png"), island.x + 45, island.y + island.height / 2)
+    cannon_NE = Cannon(300, Sprite("../assets/images/cannon_NE.png"), island.x + 130 + island.width / 2, island.y + island.height / 2 - 70)
 
     # --------- Contact area of cannons ---------
 
@@ -63,7 +56,7 @@ def init():
 
     # ------------ Cannon ball chest -----------
 
-    chest = Sprite("../assets/chest.png")
+    chest = Sprite("../assets/images/chest.png")
     chest.x = island.x + island.x / 2 + island.x / 6
     chest.y = island.y + island.y / 2
 
@@ -98,7 +91,9 @@ def init():
 
         # -------------- Enemy generation ---------------
 
-        fleet_of_ships.generate_enemy_ships(delta_time)
+
+        fleet_of_ships.generate_enemy_ships(delta_time, [40, 100, 40])
+        # fleet_of_ships.generate_enemy_ships(delta_time, [40, 100, 40])
 
         # ------------- Player interactions -------------
 
@@ -127,7 +122,7 @@ def init():
         if player.life <= 0:
             if play_sound:
                 mixer.music.stop()
-                sound_lose.play()
+                # sound_lose.play()
             play_sound = False
             Text_utils.draw_text("Você perdeu!", 100, WIDTH/2, HEIGHT/2)
             Text_utils.draw_text("Digite R para recomeçar.", 35, WIDTH/2, HEIGHT/2 + 120)

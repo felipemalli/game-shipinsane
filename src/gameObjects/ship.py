@@ -17,7 +17,7 @@ class Ship(I_Cannon_ball):
     TOO_CLOSE_TO_SCREEN = 50
     TIME_TO_FIRST_SHOT = 4
 
-    def __init__(self, island, life, speed, damage = 20, shot_speed = 400, shot_cooldown = 10, shot_inaccuracy = 300, shot_quantity = 2):
+    def __init__(self, island, life = 20, speed = 40, damage = 20, shot_speed = 400, shot_cooldown = 10, shot_inaccuracy = 300, shot_quantity = 1):
         self.island = island
         self.life = life
         self.speed = speed
@@ -27,9 +27,9 @@ class Ship(I_Cannon_ball):
         self.is_moving = True
         self.is_shooting = True
 
-        self.sound = pygame.mixer.Sound("../assets/explosion1.ogg")
+        self.sound = pygame.mixer.Sound("../assets/sounds/explosion1.ogg")
         self.direction = random.choice(['N', 'S', 'E', 'W'])
-        self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction)
+        self.sprite = Sprite_utils.sprite_direction('../assets/images/', 'enemy_ship', self.direction)
         self.is_initial_position_defined = self.set_position_out_of_screen()
 
         self.all_directions = ["N", "NW", "W", "SW", "S", "SE", "E", "NE"]
@@ -57,7 +57,7 @@ class Ship(I_Cannon_ball):
         self.shot_quantity = shot_quantity
         self.rect = self.sprite.image.get_rect()
 
-        # self.shot_animation = Animation([Sprite("../assets/enemy1.png"),Sprite("../assets/enemy2.png"),Sprite("../assets/exit_button.png"),Sprite("../assets/play_button.png"),Sprite("../assets/chest.png")])
+        # self.shot_animation = Animation([Sprite("../assets/images/enemy1.png"),Sprite("../assets/images/enemy2.png"),Sprite("../assets/images/exit_button.png"),Sprite("../assets/images/play_button.png"),Sprite("../assets/images/chest.png")])
 
     def get_life(self):
         return self.life
@@ -216,7 +216,7 @@ class Ship(I_Cannon_ball):
                     possible_valid_directions.append(main_direction)
 
         self.direction = random.choice(possible_valid_directions)
-        self.sprite = Sprite_utils.sprite_direction('../assets/', 'enemy_ship', self.direction, self.sprite.x, self.sprite.y)
+        self.sprite = Sprite_utils.sprite_direction('../assets/images/', 'enemy_ship', self.direction, self.sprite.x, self.sprite.y)
 
     def set_directions(self, directions, boolean):
         for direction in directions:
