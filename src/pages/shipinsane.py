@@ -14,6 +14,7 @@ from gameObjects.player import Player
 from PPlay.keyboard import Keyboard
 from utils.animation import Animation
 from utils.text_utils import Text_utils
+from pygame import mixer
 
 keyboard = Keyboard()
 
@@ -29,6 +30,8 @@ def init():
 
     sea_sprites = [Sprite("../assets/sea0.png"),Sprite("../assets/sea1.png"),Sprite("../assets/sea2.png"),Sprite("../assets/sea3.png"),Sprite("../assets/sea4.png")]
     sea_animation = Animation(sea_sprites, 0)
+    sound_lose = mixer.Sound("../assets/sf-you-lose.mp3")
+    play_sound = True
 
     # sea_sprite = Sprite("../assets/sea0.png")
     # image = sea_sprite.image.convert_alpha()
@@ -122,14 +125,21 @@ def init():
     #  ---------------- In progress ----------------
 
         if player.life <= 0:
+            if play_sound:
+                mixer.music.stop()
+                sound_lose.play()
+            play_sound = False
             Text_utils.draw_text("Você perdeu!", 100, WIDTH/2, HEIGHT/2)
             Text_utils.draw_text("Digite R para recomeçar.", 35, WIDTH/2, HEIGHT/2 + 120)
 
             if keyboard.key_pressed("R"):
                 Fleet_of_ships.enemy_ships = []
+                mixer.music.play(-1)
                 return True
 
         if keyboard.key_pressed("ESC"):
+            if player.life <= 0:
+                mixer.music.play(-1)
             Fleet_of_ships.enemy_ships = []
             return False
 
