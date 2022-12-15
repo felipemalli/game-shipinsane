@@ -6,7 +6,7 @@ from .ship import Ship
 class Fleet_of_ships:
     enemy_ships = []
 
-    def __init__(self, island, max_count = 5, average_spawn_speed = 500, enemy_ship_max_life = 40, enemy_ship_speed = 40):
+    def __init__(self, island, max_count = 5, average_spawn_speed = 200, enemy_ship_max_life = 40, enemy_ship_speed = 40):
         self.island = island
         self.max_count = max_count
         self.enemy_ship_max_life = enemy_ship_max_life

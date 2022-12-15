@@ -2,10 +2,21 @@
 import random
 
 import pygame
-from pygame import mixer
+from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.ship_moviment import get_around_string_list_by_range
-from src.utils.sprite_utils import Sprite_utils
+<<<<<<< HEAD
+<<<<<<< HEAD
+from src.utils.sprite_utilities import Sprite_utils
+from pygame import mixer
+=======
+from utils.animation import Animation
+from utils.sprite_utils import Sprite_utils
+>>>>>>> fe0454e4127c8c87cb62357c6ca8b34ad7350910
+=======
+from utils.animation import Animation
+from utils.sprite_utils import Sprite_utils
+>>>>>>> fe0454e4127c8c87cb62357c6ca8b34ad7350910
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
 from .lifebar import Life_bar
@@ -14,12 +25,13 @@ from .lifebar import Life_bar
 class Ship(I_Cannon_ball):
     CLOSE_TO_SCREEN = 150
     TOO_CLOSE_TO_SCREEN = 50
+    TIME_TO_FIRST_SHOT = 4
 
-    def __init__(self, island, life, speed):
+    def __init__(self, island, life, speed, damage = 20, shot_speed = 400, shot_cooldown = 10, shot_inaccuracy = 300, shot_quantity = 2):
         self.island = island
         self.life = life
         self.speed = speed
-        self.damage = 20
+        self.damage = damage
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.show_hitbox = False
         self.is_moving = True
@@ -48,10 +60,14 @@ class Ship(I_Cannon_ball):
         # self.quadrant = ''
     
         self.cannon_ball_list = []
-        self.shot_speed = 200
-        self.shot_cooldown = 4
-        self.shot_inaccuracy = 300
+        self.shot_speed = shot_speed
+        self.shot_cooldown = shot_cooldown
+        self.shot_cooldown_timer = self.TIME_TO_FIRST_SHOT
+        self.shot_inaccuracy = shot_inaccuracy
+        self.shot_quantity = shot_quantity
         self.rect = self.sprite.image.get_rect()
+
+        # self.shot_animation = Animation([Sprite("../assets/enemy1.png"),Sprite("../assets/enemy2.png"),Sprite("../assets/exit_button.png"),Sprite("../assets/play_button.png"),Sprite("../assets/chest.png")])
 
     def get_life(self):
         return self.life
@@ -263,12 +279,15 @@ class Ship(I_Cannon_ball):
 
     def shot(self, delta_time):
         if self.is_shooting:
-            if self.shot_cooldown <= 0:
-                cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
-                self.shot_cooldown = 2
-                self.cannon_ball_list.append(cannon_ball)
+            # self.shot_animation.render_back_and_forth(400, delta_time)
+            if self.shot_cooldown_timer <= 0:
+                # self.shot_animation.active_scroll()
+                for _ in range(self.shot_quantity):
+                    cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
+                    self.cannon_ball_list.append(cannon_ball)
+                self.shot_cooldown_timer = self.shot_cooldown
             if self.shot_cooldown > 0:
-                self.shot_cooldown -= delta_time
+                self.shot_cooldown_timer -= delta_time
     
     def remove_cannon_ball(self, cannon_ball):
         self.cannon_ball_list.remove(cannon_ball)

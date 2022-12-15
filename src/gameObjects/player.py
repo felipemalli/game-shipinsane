@@ -5,7 +5,8 @@ keyboard = Keyboard()
 
 from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from src.utils.sprite_utils import Sprite_utils
+from utils.sprite_utils import Sprite_utils
+from utils.text_utils import Text_utils
 
 from .lifebar import I_Life_bar, Life_bar
 
@@ -128,10 +129,7 @@ class Player(I_Life_bar):
         self.player_direction()
 
     def reload_ammo(self):
-        font = pygame.font.SysFont("Arial", 30, False, False)
-        text = font.render("Press R to reload", False, (0,0,0))
-        text_rect = text.get_rect(center=(WIDTH/2, HEIGHT - 200))
-        window.get_screen().blit(text, text_rect)
-        
+        Text_utils.draw_text("Aperte R para recarregar", 30, WIDTH/2, HEIGHT-200)
+
         if keyboard.key_pressed("R"):
             self.set_cannon_ammo(10)

@@ -9,7 +9,7 @@ from .fleet_of_ships import Fleet_of_ships
 keyboard = Keyboard()
 
 from src.pages.game_parts.window_game import window
-from src.utils.sprite_utils import Sprite_utils
+from utils.sprite_utils import Sprite_utils
 
 
 class Cannon(I_Cannon_ball):

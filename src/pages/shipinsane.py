@@ -1,7 +1,6 @@
 import os
 import sys
 
-import pygame
 from PPlay.sprite import Sprite
 
 from game_parts.window_game import HEIGHT, WIDTH, island, window
@@ -11,9 +10,10 @@ from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
-from gameObjects.lifebar import Life_bar
 from gameObjects.player import Player
 from PPlay.keyboard import Keyboard
+from utils.animation import Animation
+from utils.text_utils import Text_utils
 
 keyboard = Keyboard()
 
@@ -27,17 +27,17 @@ def init():
     # enemy_pirate_2.x = island.x + island.width / 2 - 70
     # enemy_pirate_2.y = island.y + 80
 
+    sea_sprites = [Sprite("../assets/sea0.png"),Sprite("../assets/sea1.png"),Sprite("../assets/sea2.png"),Sprite("../assets/sea3.png"),Sprite("../assets/sea4.png")]
+    sea_animation = Animation(sea_sprites, 0)
+
+    # sea_sprite = Sprite("../assets/sea0.png")
+    # image = sea_sprite.image.convert_alpha()
+    # image.set_alpha(100)
+    # window.get_screen().blit(sea_sprite.image, (0,0))
+
     # -------------------- Player  -------------------
 
     player = Player(island)
-
-    #------------------Sea Sprites--------------------
-
-    image_sprite = [Sprite("../assets/sea0.png"),
-                    Sprite("../assets/sea1.png"),
-                    Sprite("../assets/sea2.png"),
-                    Sprite("../assets/sea3.png"),
-                    Sprite("../assets/sea4.png")]
 
     # ----------- Cannons of island  -----------
 
@@ -77,8 +77,6 @@ def init():
 
     delta_time = 0
 
-    counter = 0
-
     while(True):
         if player.life > 0:
             player.movement(delta_time)
@@ -86,16 +84,8 @@ def init():
         if window.delta_time() < 0.1:
             delta_time = window.delta_time()
 
-       #  ---------- Animation: In progress... ----------
-
-        if (0 <= counter <= 50): image_sprite[0].draw()
-        elif (51 <= counter <= 100): image_sprite[1].draw()
-        elif (101 <= counter <= 150): image_sprite[2].draw()
-        elif (151 <= counter <= 200): image_sprite[3].draw()
-        else: image_sprite[4].draw()
-        counter += 1
-        if counter >= 250: counter = 0
-
+        sea_animation.infinite_scroll(200, delta_time)
+        
         # ----------- Static renderizations ------------
 
         island.draw()
@@ -116,7 +106,7 @@ def init():
         if player.get_hitbox().colliderect(chest): player.reload_ammo()
 
         # ------- Dynamic and order renderizations -------
-       
+    
         cannon_N.render_shots(delta_time)
         cannon_N.render()
         cannon_W.render_shots(delta_time)
@@ -129,18 +119,18 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
 
-       #  ---------------- In progress ----------------
+    #  ---------------- In progress ----------------
 
         if player.life <= 0:
-            font = pygame.font.SysFont("Arial", 100, False, False)
-            text = font.render("Você perdeu!", False, (0,0,0))
-            text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
-            window.get_screen().blit(text, text_rect)
+            Text_utils.draw_text("Você perdeu!", 100, WIDTH/2, HEIGHT/2)
+            Text_utils.draw_text("Digite R para recomeçar.", 35, WIDTH/2, HEIGHT/2 + 120)
 
-        # if keyboard.key_pressed("L"):
-        #     return True
+            if keyboard.key_pressed("R"):
+                Fleet_of_ships.enemy_ships = []
+                return True
 
         if keyboard.key_pressed("ESC"):
+            Fleet_of_ships.enemy_ships = []
             return False
 
         #  ----------------------------------------------
