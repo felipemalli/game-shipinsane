@@ -8,6 +8,7 @@ from PPlay.mouse import Mouse
 from PPlay.sound import Sound
 from PPlay.sprite import Sprite
 from PPlay.window import Window
+from pygame import mixer
 
 import shipinsane
 
