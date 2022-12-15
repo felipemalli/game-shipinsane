@@ -23,7 +23,7 @@ def init():
 
     sea_sprites = [Sprite("../assets/images/sea0.png"),Sprite("../assets/images/sea1.png"),Sprite("../assets/images/sea2.png"),Sprite("../assets/images/sea3.png"),Sprite("../assets/images/sea4.png")]
     sea_animation = Animation(sea_sprites, 0)
-    # sound_lose = mixer.Sound("../assets/sounds/sf-you-lose.mp3")
+    sound_lose = mixer.Sound("../assets/sounds/sf-you-lose.mp3")
     play_sound = True
 
     # sea_sprite = Sprite("../assets/images/sea0.png")
@@ -122,7 +122,7 @@ def init():
         if player.life <= 0:
             if play_sound:
                 mixer.music.stop()
-                # sound_lose.play()
+                sound_lose.play()
             play_sound = False
             Text_utils.draw_text("Você perdeu!", 100, WIDTH/2, HEIGHT/2)
             Text_utils.draw_text("Digite R para recomeçar.", 35, WIDTH/2, HEIGHT/2 + 120)
