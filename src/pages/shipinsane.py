@@ -4,7 +4,7 @@ import sys
 from PPlay.sprite import Sprite
 
 from game_parts.endless_mode import Endless_mode
-from game_parts.window_game import HEIGHT, WIDTH, island, window
+from game_parts.window_game import HEIGHT, WIDTH, island, island_hitbox, window
 
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
@@ -12,12 +12,11 @@ from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.player import Player
-from gameObjects.smoke_effect import SmokeParticle, Smoke
+from gameObjects.smoke_effect import Smoke, SmokeParticle
 from PPlay.keyboard import Keyboard
 from pygame import mixer
 from utils.animation import Animation
 from utils.text_utils import Text_utils
-
 
 keyboard = Keyboard()
 
@@ -37,7 +36,7 @@ def init():
 
     # -------------------- Player  -------------------
 
-    player = Player(island)
+    player = Player(island_hitbox)
 
     # ----------- Cannons of island  -----------
 
@@ -76,10 +75,6 @@ def init():
     # ------------------------------------------
 
     delta_time = 0
-
-    island_view = Sprite("../assets/images/island2.png", 1)
-    island_view.x = WIDTH / 2 - island_view.width / 2
-    island_view.y = HEIGHT / 2 - island_view.height / 2
     
     while(True):
         if player.life > 0:
@@ -92,8 +87,8 @@ def init():
         
         # ----------- Static renderizations ------------
 
+        island_hitbox.draw()
         island.draw()
-        island_view.draw()
         hitbox_switcher.draw(delta_time)
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 2 - 110, HEIGHT - 100, 30)
 
@@ -123,9 +118,6 @@ def init():
 
         smoke.update()
         smoke.draw()
-
-
-
 
     #  ---------------- In progress ----------------
 
