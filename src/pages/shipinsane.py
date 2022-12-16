@@ -11,9 +11,10 @@ from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
+from gameObjects.explosion import Explosion
 from gameObjects.player import Player
 from PPlay.keyboard import Keyboard
-from pygame import mixer
+from pygame import mixer, sprite
 from utils.animation import Animation
 from utils.smoke_effect import Smoke
 from utils.text_utils import Text_utils
@@ -70,6 +71,9 @@ def init():
 
     delta_time = 0
     
+    explosion_group = sprite.Group()
+
+
     while(True):
         if player.life > 0:
             player.movement(delta_time)
@@ -108,6 +112,12 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
         endless_mode.screen_configurations(delta_time)
+
+        explosion_group.draw(window.get_screen())
+        explosion_group.update()
+        if keyboard.key_pressed("SPACE"):
+            explosion = Explosion(500, 500)
+            explosion_group.add(explosion)
 
     #  ---------------- In progress ----------------
 
