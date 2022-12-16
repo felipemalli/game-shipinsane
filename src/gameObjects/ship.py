@@ -11,6 +11,7 @@ from utils.sprite_utils import Sprite_utils
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
 from .lifebar import Life_bar
+from .pontuation import Pontuation
 
 
 class Ship(I_Cannon_ball):
@@ -78,6 +79,9 @@ class Ship(I_Cannon_ball):
 
     def check_death(self, enemy_ships, delta_time):
         if self.life <= 0:
+            if self.is_shooting:
+                if self.image_name == 'enemy_ship': Pontuation.add_pontuation(5)
+                else: Pontuation.add_pontuation(30)
             self.is_shooting = False
             self.is_moving = False
             self.death_animation.x = self.sprite.x + (self.sprite.width / 2)

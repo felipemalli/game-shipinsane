@@ -38,13 +38,13 @@ class Fleet_of_ships:
         else: enemy_ship = Ship(self.island, image_name)
         Fleet_of_ships.enemy_ships.append(enemy_ship)
 
-    def render_ships(self, delta_time):
+    def render_ships(self, delta_time, player):
         for enemy_ship in Fleet_of_ships.enemy_ships:
             enemy_ship.set_show_hitbox(self.show_hitbox)
             enemy_ship.draw()
             enemy_ship.render_shots(delta_time, self.targets)
             if enemy_ship.is_moving: enemy_ship.move(delta_time)
-            if enemy_ship.is_shooting: enemy_ship.shot(delta_time)
+            if enemy_ship.is_shooting and player.life > 0: enemy_ship.shot(delta_time)
 
         for enemy_ship in Fleet_of_ships.enemy_ships:
             enemy_ship.check_death(self.enemy_ships, delta_time)

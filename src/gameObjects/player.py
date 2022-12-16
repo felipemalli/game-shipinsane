@@ -5,7 +5,6 @@ keyboard = Keyboard()
 
 from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
-from utils.smoke_effect import Smoke
 from utils.sprite_utils import Sprite_utils
 from utils.text_utils import Text_utils
 
@@ -21,12 +20,13 @@ class Player(I_Life_bar):
         self.cannon_max_ammo = 10
         self.cannon_ammo = self.cannon_max_ammo
         self.speed = 100
+        self.max_life = 100
         self.life = 100
         self.key_W = 'free'
         self.key_A = 'free'
         self.key_S = 'free'
         self.key_D = 'free'
-        self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/images/heart_50x50.png"))
+        self.life_bar = Life_bar(self, self.max_life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/images/heart_50x50.png"))
         self.sound_reload = pygame.mixer.Sound("../assets/sounds/Reload.wav")
         self.sound_hit = self.generate_sound_hit()
 
@@ -139,7 +139,7 @@ class Player(I_Life_bar):
         self.player_direction()
 
     def reload_ammo(self):
-        Text_utils.draw_text("Aperte R para recarregar", 30, WIDTH/2, HEIGHT-200)
+        Text_utils.draw_text("Press R to reload", 30, WIDTH/2, HEIGHT-200)
 
         if keyboard.key_pressed("R"):
             if self.cannon_ammo < self.cannon_max_ammo:

@@ -27,7 +27,8 @@ class SmokeParticle:
         self.vy = self.initial_height + random.randint(self.min_random_height, self.max_random_height) / 10
         self.k = 0.01 * random.random() * random.choice([-1, 1]) * x_variaton
 
-    def update(self):
+    def update(self, delta_time = 1):
+        if delta_time != 1: delta_time *= 100
         self.x += self.vx
         self.vx += self.k
         self.y -= self.vy
@@ -37,7 +38,7 @@ class SmokeParticle:
         if self.alpha < 0:
             self.alpha = 0
             self.alive = False
-        self.alpha_rate -= 0.1
+        self.alpha_rate -= 0.1 * delta_time
         if self.alpha_rate < 1.5:
             self.alpha_rate = 1.5
         self.img = scale(self.image, self.scale_k)

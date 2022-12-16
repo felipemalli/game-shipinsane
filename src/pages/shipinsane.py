@@ -12,6 +12,7 @@ from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.player import Player
+from gameObjects.pontuation import Pontuation
 from PPlay.keyboard import Keyboard
 from pygame import mixer, sprite
 from utils.animation import Animation
@@ -86,7 +87,6 @@ def init():
         island_hitbox.draw()
         island.draw()
         hitbox_switcher.draw(delta_time)
-        window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 2 - 110, HEIGHT - 100, 30)
 
         # ------------- Player interactions -------------
 
@@ -110,7 +110,8 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
         endless_mode.screen_configurations(delta_time)
-
+        window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 2 - 110, HEIGHT - 100, 30)
+        Pontuation.draw()
     #  ---------------- In progress ----------------
 
         if player.life <= 0:
@@ -118,8 +119,8 @@ def init():
                 mixer.music.stop()
                 sound_lose.play()
             play_sound = False
-            Text_utils.draw_text("Você perdeu!", 100, WIDTH/2, HEIGHT/2)
-            Text_utils.draw_text("Digite R para recomeçar.", 35, WIDTH/2, HEIGHT/2 + 120)
+            Text_utils.draw_text("You lose!", 100, WIDTH/2, HEIGHT/2)
+            Text_utils.draw_text("Press R to restart.", 35, WIDTH/2, HEIGHT/2 + 160)
 
             if keyboard.key_pressed("R"):
                 Fleet_of_ships.enemy_ships = []

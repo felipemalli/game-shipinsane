@@ -8,6 +8,7 @@ from .window_game import WIDTH, window
 
 sys.path.insert(0, os.path.abspath("../"))
 from gameObjects.fleet_of_ships import Fleet_of_ships
+from gameObjects.pontuation import Pontuation
 from utils.text_utils import Text_utils
 
 
@@ -39,18 +40,18 @@ class Endless_mode:
 
     def show_configs(self):
         window.draw_text("Player:", 20, 20, 15, (46,46,46), "Arial", True)
-        window.draw_text("- max life: " + str(self.player.life), 40, 40, 15, (46,46,46), "Arial", True)
+        window.draw_text("- max life: " + str(self.player.max_life), 40, 40, 15, (46,46,46), "Arial", True)
         window.draw_text("- speed: " + str(self.player.speed), 40, 60, 15, (46,46,46), "Arial", True)
         window.draw_text("- max ammo: " + str(self.player.cannon_max_ammo), 40, 80, 15, (46,46,46), "Arial", True)
         window.draw_text("Enemy ship:", 20, 100, 15, (46,46,46), "Arial", True)
         window.draw_text("- life: " + str(self.life), 40, 120, 15, (46,46,46), "Arial", True)
         window.draw_text("- speed: " + str(self.speed), 40, 140, 15, (46,46,46), "Arial", True)
         window.draw_text("- damage: " + str(self.damage), 40, 160, 15, (46,46,46), "Arial", True)
-        window.draw_text("- shot cooldown: " + str(self.speed), 40, 180, 15, (46,46,46), "Arial", True)
-        window.draw_text("- shot inaccuracy: " + str(self.damage), 40, 200, 15, (46,46,46), "Arial", True)
-        window.draw_text("- cannon ball per shot: " + str(self.damage), 40, 220, 15, (46,46,46), "Arial", True)
-        window.draw_text("- max count on screen: " + str(self.fleet_of_ships.max_count), 40, 240, 15, (46,46,46), "Arial", True)
-        window.draw_text("- spawn speed: " + str(self.fleet_of_ships.average_spawn_speed), 40, 260, 15, (46,46,46), "Arial", True)
+        window.draw_text("- max count on screen: " + str(self.fleet_of_ships.max_count), 40, 180, 15, (46,46,46), "Arial", True)
+        window.draw_text("- spawn speed: " + str(self.fleet_of_ships.average_spawn_speed), 40, 200, 15, (46,46,46), "Arial", True)
+        window.draw_text("- shot cooldown: " + str(self.speed), 40, 220, 15, (46,46,46), "Arial", True)
+        window.draw_text("- shot inaccuracy: " + str(self.damage), 40, 240, 15, (46,46,46), "Arial", True)
+        window.draw_text("- cannon ball per shot: " + str(self.damage), 40, 260, 15, (46,46,46), "Arial", True)
 
     def screen_configurations(self, delta_time):
         if self.toggle_config_cooldown > 0:
@@ -68,14 +69,15 @@ class Endless_mode:
         self.timer_in_seconds += delta_time
         self.timer_in_minutes = self.timer_in_seconds / 60
 
-    def render_timer(self):
+    def render_timer(self, delta_time):
         self.minutes = math.floor(self.timer_in_minutes)
-        self.seconds = math.floor(self.timer_in_seconds)
-        if self.seconds > 60: self.seconds -= 60
-        Text_utils.draw_text(str(self.minutes).zfill(2) + " : " + str(self.seconds).zfill(2), 30, WIDTH / 2, 20)
+        self.seconds += delta_time
+        if self.seconds >= 60: self.seconds -= 60
+        Text_utils.draw_text(str(self.minutes).zfill(2) + " : " + str(math.floor(self.seconds)).zfill(2), 30, WIDTH / 2, 60)
+        Pontuation.update_time_by_seconds(self.timer_in_seconds)
 
     def render(self, delta_time):
-        self.render_timer()
+        self.render_timer(delta_time)
         self.delta_time = delta_time
         self.fleet_of_ships.generate_enemy_ships(delta_time, 
             [
@@ -83,7 +85,7 @@ class Endless_mode:
                 self.shot_cooldown, self.shot_inaccuracy, self.shot_quantity
             ]
         )
-        self.fleet_of_ships.render_ships(delta_time)
+        self.fleet_of_ships.render_ships(delta_time, self.player)
         self.increase_timer(delta_time)
         self.balancing_management(delta_time)
 

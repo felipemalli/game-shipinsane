@@ -55,8 +55,8 @@ class Cannon(I_Cannon_ball):
         pygame.mixer.Sound.set_volume(sound, 0.5)
         return sound
 
-    def render_smoke(self):
-        self.smoke.update()
+    def render_smoke(self, delta_time):
+        self.smoke.update(delta_time)
         self.smoke.draw()
 
     """Ensure that cannon ball will come out in the perfect position"""
@@ -106,7 +106,7 @@ class Cannon(I_Cannon_ball):
 
         self.explosion_group.draw(window.get_screen())
         self.explosion_group.update()
-        if self.is_shooting and self.smoke.alive: self.render_smoke()
+        if self.is_shooting and self.smoke.alive: self.render_smoke(delta_time)
 
     def render(self):
         window.get_screen().blit(self.rot_image, self.rot_rect)
