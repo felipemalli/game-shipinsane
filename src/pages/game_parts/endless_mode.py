@@ -71,8 +71,9 @@ class Endless_mode:
         self.timer_in_minutes = self.timer_in_seconds / 60
 
     def render_timer(self, delta_time):
-        self.minutes = math.floor(self.timer_in_minutes)
-        self.seconds += delta_time
+        if self.player.life > 0:
+            self.minutes = math.floor(self.timer_in_minutes)
+            self.seconds += delta_time
         if self.seconds >= 60: self.seconds -= 60
         Text_utils.draw_text(str(self.minutes).zfill(2) + " : " + str(math.floor(self.seconds)).zfill(2), 30, WIDTH / 2, 60)
         Pontuation.update_time_by_seconds(self.timer_in_seconds)
@@ -87,9 +88,9 @@ class Endless_mode:
             ]
         )
         self.fleet_of_ships.render_ships(delta_time, self.player)
-        self.increase_timer(delta_time)
-        self.balancing_management(delta_time)
-        print(self.minutes)
+        if self.player.life > 0: 
+            self.increase_timer(delta_time)
+            self.balancing_management(delta_time)
 
     def timer_reaches(self, minute, seconds):
         time = seconds + (minute * 60)
@@ -144,6 +145,9 @@ class Endless_mode:
 
         if self.timer_reaches(3, 0):
             self.fleet_of_ships.max_count += 1
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(3, 30):
             self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
 
         if self.timer_reaches(4, 30):

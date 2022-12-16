@@ -25,7 +25,6 @@ keyboard = Keyboard()
 
 
 def init():
-
     sea_sprites = [Sprite("../assets/images/sea0.png"),Sprite("../assets/images/sea1.png"),Sprite("../assets/images/sea2.png"),Sprite("../assets/images/sea3.png"),Sprite("../assets/images/sea4.png")]
     sea_animation = Animation(sea_sprites, 0)
     sound_lose = mixer.Sound("../assets/sounds/sf-you-lose.mp3")
@@ -112,7 +111,8 @@ def init():
         endless_mode.screen_configurations(delta_time)
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 2 - 110, HEIGHT - 100, 30)
         Pontuation.draw()
-    #  ---------------- In progress ----------------
+
+    #  ------------------ Key Pressed ------------------
 
         if player.life <= 0:
             if play_sound:
@@ -124,17 +124,18 @@ def init():
 
             if keyboard.key_pressed("R"):
                 Fleet_of_ships.enemy_ships = []
+                Pontuation.PONTUATION = 0
                 mixer.music.play(-1)
                 return True
 
         if keyboard.key_pressed("ESC"):
             if player.life <= 0:
                 mixer.music.play(-1)
+            Pontuation.PONTUATION = 0
             Fleet_of_ships.enemy_ships = []
             return False
 
-        if keyboard.key_pressed("P"):
-            pause.init()
+        if keyboard.key_pressed("P"): pause.init()
 
         #  ----------------------------------------------
 

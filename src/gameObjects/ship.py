@@ -38,10 +38,6 @@ class Ship(I_Cannon_ball):
         self.all_directions = ["N", "NW", "W", "SW", "S", "SE", "E", "NE"]
         self.direction_dict = { direction: True for direction in self.all_directions }
 
-        # self.average_change_direction_speed = 100
-        # self.change_direction_initial_timer = 20
-        # self.change_direction_timer = self.change_direction_initial_timer
-
         self.life_bar = Life_bar(self, self.life, self.life, self.sprite.x - self.sprite.width / 2, self.sprite.y - 13, 50, 10)
 
         """ Random speed for perpendicular direction """
@@ -49,8 +45,6 @@ class Ship(I_Cannon_ball):
         self.change_random_speed = 5
         self.random_speed_NS = 0
         self.random_speed_EW = 0
-
-        # self.quadrant = ''
     
         self.cannon_ball_list = []
         self.shot_speed = shot_speed
@@ -64,8 +58,6 @@ class Ship(I_Cannon_ball):
         self.death_animation = Smoke(self.sprite.x, self.sprite.y, 200, 1, 7, 10, 0.3)
         self.alpha = 255
         self.alpha_rate = 7
-
-        # self.shot_animation = Animation([Sprite("../assets/images/enemy1.png"),Sprite("../assets/images/enemy2.png"),Sprite("../assets/images/exit_button.png"),Sprite("../assets/images/play_button.png"),Sprite("../assets/images/chest.png")])
 
     def get_life(self):
         return self.life
@@ -116,25 +108,6 @@ class Ship(I_Cannon_ball):
             self.life_bar.x = self.sprite.x + self.sprite.width - (self.sprite.width / 2) - (self.life_bar.size / 2)
             self.life_bar.y = self.sprite.y - 13
             self.life_bar.draw()
-
-    # """Initial position with middle included"""
-    # def set_position_out_of_screen(self):
-    #     if self.direction == 'S': # coming from N
-    #         self.sprite.y = - self.sprite.height
-    #         self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
-    #         return
-    #     if self.direction == 'N': # coming from S
-    #         self.sprite.y = HEIGHT
-    #         self.sprite.x = random.randint(0, WIDTH - self.sprite.width)
-    #         return
-    #     if self.direction == 'E': # coming from W
-    #         self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
-    #         self.sprite.x = - self.sprite.width
-    #         return
-    #     if self.direction == 'W': # coming from E
-    #         self.sprite.y = random.randint(0, HEIGHT - self.sprite.height)
-    #         self.sprite.x = WIDTH
-    #         return
 
     """Initial position with middle not included"""
     def set_position_out_of_screen(self):
@@ -282,21 +255,11 @@ class Ship(I_Cannon_ball):
             self.prevents_going_through('E')
             self.prevents_going_through('S')
             self.prevents_going_through('W')
-            
-            """Ship to random direction | In progress..."""
-            #
-            # if self.change_direction_timer > 0:
-            #     self.change_direction_timer -= self.change_direction_speed * delta_time
-            # else:
-            #     random_timer = self.generate_random_num_around(self.)
-
             self.move_to_a_direction(self.direction, delta_time)
 
     def shot(self, delta_time):
         if self.is_shooting:
-            # self.shot_animation.render_back_and_forth(400, delta_time)
             if self.shot_cooldown_timer <= 0:
-                # self.shot_animation.active_scroll()
                 for _ in range(self.shot_quantity):
                     cannon_ball = Cannon_ball(self.sprite.x + (self.sprite.width / 2), self.sprite.y + (self.sprite.height / 2), self.shot_speed, self)
                     self.cannon_ball_list.append(cannon_ball)
@@ -319,15 +282,3 @@ class Ship(I_Cannon_ball):
                 if cannon_ball.sprite.rect.colliderect(target.hitbox):
                     self.remove_cannon_ball(cannon_ball)
                     target.take_damage(self.damage)
-
-    # def update_quadrant(self):
-    #     if self.hitbox.y + (self.hitbox.height / 2) < HEIGHT / 2:
-    #         if self.hitbox.x + (self.hitbox.width / 2) > WIDTH / 2:
-    #             self.quadrant = 'NE'
-    #         else:
-    #             self.quadrant = 'NW'
-    #     else:
-    #         if self.hitbox.x + (self.hitbox.width / 2) > WIDTH / 2:
-    #             self.quadrant = 'SE'
-    #         else:
-    #             self.quadrant = 'SW'

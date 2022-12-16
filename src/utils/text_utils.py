@@ -3,7 +3,6 @@ from src.pages.game_parts.window_game import window
 
 
 class Text_utils:
-    
     @classmethod
     def draw_text(self, text, font_size, center_x, center_y, font = "Arial"):
         font_sys = pygame.font.SysFont(font, font_size, False, False)

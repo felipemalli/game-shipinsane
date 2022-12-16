@@ -25,7 +25,6 @@ class Fleet_of_ships:
         self.show_hitbox = not self.show_hitbox
 
     def generate_enemy_ships(self, delta_time, parameters = None):
-        # print(self.spawn_speed)
         if len(Fleet_of_ships.enemy_ships) < self.max_count and self.next_ship_timer > 0:
             self.next_ship_timer -= self.spawn_speed * delta_time
         if self.next_ship_timer <= 0:
