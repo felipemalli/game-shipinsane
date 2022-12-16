@@ -19,7 +19,7 @@ class Ship(I_Cannon_ball):
     TOO_CLOSE_TO_SCREEN = 50
     TIME_TO_FIRST_SHOT = 4
 
-    def __init__(self, island, image_name = 'enemy_ship', life = 20, speed = 40, damage = 20, shot_speed = 400, shot_cooldown = 10, shot_inaccuracy = 300, shot_quantity = 1):
+    def __init__(self, island, image_name = 'enemy_ship', life = 20, speed = 40, damage = 10, shot_speed = 400, shot_cooldown = 10, shot_inaccuracy = 300, shot_quantity = 1):
         self.island = island
         self.life = life
         self.speed = speed

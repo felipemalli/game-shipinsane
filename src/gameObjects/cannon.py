@@ -20,7 +20,7 @@ class Cannon(I_Cannon_ball):
     def __init__(self, initial_angle, sprite_c, x, y):
         self.cannon_ball_list = []
         self.shot_cooldown = 0
-        self.shot_speed = 150
+        self.shot_speed = 200
         self.damage = 20
         self.sound_explosion = self.render_sound_explosion()
 

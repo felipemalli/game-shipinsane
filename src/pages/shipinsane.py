@@ -57,8 +57,8 @@ def init():
     # ------------ Cannon ball chest -----------
 
     chest = Sprite("../assets/images/chest.png")
-    chest.x = island.x + island.x / 2 + island.x / 6
-    chest.y = island.y + island.y / 2
+    chest.x = island.x + island.x / 2 + island.x / 6 - 25
+    chest.y = island.y + island.y / 2 - 10
 
     # -------------- Game modes  ------------
 

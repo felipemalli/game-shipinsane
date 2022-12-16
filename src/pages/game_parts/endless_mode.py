@@ -20,8 +20,8 @@ class Endless_mode:
         self.initial_average_spawn_speed = 200
         self.life = 20
         self.speed = 40
-        self.damage = 20
-        self.shot_speed = 400
+        self.damage = 10
+        self.shot_speed = 300
         self.shot_cooldown = 5
         self.shot_inaccuracy = 300
         self.shot_quantity = 1
@@ -49,9 +49,10 @@ class Endless_mode:
         window.draw_text("- damage: " + str(self.damage), 40, 160, 15, (46,46,46), "Arial", True)
         window.draw_text("- max count on screen: " + str(self.fleet_of_ships.max_count), 40, 180, 15, (46,46,46), "Arial", True)
         window.draw_text("- spawn speed: " + str(self.fleet_of_ships.average_spawn_speed), 40, 200, 15, (46,46,46), "Arial", True)
-        window.draw_text("- shot cooldown: " + str(self.speed), 40, 220, 15, (46,46,46), "Arial", True)
-        window.draw_text("- shot inaccuracy: " + str(self.damage), 40, 240, 15, (46,46,46), "Arial", True)
-        window.draw_text("- cannon ball per shot: " + str(self.damage), 40, 260, 15, (46,46,46), "Arial", True)
+        window.draw_text("- shot speed: " + str(self.shot_speed), 40, 220, 15, (46,46,46), "Arial", True)
+        window.draw_text("- shot cooldown: " + str(self.shot_cooldown), 40, 240, 15, (46,46,46), "Arial", True)
+        window.draw_text("- shot inaccuracy: " + str(self.shot_inaccuracy), 40, 260, 15, (46,46,46), "Arial", True)
+        window.draw_text("- cannon ball per shot: " + str(self.shot_quantity), 40, 280, 15, (46,46,46), "Arial", True)
 
     def screen_configurations(self, delta_time):
         if self.toggle_config_cooldown > 0:
@@ -88,6 +89,7 @@ class Endless_mode:
         self.fleet_of_ships.render_ships(delta_time, self.player)
         self.increase_timer(delta_time)
         self.balancing_management(delta_time)
+        print(self.minutes)
 
     def timer_reaches(self, minute, seconds):
         time = seconds + (minute * 60)
@@ -104,22 +106,114 @@ class Endless_mode:
 
     def boss_parameters(self):
         return [
-            self.life * 3,
+            self.life * 2,
             self.speed,
             self.damage,
             self.shot_speed,
-            self.shot_cooldown / 2,
+            self.shot_cooldown / 1.25,
             self.shot_inaccuracy,
-            self.shot_quantity * 3,
+            self.shot_quantity * 2,
         ]  
     
     def timer_balancing(self):
-        if self.timer_reaches(0, 10):
+        if self.minutes != 0 and (self.minutes % 2 == 0 or self.minutes == 1) and self.seconds < 1:
             self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(0, 10):
+            self.fleet_of_ships.average_spawn_speed += 50
+
         if self.timer_reaches(0, 20):
             self.fleet_of_ships.max_count += 1
-            self.fleet_of_ships.average_spawn_speed += 100
+            self.fleet_of_ships.average_spawn_speed += 50
+            self.shot_cooldown -= 0.5
+            self.shot_speed += 50
+
+        if self.timer_reaches(0, 30):
+            self.shot_cooldown -= 0.5
+            self.damage += 5
 
         if self.timer_reaches(0, 40):
-            self.shot_speed += 20
-        # if self.timer_reaches()
+            self.shot_cooldown -= 0.5
+        
+        if self.timer_reaches(1, 30):
+            self.fleet_of_ships.average_spawn_speed += 50
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(2, 0):
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(3, 0):
+            self.fleet_of_ships.max_count += 1
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(4, 30):
+            self.shot_speed += 50
+
+        if self.timer_reaches(5, 0):
+            self.shot_quantity += 1
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(6, 0):
+            self.fleet_of_ships.max_count += 1
+
+        if self.timer_reaches(7, 0):
+            self.fleet_of_ships.average_spawn_speed += 50
+    
+        if self.timer_reaches(9, 0):
+            self.damage += 5
+            self.fleet_of_ships.max_count += 1
+
+        if self.timer_reaches(9, 30):
+            self.life += 20
+
+        if self.timer_reaches(10, 0):
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(11, 0):
+            self.shot_inaccuracy -= 50
+
+        if self.timer_reaches(13, 0):
+            self.shot_inaccuracy -= 50
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(15, 0):
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.shot_cooldown -= 0.5
+
+        if self.timer_reaches(17, 0):
+            self.shot_inaccuracy -= 50
+
+        if self.timer_reaches(20, 0):
+            self.shot_speed += 50
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(22, 30):
+            self.shot_inaccuracy -= 50
+
+        if self.timer_reaches(25, 0):
+            self.fleet_of_ships.max_count += 1
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(27, 30):
+            self.shot_inaccuracy -= 50
+
+        if self.timer_reaches(30, 0):
+            self.shot_speed += 50
+            self.shot_inaccuracy -= 50
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+
+        if self.timer_reaches(60, 0):
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())

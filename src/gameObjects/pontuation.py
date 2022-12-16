@@ -10,7 +10,9 @@ class Pontuation:
 
     @classmethod
     def add_pontuation(self, pontuation):
-        self.PONTUATION += (pontuation + (pontuation * (self.TIME_SECONDS / 150)))
+        seconds = self.TIME_SECONDS
+        if self.TIME_SECONDS > 1800: seconds = 1800
+        self.PONTUATION += (pontuation + (pontuation * (seconds / 150)))
 
     @classmethod
     def draw(self):
