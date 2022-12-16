@@ -3,6 +3,7 @@ import sys
 
 from PPlay.sprite import Sprite
 
+from game_parts.endless_mode import Endless_mode
 from game_parts.window_game import HEIGHT, WIDTH, island, window
 
 sys.path.insert(0, os.path.abspath("../")) # src/
@@ -60,19 +61,23 @@ def init():
     chest.x = island.x + island.x / 2 + island.x / 6
     chest.y = island.y + island.y / 2
 
-    # -------------- Fleet_of_ships ------------
+    # -------------- Game modes  ------------
 
-    fleet_of_ships = Fleet_of_ships(island)
-    fleet_of_ships.add_target(player)
+    endless_mode = Endless_mode(island)
+    endless_mode.add_player(player)
 
     # ---------------- Hitbox Switcher ---------------
 
-    hitbox_switcher = Hitbox_switcher([player, fleet_of_ships])
+    hitbox_switcher = Hitbox_switcher([player, endless_mode.fleet_of_ships])
 
     # ------------------------------------------
 
     delta_time = 0
 
+    island_view = Sprite("../assets/images/island2.png", 1)
+    island_view.x = WIDTH / 2 - island_view.width / 2
+    island_view.y = HEIGHT / 2 - island_view.height / 2
+    
     while(True):
         if player.life > 0:
             player.movement(delta_time)
@@ -85,15 +90,9 @@ def init():
         # ----------- Static renderizations ------------
 
         island.draw()
+        island_view.draw()
         hitbox_switcher.draw(delta_time)
-
         window.draw_text('Cannon ammo: ' + str(player.get_cannon_ammo()), WIDTH / 2 - 110, HEIGHT - 100, 30)
-
-        # -------------- Enemy generation ---------------
-
-
-        fleet_of_ships.generate_enemy_ships(delta_time, [40, 100, 40])
-        # fleet_of_ships.generate_enemy_ships(delta_time, [40, 100, 40])
 
         # ------------- Player interactions -------------
 
@@ -111,11 +110,12 @@ def init():
         cannon_W.render()
         cannon_NE.render_shots(delta_time)
         cannon_NE.render()
-        fleet_of_ships.render_ships(delta_time)
+        endless_mode.render(delta_time)
         player.draw()
         cannon_S.render()
         cannon_S.render_shots(delta_time)
         chest.draw()
+        endless_mode.screen_configurations(delta_time)
 
     #  ---------------- In progress ----------------
 

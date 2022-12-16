@@ -6,7 +6,7 @@ from .ship import Ship
 class Fleet_of_ships:
     enemy_ships = []
 
-    def __init__(self, island, max_count = 2, average_spawn_speed = 200):
+    def __init__(self, island, max_count = 2, average_spawn_speed = 100):
         self.island = island
         self.max_count = max_count
         self.average_spawn_speed = average_spawn_speed
@@ -25,9 +25,9 @@ class Fleet_of_ships:
         self.show_hitbox = not self.show_hitbox
 
     def generate_enemy_ships(self, delta_time, parameters = None):
+        print(self.spawn_speed)
         if len(Fleet_of_ships.enemy_ships) < self.max_count and self.next_ship_timer > 0:
             self.next_ship_timer -= self.spawn_speed * delta_time
-
         if self.next_ship_timer <= 0:
             self.spawn_speed = self.generate_random_num_around(self.average_spawn_speed, 30)
             self.next_ship_timer = self.next_ship_initial_timer

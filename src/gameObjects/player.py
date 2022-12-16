@@ -17,7 +17,8 @@ class Player(I_Life_bar):
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.show_hitbox = False
         self.sprite = Sprite_utils.sprite_direction('../assets/images/', 'player', 'S', island.x + island.width / 2 - 35, island.y + island.height / 2 - 25)
-        self.cannon_ammo = 10
+        self.cannon_max_ammo = 10
+        self.cannon_ammo = self.cannon_max_ammo
         self.speed = 100
         self.life = 100
         self.key_W = 'free'
@@ -135,4 +136,4 @@ class Player(I_Life_bar):
         Text_utils.draw_text("Aperte R para recarregar", 30, WIDTH/2, HEIGHT-200)
 
         if keyboard.key_pressed("R"):
-            self.set_cannon_ammo(10)
+            self.set_cannon_ammo(self.cannon_max_ammo)
