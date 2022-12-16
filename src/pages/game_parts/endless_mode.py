@@ -99,11 +99,25 @@ class Endless_mode:
         if self.balancing_timer <= 0:
             self.balancing_timer = 2
             self.timer_balancing()
+
+    def boss_parameters(self):
+        return [
+            self.life * 3,
+            self.speed,
+            self.damage,
+            self.shot_speed,
+            self.shot_cooldown / 2,
+            self.shot_inaccuracy,
+            self.shot_quantity * 3,
+        ]  
     
     def timer_balancing(self):
+        if self.timer_reaches(0, 10):
+            self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
         if self.timer_reaches(0, 20):
             self.fleet_of_ships.max_count += 1
             self.fleet_of_ships.average_spawn_speed += 100
+
         if self.timer_reaches(0, 40):
             self.shot_speed += 20
         # if self.timer_reaches()

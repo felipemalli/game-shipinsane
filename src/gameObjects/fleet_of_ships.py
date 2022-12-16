@@ -31,11 +31,11 @@ class Fleet_of_ships:
         if self.next_ship_timer <= 0:
             self.spawn_speed = self.generate_random_num_around(self.average_spawn_speed, 30)
             self.next_ship_timer = self.next_ship_initial_timer
-            self.create_enemy_ship(parameters)
+            self.create_enemy_ship('enemy_ship', parameters)
 
-    def create_enemy_ship(self, parameters):
-        if parameters: enemy_ship = Ship(self.island, *parameters)
-        else: enemy_ship = Ship(self.island)
+    def create_enemy_ship(self, image_name = 'enemy_ship', parameters = None):
+        if parameters: enemy_ship = Ship(self.island, image_name, *parameters)
+        else: enemy_ship = Ship(self.island, image_name)
         Fleet_of_ships.enemy_ships.append(enemy_ship)
 
     def render_ships(self, delta_time):

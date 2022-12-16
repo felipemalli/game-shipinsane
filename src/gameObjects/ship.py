@@ -18,7 +18,7 @@ class Ship(I_Cannon_ball):
     TOO_CLOSE_TO_SCREEN = 50
     TIME_TO_FIRST_SHOT = 4
 
-    def __init__(self, island, life = 20, speed = 40, damage = 20, shot_speed = 400, shot_cooldown = 10, shot_inaccuracy = 300, shot_quantity = 1):
+    def __init__(self, island, image_name = 'enemy_ship', life = 20, speed = 40, damage = 20, shot_speed = 400, shot_cooldown = 10, shot_inaccuracy = 300, shot_quantity = 1):
         self.island = island
         self.life = life
         self.speed = speed
@@ -30,7 +30,7 @@ class Ship(I_Cannon_ball):
 
         self.sound = pygame.mixer.Sound("../assets/sounds/explosion1.ogg")
         self.direction = random.choice(['N', 'S', 'E', 'W'])
-        self.sprite = Sprite_utils.sprite_direction('../assets/images/', 'enemy_ship', self.direction)
+        self.sprite = Sprite_utils.sprite_direction('../assets/images/', image_name, self.direction)
         self.is_initial_position_defined = self.set_position_out_of_screen()
 
         self.all_directions = ["N", "NW", "W", "SW", "S", "SE", "E", "NE"]
