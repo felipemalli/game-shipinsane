@@ -117,23 +117,23 @@ class Ship(I_Cannon_ball):
         space_ship_island = 50
         if self.direction == 'S': # coming from N
             self.sprite.y = - self.sprite.height
-            if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
-            elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
+            if 'left' in side: self.sprite.x = random.randint(0, int(self.island.x - self.sprite.width - space_ship_island))
+            elif 'right' in side: self.sprite.x = random.randint(int(self.island.x + self.island.width + space_ship_island), WIDTH - self.sprite.width)
             return True
         if self.direction == 'N': # coming from S
             self.sprite.y = HEIGHT
-            if 'left' in side: self.sprite.x = random.randint(0, self.island.x - self.sprite.width - space_ship_island)
-            elif 'right' in side: self.sprite.x = random.randint(self.island.x + self.island.width + space_ship_island, WIDTH - self.sprite.width)
+            if 'left' in side: self.sprite.x = random.randint(0, int(self.island.x - self.sprite.width - space_ship_island))
+            elif 'right' in side: self.sprite.x = random.randint(int(self.island.x + self.island.width + space_ship_island), WIDTH - self.sprite.width)
             return True
         if self.direction == 'E': # coming from W
             self.sprite.x = - self.sprite.width
-            if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
-            elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
+            if 'up' in side: self.sprite.y = random.randint(0, int(self.island.y - self.sprite.height - space_ship_island))
+            elif 'down' in side: self.sprite.y = random.randint(int(self.island.y + self.island.height + space_ship_island), HEIGHT - self.sprite.height)
             return True
         if self.direction == 'W': # coming from E
             self.sprite.x = WIDTH
-            if 'up' in side: self.sprite.y = random.randint(0, self.island.y - self.sprite.height - space_ship_island)
-            elif 'down' in side: self.sprite.y = random.randint(self.island.y + self.island.height + space_ship_island, HEIGHT - self.sprite.height)
+            if 'up' in side: self.sprite.y = random.randint(0, int(self.island.y - self.sprite.height - space_ship_island))
+            elif 'down' in side: self.sprite.y = random.randint(int(self.island.y + self.island.height + space_ship_island), HEIGHT - self.sprite.height)
             return True
 
     def is_close_to_S(self):
@@ -273,7 +273,7 @@ class Ship(I_Cannon_ball):
             if self.shot_cooldown_timer <= 0:
                 # self.shot_animation.active_scroll()
                 for _ in range(self.shot_quantity):
-                    cannon_ball = Cannon_ball(self.sprite.x, self.sprite.y, self.shot_speed, self)
+                    cannon_ball = Cannon_ball(self.sprite.x + (self.sprite.width / 2), self.sprite.y + (self.sprite.height / 2), self.shot_speed, self)
                     self.cannon_ball_list.append(cannon_ball)
                 self.shot_cooldown_timer = self.shot_cooldown
             if self.shot_cooldown > 0:
