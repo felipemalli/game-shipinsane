@@ -9,23 +9,23 @@ def scale(img: pygame.Surface, factor):
     return pygame.transform.scale(img, (int(w), int(h)))
 
 
-IMAGE = pygame.image.load('../assets/images/smoke.png').convert_alpha()
 
 class SmokeParticle:
-    def __init__(self, x=WIDTH // 2, y=HEIGHT // 2, initial_height = 4, min_random_height = 7, max_random_height = 10, scale_k = 0.1):
+    def __init__(self, x=WIDTH // 2, y=HEIGHT // 2, initial_height = 4, min_random_height = 7, max_random_height = 10, scale_k = 0.1, x_variaton = 1, image_path = '../assets/images/smoke.png'):
+        self.image = pygame.image.load(image_path).convert_alpha()
         self.x = x
         self.y = y
         self.initial_height = initial_height
         self.min_random_height = min_random_height
         self.max_random_height = max_random_height
         self.scale_k = scale_k
-        self.img = scale(IMAGE, self.scale_k)
+        self.img = scale(self.image, self.scale_k)
         self.alpha = 255
         self.alpha_rate = 3
         self.alive = True
-        self.vx = random.randint(self.min_random_height, self.max_random_height) / 10
+        self.vx = random.randint(-self.min_random_height, self.max_random_height) / 10
         self.vy = self.initial_height + random.randint(self.min_random_height, self.max_random_height) / 10
-        self.k = 0.01 * random.random() * random.choice([-1, 1])
+        self.k = 0.01 * random.random() * random.choice([-1, 1]) * x_variaton
 
     def update(self):
         self.x += self.vx
@@ -40,7 +40,7 @@ class SmokeParticle:
         self.alpha_rate -= 0.1
         if self.alpha_rate < 1.5:
             self.alpha_rate = 1.5
-        self.img = scale(IMAGE, self.scale_k)
+        self.img = scale(self.image, self.scale_k)
         self.img.set_alpha(self.alpha)
 
     def draw(self):

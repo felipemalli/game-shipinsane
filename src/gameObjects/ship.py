@@ -314,7 +314,7 @@ class Ship(I_Cannon_ball):
             for target in targets:
                 if cannon_ball.sprite.rect.colliderect(target.hitbox):
                     self.remove_cannon_ball(cannon_ball)
-                    target.take_damage(self.damage, delta_time)
+                    target.take_damage(self.damage)
 
     # def update_quadrant(self):
     #     if self.hitbox.y + (self.hitbox.height / 2) < HEIGHT / 2:

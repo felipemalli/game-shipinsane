@@ -9,7 +9,6 @@ from game_parts.window_game import HEIGHT, WIDTH, island, island_hitbox, window
 sys.path.insert(0, os.path.abspath("../")) # src/
 from gameObjects.cannon import Cannon
 from gameObjects.contact_circle import Contact_circle
-from gameObjects.explosion import Explosion
 from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.player import Player
@@ -72,9 +71,6 @@ def init():
     # ------------------------------------------
 
     delta_time = 0
-    
-    explosion_group = sprite.Group()
-
 
     while(True):
         if player.life > 0:
@@ -114,12 +110,6 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
         endless_mode.screen_configurations(delta_time)
-
-        explosion_group.draw(window.get_screen())
-        explosion_group.update()
-        if keyboard.key_pressed("SPACE"):
-            explosion = Explosion(500, 500)
-            explosion_group.add(explosion)
 
     #  ---------------- In progress ----------------
 
