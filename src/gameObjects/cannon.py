@@ -5,6 +5,7 @@ from PPlay.keyboard import Keyboard
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
 from .fleet_of_ships import Fleet_of_ships
+from .smoke_effect import SmokeParticle
 
 keyboard = Keyboard()
 
@@ -33,6 +34,10 @@ class Cannon(I_Cannon_ball):
         self.rect.center = (self.sprite.x - (self.sprite.width / 2), self.sprite.y + (self.sprite.height / 2))
         self.rot_image = self.image
         self.rot_rect = self.rect
+
+        self.smoke = SmokeParticle()
+
+
 
     def get_sprite(self):
         return self.sprite
@@ -99,6 +104,8 @@ class Cannon(I_Cannon_ball):
             rot_image, rot_rect = self.move_anticlockwise()
 
         if keyboard.key_pressed("SPACE") and self.shot_cooldown <= 0 and player_object.get_cannon_ammo() > 0:
+            self.smoke.update()
+            self.smoke.draw()
             self.sound_explosion4.play()
             player_object.reduce_cannon_ammo()
             self.shot()
