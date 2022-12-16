@@ -94,7 +94,7 @@ class Endless_mode:
 
     def timer_reaches(self, minute, seconds):
         time = seconds + (minute * 60)
-        if self.timer_in_seconds > time and self.timer_in_seconds < (time + 1):
+        if self.timer_in_seconds > time and self.timer_in_seconds < (time + 2):
             return True
         return False
 
@@ -117,7 +117,7 @@ class Endless_mode:
         ]  
     
     def timer_balancing(self):
-        if self.minutes != 0 and (self.minutes % 2 == 0 or self.minutes == 1) and self.seconds < 1:
+        if self.minutes != 0 and (self.minutes % 2 == 0 or self.minutes == 1) and self.seconds < 2:
             self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
 
         if self.timer_reaches(0, 10):
@@ -141,6 +141,7 @@ class Endless_mode:
             self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
 
         if self.timer_reaches(2, 0):
+            self.fleet_of_ships.max_count += 1
             self.fleet_of_ships.create_enemy_ship('enemy_ship_boss', self.boss_parameters())
 
         if self.timer_reaches(3, 0):
