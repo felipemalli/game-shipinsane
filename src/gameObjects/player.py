@@ -5,6 +5,7 @@ keyboard = Keyboard()
 
 from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
+from utils.smoke_effect import Smoke
 from utils.sprite_utils import Sprite_utils
 from utils.text_utils import Text_utils
 
@@ -26,8 +27,7 @@ class Player(I_Life_bar):
         self.key_S = 'free'
         self.key_D = 'free'
         self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/images/heart_50x50.png"))
-        self.sound_hit = pygame.mixer.Sound("../assets/sounds/hit_player.wav")
-        pygame.mixer.Sound.set_volume(self.sound_hit, 0.5)
+        self.sound_hit = self.generate_sound_hit()
 
     def get_island(self):
         return self.island
@@ -49,6 +49,11 @@ class Player(I_Life_bar):
         return self.hitbox
     def get_life(self):
         return self.life
+
+    def generate_sound_hit(self):
+        sound = pygame.mixer.Sound("../assets/sounds/hit_player.wav")
+        pygame.mixer.Sound.set_volume(sound, 0.5)
+        return sound
 
     def take_damage(self, damage):
         self.sound_hit.play()

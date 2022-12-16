@@ -23,6 +23,7 @@ class Ship(I_Cannon_ball):
         self.life = life
         self.speed = speed
         self.damage = damage
+        self.image_name = image_name
         self.hitbox = pygame.Rect(0, 0, 0, 0)
         self.show_hitbox = False
         self.is_moving = True
@@ -236,7 +237,7 @@ class Ship(I_Cannon_ball):
                     possible_valid_directions.append(main_direction)
 
         self.direction = random.choice(possible_valid_directions)
-        self.sprite = Sprite_utils.sprite_direction('../assets/images/', 'enemy_ship', self.direction, self.sprite.x, self.sprite.y)
+        self.sprite = Sprite_utils.sprite_direction('../assets/images/', self.image_name, self.direction, self.sprite.x, self.sprite.y)
 
     def set_directions(self, directions, boolean):
         for direction in directions:
@@ -313,7 +314,7 @@ class Ship(I_Cannon_ball):
             for target in targets:
                 if cannon_ball.sprite.rect.colliderect(target.hitbox):
                     self.remove_cannon_ball(cannon_ball)
-                    target.take_damage(self.damage)
+                    target.take_damage(self.damage, delta_time)
 
     # def update_quadrant(self):
     #     if self.hitbox.y + (self.hitbox.height / 2) < HEIGHT / 2:
