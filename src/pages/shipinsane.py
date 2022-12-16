@@ -12,10 +12,10 @@ from gameObjects.contact_circle import Contact_circle
 from gameObjects.fleet_of_ships import Fleet_of_ships
 from gameObjects.hitbox_switcher import Hitbox_switcher
 from gameObjects.player import Player
-from gameObjects.smoke_effect import Smoke, SmokeParticle
 from PPlay.keyboard import Keyboard
 from pygame import mixer
 from utils.animation import Animation
+from utils.smoke_effect import Smoke
 from utils.text_utils import Text_utils
 
 keyboard = Keyboard()
@@ -27,12 +27,6 @@ def init():
     sea_animation = Animation(sea_sprites, 0)
     sound_lose = mixer.Sound("../assets/sounds/sf-you-lose.mp3")
     play_sound = True
-    smoke = Smoke()
-
-    # sea_sprite = Sprite("../assets/images/sea0.png")
-    # image = sea_sprite.image.convert_alpha()
-    # image.set_alpha(100)
-    # window.get_screen().blit(sea_sprite.image, (0,0))
 
     # -------------------- Player  -------------------
 
@@ -114,10 +108,6 @@ def init():
         cannon_S.render_shots(delta_time)
         chest.draw()
         endless_mode.screen_configurations(delta_time)
-
-
-        smoke.update()
-        smoke.draw()
 
     #  ---------------- In progress ----------------
 

@@ -25,7 +25,7 @@ class Fleet_of_ships:
         self.show_hitbox = not self.show_hitbox
 
     def generate_enemy_ships(self, delta_time, parameters = None):
-        print(self.spawn_speed)
+        # print(self.spawn_speed)
         if len(Fleet_of_ships.enemy_ships) < self.max_count and self.next_ship_timer > 0:
             self.next_ship_timer -= self.spawn_speed * delta_time
         if self.next_ship_timer <= 0:
@@ -40,14 +40,14 @@ class Fleet_of_ships:
 
     def render_ships(self, delta_time):
         for enemy_ship in Fleet_of_ships.enemy_ships:
-            enemy_ship.check_death(self.enemy_ships)
-            
-        for enemy_ship in Fleet_of_ships.enemy_ships:
             enemy_ship.set_show_hitbox(self.show_hitbox)
             enemy_ship.draw()
             enemy_ship.render_shots(delta_time, self.targets)
             if enemy_ship.is_moving: enemy_ship.move(delta_time)
             if enemy_ship.is_shooting: enemy_ship.shot(delta_time)
+
+        for enemy_ship in Fleet_of_ships.enemy_ships:
+            enemy_ship.check_death(self.enemy_ships, delta_time)
 
     def generate_random_num_around(self, num, proximity):
         min_num = num - proximity

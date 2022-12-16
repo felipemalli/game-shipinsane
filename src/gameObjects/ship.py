@@ -6,6 +6,7 @@ from PPlay.sprite import Sprite
 from src.pages.game_parts.window_game import HEIGHT, WIDTH, window
 from src.utils.ship_moviment import get_around_string_list_by_range
 from utils.animation import Animation
+from utils.smoke_effect import Smoke
 from utils.sprite_utils import Sprite_utils
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
@@ -57,6 +58,11 @@ class Ship(I_Cannon_ball):
         self.shot_quantity = shot_quantity
         self.rect = self.sprite.image.get_rect()
 
+        self.death_timer = 5
+        self.death_animation = Smoke(self.sprite.x, self.sprite.y, 200, 1, 7, 10, 0.3)
+        self.alpha = 255
+        self.alpha_rate = 7
+
         # self.shot_animation = Animation([Sprite("../assets/images/enemy1.png"),Sprite("../assets/images/enemy2.png"),Sprite("../assets/images/exit_button.png"),Sprite("../assets/images/play_button.png"),Sprite("../assets/images/chest.png")])
 
     def get_life(self):
@@ -69,12 +75,26 @@ class Ship(I_Cannon_ball):
         self.sound.play()
         self.life -= damage
 
-    def check_death(self, enemy_ships):
+    def check_death(self, enemy_ships, delta_time):
         if self.life <= 0:
             self.is_shooting = False
             self.is_moving = False
-
-            if not len(self.cannon_ball_list):
+            self.death_animation.x = self.sprite.x + (self.sprite.width / 2)
+            self.death_animation.y = self.sprite.y + (self.sprite.height / 2)
+            self.death_animation.update(delta_time)
+            self.death_animation.draw()
+            
+            self.alpha -= self.alpha_rate * delta_time * 10
+            self.alpha_rate -= delta_time
+            if self.alpha < 0: self.alpha = 0
+            if self.alpha_rate < 1.5: self.alpha_rate = 1.5
+            self.sprite.image.set_alpha(self.alpha)
+    
+            self.death_timer -= delta_time
+            if self.death_timer <= 4:
+                self.death_animation.generate_more = False
+            if self.death_timer <= 0 and not len(self.cannon_ball_list):
+                self.death_timer = 5
                 enemy_ships.remove(self)
 
     def draw(self):

@@ -21,7 +21,7 @@ class Endless_mode:
         self.speed = 40
         self.damage = 20
         self.shot_speed = 400
-        self.shot_cooldown = 10
+        self.shot_cooldown = 5
         self.shot_inaccuracy = 300
         self.shot_quantity = 1
         self.fleet_of_ships = Fleet_of_ships(island, self.initial_max_count, self.initial_average_spawn_speed)

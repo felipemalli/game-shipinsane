@@ -5,11 +5,11 @@ from PPlay.keyboard import Keyboard
 
 from .cannon_ball import Cannon_ball, I_Cannon_ball
 from .fleet_of_ships import Fleet_of_ships
-from .smoke_effect import SmokeParticle
 
 keyboard = Keyboard()
 
 from src.pages.game_parts.window_game import window
+from utils.smoke_effect import SmokeParticle
 from utils.sprite_utils import Sprite_utils
 
 
