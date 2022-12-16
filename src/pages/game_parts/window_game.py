@@ -13,7 +13,7 @@ island = Sprite("../assets/images/island_view.png", 1)
 island.x = WIDTH / 2 - island.width / 2
 island.y = HEIGHT / 2 - island.height / 2
 
-island_hitbox = Sprite("../assets/images/island_hitbox.png", 1)
+island_hitbox = Sprite("../assets/images/island2.png", 1)
 island_hitbox.x = WIDTH / 2 - island_hitbox.width / 2
 island_hitbox.y = HEIGHT / 2 - island_hitbox.height / 2
 
