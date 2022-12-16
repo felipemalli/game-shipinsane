@@ -27,6 +27,7 @@ class Player(I_Life_bar):
         self.key_S = 'free'
         self.key_D = 'free'
         self.life_bar = Life_bar(self, self.life, self.life, WIDTH/4 , HEIGHT - 50, 1000, 30, Sprite("../assets/images/heart_50x50.png"))
+        self.sound_reload = pygame.mixer.Sound("../assets/sounds/Reload.wav")
         self.sound_hit = self.generate_sound_hit()
 
     def get_island(self):
@@ -141,4 +142,7 @@ class Player(I_Life_bar):
         Text_utils.draw_text("Aperte R para recarregar", 30, WIDTH/2, HEIGHT-200)
 
         if keyboard.key_pressed("R"):
+            if self.cannon_ammo < self.cannon_max_ammo:
+                self.sound_reload.play()
+
             self.set_cannon_ammo(self.cannon_max_ammo)
