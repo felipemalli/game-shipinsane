@@ -1,4 +1,4 @@
-# Game: Shipinsane [Em desenvolvimento...]
+# Game: Shipinsane
 
 Sobreviva em uma jangada ao enfrentar piratas em mares desconhecidos. A dificuldade
 aumentará conforme você sobrevive mais tempo, prepare-se para viver como um verdadeiro
@@ -15,8 +15,6 @@ O jogador deve desviar dos tiros e atirar nos barcos com os canhões da ilha. Ao
 ### Teclas:
 
 W A S D - Movimento do jogador
-
-Espaço - Ataque corpo-a-corpo do jogador
 
 Setas - Movimento do canhão
 
