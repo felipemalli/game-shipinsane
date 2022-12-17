@@ -9,14 +9,13 @@ navegador em um barco insano!
 ## Como Jogar
 
 Barcos piratas (normais e chefões) aparecerão ao redor do mapa atirando bolas de canhão em direção à ilha em que se encontra o jogador.
-O jogador deve desviar dos tiros e atirar nos barcos com os canhões da ilha. Ao derrotar um barco, você recebe pontos proporcional à dificuldade do inimigo enfrentado! O objetivo é alcançar a maior pontuação possível, divirta-se :D!
-
+O jogador deve desviar dos tiros e atirar nos barcos com os canhões da ilha. Ao derrotar um barco, você recebe pontos proporcional à dificuldade do inimigo enfrentado, que aumenta ao decorrer do tempo! O objetivo é alcançar a maior pontuação possível, divirta-se :D!
 
 ### Teclas:
 
 W A S D - Movimento do jogador
 
-Setas - Movimento do canhão
+Setas - Rotação do canhão
 
 Espaço - Atira com o canhão
 
@@ -31,7 +30,6 @@ P - Pausa o jogo
 R (após perder) - Recomeça o jogo
 
 ESC - Volta para o menu
-
 
 <br>
 
