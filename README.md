@@ -35,10 +35,7 @@ ESC - Volta para o menu
 
 ## Demonstração do jogo em vídeo
 
-[![Shipinsane demonstration](https://img.youtube.com/vi/iHFJDzxorlI&ab_channel=FelipeVM/0.jpg)](https://www.youtube.com/watch?v=iHFJDzxorlI&ab_channel=FelipeVM "Shipinsane demonstration")
-
-[![Everything Is AWESOME](https://img.youtube.com/vi/StTqXEQ2l-Y/0.jpg)](https://www.youtube.com/watch?v=StTqXEQ2l-Y "Everything Is AWESOME")
-
+[![Shipinsane demonstration](https://img.youtube.com/vi/iHFJDzxorlI/0.jpg)](https://www.youtube.com/watch?v=iHFJDzxorlI&ab_channel=FelipeVM "Shipinsane demonstration")
 
 ## Como Executar o jogo
 
